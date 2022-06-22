@@ -1,6 +1,6 @@
 ## Spire.Doc for Java, Java Library to Create, Manipulate & Convert Word Documents
 
-[![Foo](https://i.imgur.com/LYStJdY.png)](https://www.e-iceblue.com/Introduce/word-for-net-introduce.html)
+[![Foo](https://i.imgur.com/caz2lDf.png)](https://www.e-iceblue.com/Introduce/word-for-net-introduce.html)
 
 [Product Page](https://www.e-iceblue.com/Introduce/doc-for-java.html) | [Documentation](https://www.e-iceblue.com/Tutorials/Java/Spire.Doc-for-Java/Program-Guide/Spire.Doc-Program-Guide-Content-for-Java.html) | [Examples](https://github.com/eiceblue/Spire.Doc-for-Java) | [Forum](https://www.e-iceblue.com/forum/spire-doc-f6.html) | [Temporary License](https://www.e-iceblue.com/TemLicense.html) | [Customized Demo](https://www.e-iceblue.com/Misc/customized-demo.html)
 
