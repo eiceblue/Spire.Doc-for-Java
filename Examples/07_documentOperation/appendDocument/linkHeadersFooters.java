@@ -23,5 +23,9 @@ public class linkHeadersFooters {
         //Save the document
         String output="output/linkHeadersFooters.docx";
         dstDoc.saveToFile(output, FileFormat.Docx_2013);
+
+        //Dispose te documents
+        srcDoc.dispose();
+        dstDoc.dispose();
     }
 }

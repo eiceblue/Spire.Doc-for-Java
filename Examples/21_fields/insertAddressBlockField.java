@@ -4,23 +4,33 @@ import com.spire.doc.fields.Field;
 
 public class insertAddressBlockField {
     public static void main(String[] args) {
-        //Open a Word document
+
         String input="data/BlankTemplate.docx";
-        Document document = new Document(input);
+		// Create a new document object and load the file
+		Document document = new Document(input);
 
-        //Get the first section
-        Section section = document.getSections().get(0);
+		// Get the first section of the document
+		Section section = document.getSections().get(0);
 
-        Paragraph par = section.addParagraph();
+		// Add a new paragraph to the section
+		Paragraph par = section.addParagraph();
 
-        //Add address block in the paragraph
-        Field field = par.appendField("ADDRESSBLOCK", FieldType.Field_Address_Block);
+		// Append an address block field to the paragraph
+		Field field = par.appendField("ADDRESSBLOCK", FieldType.Field_Address_Block);
 
-        //Set field code
-        field.setCode("ADDRESSBLOCK \\c 1 \\d \\e Test2 \\f Test3 \\l \"Test 4\"");
+		// Set the code for the address block field
+		field.setCode("ADDRESSBLOCK \\c 1 \\d \\e Test2 \\f Test3 \\l \"Test 4\"");
 
-        //Save to file
-        String result="output/insertAddressBlockField.docx";
-        document.saveToFile(result, FileFormat.Docx);
+		// Enable updating fields in the document
+		document.isUpdateFields(true);
+
+		// Specify the file path for the resulting document
+		String result = "output/insertAddressBlockField.docx";
+
+		// Save the document to the specified file path in Docx format
+		document.saveToFile(result, FileFormat.Docx);
+
+		// Dispose of the document resources
+		document.dispose();
     }
 }

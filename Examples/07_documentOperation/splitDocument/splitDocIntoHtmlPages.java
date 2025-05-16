@@ -1,8 +1,6 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
 
-import java.nio.file.Path;
-
 public class splitDocIntoHtmlPages {
     public static void main(String[] args) throws Exception {
         String input = "data/splitDocIntoHtmlPages.doc";
@@ -12,12 +10,18 @@ public class splitDocIntoHtmlPages {
     }
     private static void SplitDocIntoMultipleHtml(String input, String outDirectory)
     {
+
+        //Create a document
         Document document = new Document();
+
+        //Load from specified path
         document.loadFromFile(input);
 
         Document subDoc = null;
         Boolean first = true;
         int index = 0;
+
+        //
         for(int s =0 ;s<document.getSections().getCount();s++) {
             Section sec = document.getSections().get(s);
             for(int c =0 ;c< sec.getBody().getChildObjects().getCount();c++)
@@ -52,7 +56,11 @@ public class splitDocIntoHtmlPages {
             index++;
             //Save to html file
             subDoc.saveToFile(outDirectory+"/out-"+ index +".html", FileFormat.Html);
+            //Dispose the document
+            subDoc.dispose();
         }
+        //Dispose the document
+        document.dispose();
     }
     private static Boolean IsInNextDocument(DocumentObject element)
     {

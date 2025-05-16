@@ -22,5 +22,8 @@ public class replaceWithDocument {
 
         // Save to file.
         doc.saveToFile(result, FileFormat.Docx);
+
+        //Dispose the document
+        doc.dispose();
     }
 }

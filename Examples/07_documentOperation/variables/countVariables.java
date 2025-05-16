@@ -11,9 +11,13 @@ public class countVariables {
         //Get the number of variables in the document.
         int number = document.getVariables().getCount();
 
+        //Create a StringBuilder
         StringBuilder content = new StringBuilder();
         content.append("The number of variables is: " + number);
 
-        System.out.println(content.toString());
+        System.out.println(content);
+
+        //Dispose the document
+        document.dispose();
     }
 }

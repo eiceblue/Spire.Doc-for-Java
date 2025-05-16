@@ -9,11 +9,11 @@ public class removeTextBox {
         //Remove the first text box
         doc.getTextBoxes().removeAt(0);
 
-        //Clear all the text boxes
-        //doc.getTextBoxes().clear();
-
         //Save the document
         String output = "output/removeTextBox.docx";
         doc.saveToFile(output, FileFormat.Docx);
+
+        // Dispose the document
+        doc.dispose();
     }
 }

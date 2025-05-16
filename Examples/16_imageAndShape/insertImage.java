@@ -8,37 +8,52 @@ public class insertImage {
         String input2 = "data/spireDoc.png";
         String output = "output/insertImage.docx";
 
-        //load a document
-        Document doc = new Document();
-        doc.loadFromFile(input1);
+		// Create a new Document object
+		Document doc = new Document();
 
-        //add paragraphs
-        Section section = doc.getSections().get(0);
-        Paragraph paragraph = section.getParagraphs().getCount()> 0 ? section.getParagraphs().get(0): section.addParagraph();
-        paragraph.appendText("The sample demonstrates how to insert an image into a document.");
-        paragraph.applyStyle(BuiltinStyle.Heading_2);
-        paragraph = section.addParagraph();
-        paragraph.appendText("This is an inserted picture.");
+		// Load the document from input1
+		doc.loadFromFile(input1);
 
-        //add picture
-        DocPicture picture = new DocPicture(doc);
-        picture.loadImage(input2);
+		// Get the first section of the document
+		Section section = doc.getSections().get(0);
 
-        //set image's position
-        picture.setHorizontalPosition(50.0F);
-        picture.setVerticalPosition(60.0F);
+		// Get the first paragraph of the section if it exists, otherwise add a new paragraph
+		Paragraph paragraph = section.getParagraphs().getCount() > 0 ? section.getParagraphs().get(0) : section.addParagraph();
 
-        //set image's size
-        picture.setWidth(200);
-        picture.setHeight(200);
+		// Append text to the paragraph
+		paragraph.appendText("The sample demonstrates how to insert an image into a document.");
 
-        //set textWrappingStyle with image;
-        picture.setTextWrappingStyle( TextWrappingStyle.Through);
+		// Apply a built-in style (Heading 2) to the paragraph
+		paragraph.applyStyle(BuiltinStyle.Heading_2);
 
-        //insert the picture at the beginning of added second paragraph
-        paragraph.getChildObjects().insert(0,picture);
+		// Add a new paragraph to the section
+		paragraph = section.addParagraph();
 
-        //save the document
-        doc.saveToFile(output, FileFormat.Docx);
+		// Append text to the new paragraph
+		paragraph.appendText("This is an inserted picture.");
+
+		// Create a new DocPicture object and load the image from input2
+		DocPicture picture = new DocPicture(doc);
+		picture.loadImage(input2);
+
+		// Set the horizontal and vertical position of the picture
+		picture.setHorizontalPosition(50.0F);
+		picture.setVerticalPosition(60.0F);
+
+		// Set the width and height of the picture
+		picture.setWidth(200);
+		picture.setHeight(200);
+
+		// Set the text wrapping style of the picture
+		picture.setTextWrappingStyle(TextWrappingStyle.Through);
+
+		// Insert the picture at the beginning of the paragraph's child objects
+		paragraph.getChildObjects().insert(0, picture);
+
+		// Save the modified document to the output file
+		doc.saveToFile(output, FileFormat.Docx);
+
+		// Clean up resources associated with the document
+		doc.dispose();
     }
 }

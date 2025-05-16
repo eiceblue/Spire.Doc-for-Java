@@ -4,20 +4,23 @@ import com.spire.doc.fields.*;
 
 public class addTCField {
     public static void main(String[] args) {
-        //Create Word document
-        Document document = new Document();
+		// Create a new document object
+		Document document = new Document();
 
-        //Add a new section
-        Section section = document.addSection();
+		// Add a section to the document
+		Section section = document.addSection();
 
-        //Add a new paragraph
-        Paragraph paragraph = section.addParagraph();
+		// Add a paragraph to the section
+		Paragraph paragraph = section.addParagraph();
 
-        //Add TC field in the paragraph
-        Field field = paragraph.appendField("TC", FieldType.Field_TOC_Entry);
-        field.setCode("TC " + "\"Entry Text\"" + " \\f" + " t");
+		// Append a TC field with the specified entry text to the paragraph
+		Field field = paragraph.appendField("TC", FieldType.Field_TOC_Entry);
+		field.setCode("TC " + "\"Entry Text\"" + " \\f" + " t");
 
-        //Save to file
-        document.saveToFile("output/addTCField.docx", FileFormat.Docx);
+		// Save the document to the specified output file in DOCX format
+		document.saveToFile("output/addTCField.docx", FileFormat.Docx);
+
+		// Dispose the document resources
+		document.dispose();
     }
 }

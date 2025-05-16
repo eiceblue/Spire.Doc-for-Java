@@ -5,54 +5,58 @@ import java.util.ArrayList;
 
 public class removeContentWithComment {
     public static void main(String[] args) {
+		// Define the input file path and output file path
         String input = "data/commentSample.docx";
         String output = "output/removeContentWithComment.docx";
 
-        //Create a document
-        Document document = new Document();
+		// Create a new Document object
+		Document document = new Document();
 
-        //Load the document from disk.
-        document.loadFromFile(input);
+		// Load the document from the specified input file
+		document.loadFromFile(input);
 
-        //Get the first comment
-        Comment comment = document.getComments().get(1);
+		// Get the second comment in the document
+		Comment comment = document.getComments().get(1);
 
-        //Get the paragraph of obtained comment
-        Paragraph para = comment.getOwnerParagraph();
+		// Get the paragraph that contains the obtained comment
+		Paragraph para = comment.getOwnerParagraph();
 
-        //Get index of the CommentMarkStart
-        int startIndex = para.getChildObjects().indexOf(comment.getCommentMarkStart());
+		// Find the index of the CommentMarkStart in the paragraph's child objects
+		int startIndex = para.getChildObjects().indexOf(comment.getCommentMarkStart());
 
-        //Get index of the CommentMarkEnd
-        int endIndex = para.getChildObjects().indexOf(comment.getCommentMarkEnd());
+		// Find the index of the CommentMarkEnd in the paragraph's child objects
+		int endIndex = para.getChildObjects().indexOf(comment.getCommentMarkEnd());
 
-        //Create a list
-        ArrayList<TextRange> list = new ArrayList<TextRange>();
+		// Create an ArrayList to store TextRange objects
+		ArrayList<TextRange> list = new ArrayList<TextRange>();
 
-        //Get TextRanges between the indexes
-        for (int i = startIndex; i < endIndex; i++)
-        {
-            if (para.getChildObjects().get(i) instanceof TextRange)
-            {
-                list.add((TextRange)para.getChildObjects().get(i) );
-            }
-        }
+		// Iterate over the child objects between startIndex and endIndex
+		for (int i = startIndex; i < endIndex; i++) {
+			// Check if the current child object is an instance of TextRange
+			if (para.getChildObjects().get(i) instanceof TextRange) {
+				// Add the TextRange object to the list
+				list.add((TextRange) para.getChildObjects().get(i));
+			}
+		}
 
-        //Insert a new TextRange
-        TextRange textRange = new TextRange(document);
+		// Create a new TextRange object associated with the document
+		TextRange textRange = new TextRange(document);
 
-        //Set text is null
-        textRange.setText(null);
+		// Set the text of the new TextRange to null
+		textRange.setText(null);
 
-        //Insert the new textRange
-        para.getChildObjects().insert(endIndex, textRange);
+		// Insert the new TextRange object at the endIndex position in the paragraph's child objects
+		para.getChildObjects().insert(endIndex, textRange);
 
-        //Remove previous TextRanges
-        for (int i = 0; i < list.size(); i++)
-        {
-            para.getChildObjects().remove(list.get(i));
-        }
-        //Save the document.
-        document.saveToFile(output, FileFormat.Docx);
+		// Remove the previous TextRange objects from the paragraph's child objects
+		for (int i = 0; i < list.size(); i++) {
+			para.getChildObjects().remove(list.get(i));
+		}
+
+		// Save the modified document to the specified output file in Docx format
+		document.saveToFile(output, FileFormat.Docx);
+
+		// Clean up resources associated with the document
+		document.dispose();
     }
 }

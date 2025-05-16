@@ -5,24 +5,33 @@ import java.io.*;
 
 public class getFieldText {
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
+		
+		// Create a StringBuilder object to store the field texts
+		StringBuilder sb = new StringBuilder();
 
-        //Open a Word document
-        Document document = new Document("data/GetFieldText.docx");
+		// Create a new document object using the specified input file path
+		Document document = new Document("data/GetFieldText.docx");
 
-        //Get all fields in document
-        FieldCollection fields = document.getFields();
+		// Get the collection of fields in the document
+		FieldCollection fields = document.getFields();
 
-        for (Field field : (Iterable<Field>)fields)
-        {
-            //Get field text
-            String fieldText = field.getFieldText();
-            sb.append("The field text is \""+fieldText + "\".\r\n");
-        }
+		// Iterate through each field in the collection
+		for (Field field : (Iterable<Field>) fields) {
+			// Get the text of the field
+			String fieldText = field.getFieldText();
+			
+			// Append the field text to the StringBuilder object with additional formatting
+			sb.append("The field text is \"" + fieldText + "\".\r\n");
+		}
 
-        //Write to txt file
-        String output="output/getFieldText.txt";
-        writeStringToTxt(sb.toString(),output);
+		// Specify the output file path for the text file
+		String output = "output/getFieldText.txt";
+
+		// Write the contents of the StringBuilder object to a text file
+		writeStringToTxt(sb.toString(), output);
+
+		// Dispose the document resources
+		document.dispose();
     }
     public static void writeStringToTxt(String content, String txtFileName) throws IOException {
         File file=new File(txtFileName);

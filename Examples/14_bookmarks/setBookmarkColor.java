@@ -3,52 +3,58 @@ import java.awt.*;
 
 public class setBookmarkColor {
     public static void main(String[] args) {
+        // Define the input file path for the document to be loaded
         String input = "data/bookmarkTemplate.docx";
+
+        // Define the output file path for the PDF with modified bookmark settings
         String output = "output/setBookmarkColor.pdf";
 
-        //Load the document
+        // Create a new Document instance
         Document doc = new Document();
+
+        // Load the document from the specified input file
         doc.loadFromFile(input);
 
-        //Create an instance of ToPdfParameterList
+        // Create a ToPdfParameterList instance to specify the PDF conversion settings
         ToPdfParameterList toPdf = new ToPdfParameterList();
 
-        //Set CreateWordBookmarks to true to use word bookmarks when create the bookmarks
+        // Enable the creation of Word bookmarks in the PDF
         toPdf.setCreateWordBookmarks(true);
 
-        //Set the title of word bookmarks
+        // Set the title of the Word bookmarks in the PDF
         toPdf.setWordBookmarksTitle("Changed bookmark");
 
-        //Set the text color of word bookmarks
+        // Set the color of the Word bookmarks to gray
         toPdf.setWordBookmarksColor(Color.gray);
 
-        //Call the event document_BookmarkLayout when drawing a bookmark
-        doc.BookmarkLayout = new  com.spire.doc.documents.rendering.BookmarkLevelHandler() {
+        // Set the bookmark layout handler for the document
+        doc.BookmarkLayout = new com.spire.doc.documents.rendering.BookmarkLevelHandler() {
             @Override
             public void invoke(Object sender, com.spire.doc.documents.rendering.BookmarkLevelEventArgs args) {
                 document_BookmarkLayout(sender, args);
             }
         };
 
-        //Save the document
+        // Save the modified document to the specified output file in PDF format with the specified PDF conversion
+        // settings
         doc.saveToFile(output, toPdf);
+
+        // Dispose of the document resources
+        doc.dispose();
     }
-    private static void document_BookmarkLayout(Object sender, com.spire.doc.documents.rendering.BookmarkLevelEventArgs args)
-    {
-        //set the different color for different levels of bookmarks
-        if (args.getBookmarkLevel().getLevel() == 2)
-        {
-            args.getBookmarkLevel().setColor( Color.red);
+
+    // Custom method to handle bookmark layout customization
+    private static void document_BookmarkLayout(Object sender,
+        com.spire.doc.documents.rendering.BookmarkLevelEventArgs args) {
+        // Customize bookmark appearance based on its level
+        if (args.getBookmarkLevel().getLevel() == 2) {
+            args.getBookmarkLevel().setColor(Color.red);
             args.getBookmarkLevel().setStyle(BookmarkTextStyle.Bold);
-        }
-        else if (args.getBookmarkLevel().getLevel() == 3)
-        {
-            args.getBookmarkLevel().setColor( Color.gray);
+        } else if (args.getBookmarkLevel().getLevel() == 3) {
+            args.getBookmarkLevel().setColor(Color.gray);
             args.getBookmarkLevel().setStyle(BookmarkTextStyle.Italic);
-        }
-        else
-        {
-            args.getBookmarkLevel().setColor( Color.green);
+        } else {
+            args.getBookmarkLevel().setColor(Color.green);
             args.getBookmarkLevel().setStyle(BookmarkTextStyle.Regular);
         }
     }

@@ -5,23 +5,28 @@ public class addAlternativeText {
         String input = "data/tableSample.docx";
         String output = "output/addAlternativeText.docx";
 
-        //load the document
+        // Create a new document object
         Document doc = new Document();
+
+        // Load the document from the input file
         doc.loadFromFile(input);
 
-        //get the first section
+        // Get the first section of the document
         Section section = doc.getSections().get(0);
 
-        //get the first table in the section
-        Table table = (Table)section.getTables().get(0);
+        // Get the first table in the section
+        Table table = (Table) section.getTables().get(0);
 
-        //add title
+        // Set the title of the table
         table.setTitle("Table 1");
 
-        //add description
+        // Set the description of the table
         table.setTableDescription("Description Text");
 
-        //save the document
+        // Save the modified document to the output file
         doc.saveToFile(output, FileFormat.Docx);
+
+        // Dispose of the document object to release resources
+        doc.dispose();
     }
 }

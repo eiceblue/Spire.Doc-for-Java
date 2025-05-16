@@ -1,31 +1,42 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
 import com.spire.doc.fields.*;
+
 import java.awt.*;
 
 public class setTransparentColorForImage {
     public static void main(String[] args) {
-        String input="data/imageTemplate.docx";
-        String output="output/setTransparentColorForImage.docx";
+        String input = "data/imageTemplate.docx";
+        String output = "output/setTransparentColorForImage.docx";
 
-        //load a document
+        // Create a new Document object
         Document doc = new Document();
+
+        // Load the document from the input file
         doc.loadFromFile(input);
 
-        //get the first paragraph in the first section
+        // Get the first paragraph in the first section of the document
         Paragraph paragraph = doc.getSections().get(0).getParagraphs().get(0);
 
-        //set the blue color of the image(s) in the paragraph to transperant
-        for (int i=0;i<paragraph.getChildObjects().getCount();i++)
-        {
+        // Iterate through each child object in the paragraph
+        for (int i = 0; i < paragraph.getChildObjects().getCount(); i++) {
+            // Get the current child object
             DocumentObject obj = paragraph.getChildObjects().get(i);
-            if (obj instanceof DocPicture)
-            {
-                DocPicture picture = (DocPicture)obj;
+
+            // Check if the child object is a DocPicture
+            if (obj instanceof DocPicture) {
+                // Cast the child object to DocPicture
+                DocPicture picture = (DocPicture) obj;
+
+                // Set the transparent color of the picture to blue
                 picture.setTransparentColor(Color.BLUE);
             }
         }
-        //save the document
+
+        // Save the modified document to the output file in Docx format
         doc.saveToFile(output, FileFormat.Docx);
+
+        // Dispose of the document object to release resources
+        doc.dispose();
     }
 }

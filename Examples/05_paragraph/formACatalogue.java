@@ -1,6 +1,5 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
-
 public class formACatalogue {
     public static void main(String[] args){
         //Create Word document.
@@ -55,5 +54,8 @@ public class formACatalogue {
 
         // Save to file.
         document.saveToFile(result, FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

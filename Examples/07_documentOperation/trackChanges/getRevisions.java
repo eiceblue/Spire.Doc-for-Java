@@ -2,14 +2,14 @@ import com.spire.doc.*;
 import com.spire.doc.documents.*;
 import com.spire.doc.fields.*;
 import com.spire.doc.formatting.revisions.*;
-
-import java.io.File;
 import java.io.FileWriter;
 
 public class getRevisions {
     public static void main(String[] args) throws Exception{
-        //Load file
+        //Create a document
         Document document = new Document();
+
+        //Load from a disk file
         document.loadFromFile("data/GetRevisions.docx");
         StringBuilder insertRevision = new StringBuilder();
         insertRevision.append("Insert revisions:"+"\n");
@@ -97,5 +97,8 @@ public class getRevisions {
         writer2.write(deleteRevision.toString());
         writer2.flush();
         writer2.close();
+
+        //Dispose the document
+        document.dispose();
     }
 }

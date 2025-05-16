@@ -4,21 +4,30 @@ import java.io.*;
 
 public class getFormFieldsCollection {
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
+		
+		// Create a StringBuilder object to store the information
+		StringBuilder sb = new StringBuilder();
 
-        //Open a Word document
-        Document document = new Document("data/FillFormField.doc");
+		// Create a new document object using the specified input file path
+		Document document = new Document("data/FillFormField.doc");
 
-        //Get the first section
-        Section section = document.getSections().get(0);
+		// Get the first section of the document
+		Section section = document.getSections().get(0);
 
-        FormFieldCollection formFields = section.getBody().getFormFields();
+		// Get the collection of form fields from the body of the section
+		FormFieldCollection formFields = section.getBody().getFormFields();
 
-        sb.append("The first section has " + formFields.getCount() + " form fields.");
+		// Append the count of form fields in the collection to the StringBuilder object with additional formatting
+		sb.append("The first section has " + formFields.getCount() + " form fields.");
 
-        //Write the information to txt file
-        String output="output/getFormFieldsCollection.txt";
-        writeStringToTxt(sb.toString(),output);
+		// Specify the output file path for the text file
+		String output = "output/getFormFieldsCollection.txt";
+
+		// Write the contents of the StringBuilder object to a text file
+		writeStringToTxt(sb.toString(), output);
+
+		// Dispose the document resources
+		document.dispose();
     }
     public static void writeStringToTxt(String content, String txtFileName) throws IOException {
         File file=new File(txtFileName);

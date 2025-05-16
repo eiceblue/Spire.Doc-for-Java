@@ -13,5 +13,8 @@ public class replaceWithText {
 
         // Save doc file.
         document.saveToFile("output/replaceWithText.docx", FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

@@ -13,8 +13,10 @@ public class insertOLE {
         //Add a paragraph
         Paragraph par = sec.addParagraph();
 
-        //Load the image
+        //Create a DocPicture
         DocPicture picture = new DocPicture(doc);
+
+        // Load an image
         picture.loadImage("data/excel.png");
 
         //Insert the OLE
@@ -23,5 +25,8 @@ public class insertOLE {
         //Save to file
         String output = "output/insertOLE.docx";
         doc.saveToFile(output, FileFormat.Docx_2013);
+
+        // Dispose the document
+        doc.dispose();
     }
 }

@@ -1,5 +1,4 @@
 import com.spire.doc.*;
-
 public class removeSectionContent {
     public static void main(String[] args) {
         //Create word document.
@@ -26,5 +25,8 @@ public class removeSectionContent {
 
         //Save to file
         doc.saveToFile(output, FileFormat.Docx_2013);
+
+        //Dispose the document
+        doc.dispose();
     }
 }

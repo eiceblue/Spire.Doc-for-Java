@@ -6,28 +6,39 @@ public class removeFooter {
         String input = "data/oddAndEvenHeaderFooter.docx";
         String output = "output/removeFooter.docx";
 
-        //load the document
-        Document doc = new Document();
-        doc.loadFromFile(input);
+		// Create a new document object
+		Document doc = new Document();
 
-        //get the first section
-        Section section = doc.getSections().get(0);
+		// Load the document from the input file
+		doc.loadFromFile(input);
 
-        //clear footer in the first page
-        HeaderFooter footer;
-        footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.Footer_First_Page);
-        if (footer != null)
-            footer.getChildObjects().clear();
-        //clear footer in the odd page
-        footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.Footer_Odd);
-        if (footer != null)
-            footer.getChildObjects().clear();
-        //clear footer in the even page
-        footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.Footer_Even);
-        if (footer != null)
-            footer.getChildObjects().clear();
+		// Get the first section of the document
+		Section section = doc.getSections().get(0);
 
-        //save the document
-        doc.saveToFile(output, FileFormat.Docx);
+		HeaderFooter footer;
+
+		// Clear the child objects of the footer for the first page
+		footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.Footer_First_Page);
+		if (footer != null) {
+			footer.getChildObjects().clear();
+		}
+
+		// Clear the child objects of the footer for odd pages
+		footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.Footer_Odd);
+		if (footer != null) {
+			footer.getChildObjects().clear();
+		}
+
+		// Clear the child objects of the footer for even pages
+		footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.Footer_Even);
+		if (footer != null) {
+			footer.getChildObjects().clear();
+		}
+
+		// Save the modified document to the output file
+		doc.saveToFile(output, FileFormat.Docx);
+
+		// Dispose of the document object to release resources
+		doc.dispose();
     }
 }

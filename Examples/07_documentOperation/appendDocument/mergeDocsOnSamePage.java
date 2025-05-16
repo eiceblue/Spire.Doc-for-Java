@@ -8,7 +8,7 @@ public class mergeDocsOnSamePage {
         //Load the source document from disk.
         document.loadFromFile("data/Insert.docx");
 
-        //Clone a destination  document
+        //Create a destination  document
         Document destinationDocument = new Document();
 
         //Load the destination document from disk.
@@ -26,5 +26,9 @@ public class mergeDocsOnSamePage {
         }
         //Save the document.
         destinationDocument.saveToFile("output/mergeDocsOnSamePage.docx", FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
+        destinationDocument.dispose();
     }
 }

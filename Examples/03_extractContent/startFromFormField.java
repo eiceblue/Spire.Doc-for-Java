@@ -43,5 +43,9 @@ public class startFromFormField {
 
         // Save the document.
         destinationDoc.saveToFile("output/startFromFormField.docx", FileFormat.Docx);
+
+        //Dispose the document
+        sourceDocument.dispose();
+        destinationDoc.dispose();
     }
 }

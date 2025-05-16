@@ -10,15 +10,19 @@ public class hideParagraph {
         // Load the file from disk.
         document.loadFromFile("data/Template_Docx_1.docx");
 
-        //Get the first section and the first paragraph from the word document.
+        //Get the first section
         Section sec = document.getSections().get(0);
+
+        //Get the first paragraph
         Paragraph para = sec.getParagraphs().get(0);
 
-        // Loop through the textranges and set CharacterFormat.Hidden property as true to hide the texts.
+        // Loop through the textranges and
         for (Object docObj : para.getChildObjects()) {
             DocumentObject obj = (DocumentObject)docObj;
             if ((obj instanceof TextRange)) {
                 TextRange range = ((TextRange)(obj));
+
+                //Set CharacterFormat's Hidden property as true to hide the texts.
                 range.getCharacterFormat().setHidden(true);
             }
         }
@@ -27,5 +31,8 @@ public class hideParagraph {
 
         // Save to file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

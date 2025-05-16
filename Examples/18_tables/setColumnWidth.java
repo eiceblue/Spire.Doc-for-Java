@@ -2,26 +2,31 @@ import com.spire.doc.*;
 
 public class setColumnWidth {
     public static void main(String[] args) {
+        String inputFile = "data/tableSample.docx";
+        String outputFile = "output/setColumnWidth.docx";
 
-        String inputFile="data/tableSample.docx";
-        String outputFile="output/setColumnWidth.docx";
-
-        //create a document and load file
+        // Create a new document object
         Document document = new Document();
+
+        // Load the document from the specified input file
         document.loadFromFile(inputFile);
 
+        // Get the first section of the document
         Section section = document.getSections().get(0);
+
+        // Get the first table in the section
         Table table = section.getTables().get(0);
 
-        //traverse the first column
+        // Loop through each row in the table
         for (int i = 0; i < table.getRows().getCount(); i++) {
-            //set the cell width type
-            table.getRows().get(i).getCells().get(0).setCellWidthType(CellWidthType.Point);
-            //set the value
-            table.getRows().get(i).getCells().get(0).setWidth(200);
+            // Set the width type of the first cell in each row to point, 200 points
+            table.getRows().get(i).getCells().get(0).setCellWidth(200,CellWidthType.Point);
         }
 
-        //save to file
+        // Save the modified document to the specified output file in DOCX format
         document.saveToFile(outputFile, FileFormat.Docx);
+
+        // Dispose the document resources
+        document.dispose();
     }
 }

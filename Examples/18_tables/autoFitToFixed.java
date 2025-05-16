@@ -2,22 +2,28 @@ import com.spire.doc.*;
 
 public class autoFitToFixed {
     public static void main(String[] args) {
+        String inputFile = "data/tableSample.docx";
+        String outputFile = "output/autoFitToFixed.docx";
 
-        String inputFile="data/tableSample.docx";
-        String outputFile="output/autoFitToFixed.docx";
-
-        //create a document
+        // Create a new Document instance
         Document document = new Document();
-        //load file
+
+        // Load the document from the inputFile
         document.loadFromFile(inputFile);
 
+        // Get the first section of the document
         Section section = document.getSections().get(0);
+
+        // Get the first table in the section
         Table table = section.getTables().get(0);
 
-        //the table is set to a fixed size
+        // Auto-fit the table using fixed column widths
         table.autoFit(AutoFitBehaviorType.Fixed_Column_Widths);
 
-        //save to file
-        document.saveToFile(outputFile,FileFormat.Docx);
+        // Save the modified document to the outputFile in Docx format
+        document.saveToFile(outputFile, FileFormat.Docx);
+
+        // Dispose of the document object to release resources
+        document.dispose();
     }
 }

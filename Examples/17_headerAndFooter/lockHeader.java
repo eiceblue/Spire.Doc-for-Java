@@ -5,20 +5,23 @@ public class lockHeader {
         String input = "data/headerSample.docx";
         String output = "output/lockHeader.docx";
 
-        //load the document
-        Document doc = new Document();
-        doc.loadFromFile(input);
+		// Load the document
+		Document doc = new Document();
+		doc.loadFromFile(input);
 
-        //get the first section
-        Section section = doc.getSections().get(0);
+		// Get the first section of the document
+		Section section = doc.getSections().get(0);
 
-        //protect the document and set the ProtectionType as AllowOnlyFormFields
-        doc.protect(ProtectionType.Allow_Only_Form_Fields, "123");
+		// Protect the document and set the ProtectionType as AllowOnlyFormFields with password "123"
+		doc.protect(ProtectionType.Allow_Only_Form_Fields, "123");
 
-        //set the ProtectForm as false to unprotect the section
-        section.setProtectForm(false);
+		// Set the ProtectForm property of the section as false to unprotect it
+		section.setProtectForm(false);
 
-        //save the document
-        doc.saveToFile(output, FileFormat.Docx);
+		// Save the document
+		doc.saveToFile(output, FileFormat.Docx);
+
+		// Dispose of the document object to release resources
+		doc.dispose();
     }
 }

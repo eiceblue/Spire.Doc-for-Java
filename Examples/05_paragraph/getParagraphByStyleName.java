@@ -1,7 +1,6 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
 import java.io.*;
-
 public class getParagraphByStyleName {
     public static void main(String[] args) throws Exception{
         //Create Word document.
@@ -33,8 +32,14 @@ public class getParagraphByStyleName {
             }
         }
 
+        //Flush buffer
         bw.flush();
+
+        //Close the stream
         bw.close();
         fw.close();
+
+        //Dispose the document
+        document.dispose();
     }
 }

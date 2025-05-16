@@ -12,10 +12,16 @@ public class setSpacing {
         //Load the file from disk.
         document.loadFromFile("data/Template_Docx_1.docx");
 
-        //Add the text strings to the paragraph and set the style.
+        //Create a new paragraph
         Paragraph para = new Paragraph(document);
+
+        //Append some texts
         TextRange textRange1 = para.appendText("This is an inserted paragraph.");
+
+        //Set text color
         textRange1.getCharacterFormat().setTextColor(Color.BLUE);
+
+        //Set font size
         textRange1.getCharacterFormat().setFontSize(15);
 
         //set the spacing before and after.
@@ -24,12 +30,15 @@ public class setSpacing {
         para.getFormat().setAfterAutoSpacing(false);
         para.getFormat().setAfterSpacing(10);
 
-        //insert the added paragraph to the word document.
+        //insert the added paragraph to the first section.
         document.getSections().get(0).getParagraphs().insert(1, para);
 
         String result = "output/setSpacing.docx";
 
         //Save to file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

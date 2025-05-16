@@ -17,11 +17,23 @@ public class replaceWithImage {
 
         // Remove the text and replace it with image.
         for (TextSelection selection : selections) {
+
+            //Create a DocPicture
             DocPicture pic = new DocPicture(doc);
+
+            //Load an image
             pic.loadImage("data/E-iceblue.png");
+
+            //Get the TextRange
             range = selection.getAsOneRange();
+
+            // Get the index of the TextRange
             index = range.getOwnerParagraph().getChildObjects().indexOf(range);
+
+            //Insert the picture
             range.getOwnerParagraph().getChildObjects().insert(index, pic);
+
+            // Remove the text
             range.getOwnerParagraph().getChildObjects().remove(range);
         }
 
@@ -29,5 +41,8 @@ public class replaceWithImage {
 
         // Save to file.
         doc.saveToFile(output, FileFormat.Docx);
+
+        //Dispose the document
+        doc.dispose();
     }
 }

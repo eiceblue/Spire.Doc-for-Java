@@ -6,19 +6,19 @@ import java.awt.*;
 
 public class multiStylesInAParagraph {
     public static void main(String[] args) {
+        // Set the output file path
+        String outputFile = "output/multiStylesInAParagraph.docx";
 
-        String outputFile="output/multiStylesInAParagraph.docx";
-
-        //Create a Word document
+        // Create a new Document object
         Document doc = new Document();
 
-        //Add a section
+        // Add a section to the document
         Section section = doc.addSection();
 
-        //Add a paragraph
+        // Add a paragraph to the section
         Paragraph para = section.addParagraph();
 
-        //Add a text range 1 and set its style
+        // Append text with multiple styles to the paragraph
         TextRange range = para.appendText("Spire.Doc for Java ");
         range.getCharacterFormat().setFontName("Calibri");
         range.getCharacterFormat().setFontSize(16);
@@ -26,12 +26,14 @@ public class multiStylesInAParagraph {
         range.getCharacterFormat().setBold(true);
         range.getCharacterFormat().setUnderlineStyle(UnderlineStyle.Single);
 
-        //Add a text range 2 and set its style
         range = para.appendText("is a professional Word Java library");
         range.getCharacterFormat().setFontName("Calibri");
         range.getCharacterFormat().setFontSize(15);
 
-        //Save the Word document
+        // Save the document to the output file in Docx format
         doc.saveToFile(outputFile, FileFormat.Docx);
+
+        // Dispose of the document to release resources
+        doc.dispose();
     }
 }

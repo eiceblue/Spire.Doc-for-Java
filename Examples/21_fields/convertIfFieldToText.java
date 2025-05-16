@@ -5,38 +5,55 @@ import com.spire.doc.fields.*;
 
 public class convertIfFieldToText {
     public static void main(String[] args) {
-        //Open a Word document
-        Document document = new Document("data/IfFieldSample.docx");
+     
+		// Create a new document object and load the document from the specified input file "data/IfFieldSample.docx"
+		Document document = new Document("data/IfFieldSample.docx");
 
-        //Get all fields in document
-        FieldCollection fields = document.getFields();
+		// Get the collection of fields in the document
+		FieldCollection fields = document.getFields();
 
-        for (int i = 0; i < fields.getCount(); i++)
-        {
-            Field field = fields.get(i);
-            if (field.getType().equals(FieldType.Field_If))
-            {
-                TextRange original = (TextRange)field;
-                //Get field text
-                String text = field.getFieldText();
-                //Create a new textRange and set its format
-                TextRange textRange = new TextRange(document);
-                textRange.setText(text);
-                textRange.getCharacterFormat().setFontName(original.getCharacterFormat().getFontName());
-                textRange.getCharacterFormat().setFontSize(original.getCharacterFormat().getFontSize());
+		// Iterate through each field in the collection
+		for (int i = 0; i < fields.getCount(); i++) {
+			Field field = fields.get(i);
+			
+			// Check if the field type is Field_If
+			if (field.getType().equals(FieldType.Field_If)) {
+				
+				// Cast the field to TextRange to access its properties
+				TextRange original = (TextRange) field;
+				
+				// Get the field text
+				String text = field.getFieldText();
+				
+				// Create a new TextRange with the same text as the field
+				TextRange textRange = new TextRange(document);
+				textRange.setText(text);
+				
+				// Set the character format of the new TextRange to match the original field's font name and size
+				textRange.getCharacterFormat().setFontName(original.getCharacterFormat().getFontName());
+				textRange.getCharacterFormat().setFontSize(original.getCharacterFormat().getFontSize());
 
-                Paragraph par = field.getOwnerParagraph();
-                //Get the index of the if field
-                int index = par.getChildObjects().indexOf(field);
-                //Remove if field via index
-                par.getChildObjects().removeAt(index);
-                //Insert field text at the position of if field
-                par.getChildObjects().insert(index, textRange);
-            }
-        }
+				// Get the owner paragraph of the field
+				Paragraph par = field.getOwnerParagraph();
+				
+				// Get the index of the field within the child objects of the paragraph
+				int index = par.getChildObjects().indexOf(field);
+				
+				// Remove the field from the paragraph's child objects
+				par.getChildObjects().removeAt(index);
+				
+				// Insert the new TextRange at the same index within the paragraph's child objects
+				par.getChildObjects().insert(index, textRange);
+			}
+		}
 
-        String result ="output/ConvertIfFieldToText.docx";
-        //Save doc file
-        document.saveToFile(result, FileFormat.Docx);
+		// Specify the output file path
+		String result = "output/ConvertIfFieldToText.docx";
+
+		// Save the modified document to the specified output file in DOCX format
+		document.saveToFile(result, FileFormat.Docx);
+
+		// Dispose the document resources
+		document.dispose();
     }
 }

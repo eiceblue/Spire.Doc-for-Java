@@ -1,53 +1,67 @@
 import com.spire.doc.*;
 import com.spire.doc.formatting.TablePositioning;
+
 import java.io.*;
 
 public class getTablePosition {
     public static void main(String[] args) throws IOException {
-        //Create a document
+        // Create a new document object
         Document document = new Document();
-        //Load file
+
+        // Load the document from file "data/TableSample-Az.docx"
         document.loadFromFile("data/TableSample-Az.docx");
-        //Get the first section
+
+        // Get the first section of the document
         Section section = document.getSections().get(0);
-        //Get the first table
+
+        // Get the first table in the section
         Table table = section.getTables().get(0);
 
-        StringBuilder stringBuidler = new StringBuilder();
+        // Create a StringBuilder to store the result
+        StringBuilder stringBuilder = new StringBuilder();
 
-        //Verify whether the table uses "Around" text wrapping or not.
-        if (table.getTableFormat().getWrapTextAround())
-        {
-            TablePositioning positon = table.getTableFormat().getPositioning();
+        // Check if text wrapping is enabled for the table
+        if (table.getTableFormat().getWrapTextAround()) {
+            // Get the positioning information for the table
+            TablePositioning position = table.getTableFormat().getPositioning();
 
-            stringBuidler.append("Horizontal:");
-            stringBuidler.append("\r\n");
-            stringBuidler.append("Position:" + positon.getHorizPosition() +" pt");
-            stringBuidler.append("\r\n");
-            stringBuidler.append("Absolute Position:" + positon.getHorizPositionAbs()+ ", Relative to:" + positon.getHorizRelationTo());
-            stringBuidler.append("\r\n");
+            // Append horizontal positioning details to the StringBuilder
+            stringBuilder.append("Horizontal:");
+            stringBuilder.append("\r\n");
+            stringBuilder.append("Position: " + position.getHorizPosition() + " pt");
+            stringBuilder.append("\r\n");
+            stringBuilder.append("Absolute Position: " + position.getHorizPositionAbs() +
+                    ", Relative to: " + position.getHorizRelationTo());
+            stringBuilder.append("\r\n");
 
-            stringBuidler.append("Vertical:");
-            stringBuidler.append("\r\n");
-            stringBuidler.append("Position:" + positon.getVertPosition() + " pt");
-            stringBuidler.append("\r\n");
-            stringBuidler.append("Absolute Position:" + positon.getVertPositionAbs() + ", Relative to:" + positon.getVertRelationTo());
-            stringBuidler.append("\r\n");
-            stringBuidler.append("Distance from surrounding text:");
-            stringBuidler.append("\r\n");
-            stringBuidler.append("Top:" + positon.getDistanceFromTop() + " pt, Left:" + positon.getDistanceFromLeft() + " pt");
-            stringBuidler.append("\r\n");
-            stringBuidler.append("Bottom:" + positon.getDistanceFromBottom() + "pt, Right:" + positon.getDistanceFromRight() + " pt");
+            // Append vertical positioning details to the StringBuilder
+            stringBuilder.append("Vertical:");
+            stringBuilder.append("\r\n");
+            stringBuilder.append("Position: " + position.getVertPosition() + " pt");
+            stringBuilder.append("\r\n");
+            stringBuilder.append("Absolute Position: " + position.getVertPositionAbs() +
+                    ", Relative to: " + position.getVertRelationTo());
+            stringBuilder.append("\r\n");
+            stringBuilder.append("Distance from surrounding text:");
+            stringBuilder.append("\r\n");
+            stringBuilder.append("Top: " + position.getDistanceFromTop() + " pt, Left: " + position.getDistanceFromLeft() + " pt");
+            stringBuilder.append("\r\n");
+            stringBuilder.append("Bottom: " + position.getDistanceFromBottom() + " pt, Right: " + position.getDistanceFromRight() + " pt");
         }
 
-        //Save to txt file
+        // Specify the result file path
         String result = "output/GetTablePosition_out.txt";
-        writeStringToTxt(stringBuidler.toString(),result);
+
+        // Write the contents of the StringBuilder to the result file
+        writeStringToTxt(stringBuilder.toString(), result);
+
+        // Dispose the document resources
+        document.dispose();
     }
+
     public static void writeStringToTxt(String content, String txtFileName) throws IOException {
-        File file=new File(txtFileName);
-        if (file.exists())
-        {
+        File file = new File(txtFileName);
+        if (file.exists()) {
             file.delete();
         }
         FileWriter fWriter = new FileWriter(txtFileName, true);

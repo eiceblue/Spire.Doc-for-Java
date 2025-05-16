@@ -4,32 +4,42 @@ import com.spire.doc.fields.*;
 
 public class replaceTextWithMergeField {
     public static void main(String[] args) {
-        //Open a Word document
-        Document document = new Document("data/sampleB_2.docx");
 
-        //Find the text that will be replaced
-        TextSelection ts = document.findString("Test", true, true);
+		// Create a new empty document
+		Document document = new Document();
 
-        TextRange tr = ts.getAsOneRange();
+		// Load an existing document from the specified file path
+		document.loadFromFile("data/sampleB_2.docx");
 
-        //Get the paragraph
-        Paragraph par = tr.getOwnerParagraph();
+		// Find the text "Test" in the document and select it
+		TextSelection ts = document.findString("Test", true, true);
 
-        //Get the index of the text in the paragraph
-        int index = par.getChildObjects().indexOf(tr);
+		// Get the selected text range as a single range
+		TextRange tr = ts.getAsOneRange();
 
-        //Create a new field
-        MergeField field = new MergeField(document);
-        field.setFieldName("MergeField");
+		// Get the owner paragraph of the text range
+		Paragraph par = tr.getOwnerParagraph();
 
-        //Insert field at specific position
-        par.getChildObjects().insert(index, field);
+		// Get the index of the text range within its parent paragraph
+		int index = par.getChildObjects().indexOf(tr);
 
-        //Remove the text
-        par.getChildObjects().remove(tr);
+		// Create a new merge field
+		MergeField field = new MergeField(document);
+		field.setFieldName("MergeField");
 
-        //Save to file
-        String output = "output/replaceTextWithMergeField.docx";
-        document.saveToFile(output, FileFormat.Docx_2013);
+		// Insert the merge field at the position of the text range within the paragraph
+		par.getChildObjects().insert(index, field);
+
+		// Remove the text range from its parent paragraph
+		par.getChildObjects().remove(tr);
+
+		// Specify the file path for the resulting document
+		String output = "output/replaceTextWithMergeField.docx";
+
+		// Save the document to the specified file path in Docx 2013 format
+		document.saveToFile(output, FileFormat.Docx_2013);
+
+		// Dispose of the document resources
+		document.dispose();
     }
 }

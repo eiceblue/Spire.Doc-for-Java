@@ -8,30 +8,35 @@ public class insertWordArt {
         String input="data/insertWordArt.docx";
         String output="output/insertWordArt.docx";
 
-        //load Word document.
-        Document doc = new Document();
-        doc.loadFromFile(input);
+		// Create a new Document object
+		Document doc = new Document();
 
-        //add a paragraph.
-        Paragraph paragraph = doc.getSections().get(0).addParagraph();
+		// Load the document from the input file
+		doc.loadFromFile(input);
 
-        //add a shape.
-        ShapeObject shape = paragraph.appendShape(250, 70, ShapeType.Text_Wave_4);
+		// Get the first section of the document and add a new paragraph to it
+		Paragraph paragraph = doc.getSections().get(0).addParagraph();
 
-        //set the position of the shape.
-        shape.setVerticalPosition(20);
-        shape.setHorizontalPosition(80);
+		// Append a shape to the paragraph with specified dimensions and shape type (Text_Wave_4)
+		ShapeObject shape = paragraph.appendShape(250, 70, ShapeType.Text_Wave_4);
 
-        //set the text of WordArt.
-        shape.getWordArt().setText("Spire.Doc for JAVA");
+		// Set the vertical and horizontal position of the shape
+		shape.setVerticalPosition(20);
+		shape.setHorizontalPosition(80);
 
-        //set the fill color.
-        shape.setFillColor(Color.RED);
+		// Set the text content of the WordArt in the shape
+		shape.getWordArt().setText("Spire.Doc for JAVA");
 
-        //set the border color of the text.
-        shape.setStrokeColor(Color.YELLOW);
+		// Set the fill color of the shape to red
+		shape.setFillColor(Color.RED);
 
-        //save the document.
-        doc.saveToFile(output, FileFormat.Docx);
+		// Set the stroke color of the shape to yellow
+		shape.setStrokeColor(Color.YELLOW);
+
+		// Save the modified document to the output file
+		doc.saveToFile(output, FileFormat.Docx);
+
+		// Clean up resources associated with the document
+		doc.dispose();
     }
 }

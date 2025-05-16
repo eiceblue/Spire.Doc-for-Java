@@ -2,13 +2,14 @@ import com.spire.doc.*;
 
 public class detectAndRemoveVBAMacros {
     public static void main(String[] args) {
-        //Create Word document
+
+        // Create a Word document
         Document document = new Document();
 
-        //Load the file from disk
+        // Load the file from disk
         document.loadFromFile("data/detectAndRemoveVBAMacros.docm");
 
-        //If the document contains Macros, remove them from the document
+        // If the document contains Macros, remove them from the document
         if (document.isContainMacro()) {
             document.clearMacros();
         }
@@ -17,5 +18,7 @@ public class detectAndRemoveVBAMacros {
         String output = "output/detectAndRemoveVBAMacros.docm";
         document.saveToFile(output, FileFormat.Docm);
 
+        // Dispose the document
+        document.dispose();
     }
 }

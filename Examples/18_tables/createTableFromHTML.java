@@ -2,7 +2,7 @@ import com.spire.doc.*;
 
 public class createTableFromHTML {
     public static void main(String[] args) {
-        //HTML string
+        // Define an HTML string representing a table
         String HTML = "<table border='2px'>" +
                 "<tr>" +
                 "<td>Row 1, Cell 1</td>" +
@@ -14,17 +14,22 @@ public class createTableFromHTML {
                 "</tr>" +
                 "</table>";
 
-        //Create a Word document
+        // Create a new document object
         Document document = new Document();
 
-        //Add a section
+        // Add a section to the document
         Section section = document.addSection();
 
-        //Add a paragraph and append html string
+        // Add a paragraph to the section and append the HTML content
         section.addParagraph().appendHTML(HTML);
 
-        //Save to Word document
+        // Specify the output file path
         String output = "output/CreateTableFromHTML_out.docx";
-        document.saveToFile(output, FileFormat.Docx_2013);
+
+        // Save the document to the specified file format
+        document.saveToFile(output, FileFormat.Docx);
+
+        // Dispose the document resources
+        document.dispose();
     }
 }

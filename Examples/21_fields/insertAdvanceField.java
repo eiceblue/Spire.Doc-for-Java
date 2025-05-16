@@ -4,26 +4,33 @@ import com.spire.doc.fields.Field;
 
 public class insertAdvanceField {
     public static void main(String[] args) {
-        //Open a Word document
+
         String input="data/BlankTemplate.docx";
-        Document document = new Document(input);
+		// Create a new document object and load the file
+		Document document = new Document(input);
 
-        //Get the first section
-        Section section = document.getSections().get(0);
+		// Get the first section of the document
+		Section section = document.getSections().get(0);
 
-        Paragraph par = section.addParagraph();
+		// Add a new paragraph to the section
+		Paragraph par = section.addParagraph();
 
-        //Add advance field
-        Field field = par.appendField("Field", FieldType.Field_Advance);
+		// Append an advance field to the paragraph
+		Field field = par.appendField("Field", FieldType.Field_Advance);
 
-        //Add field code
-        field.setCode("ADVANCE \\d 10 \\l 10 \\r 10 \\u 0 \\x 100 \\y 100 ");
+		// Set the code for the advance field with specified parameters
+		field.setCode("ADVANCE \\d 10 \\l 10 \\r 10 \\u 0 \\x 100 \\y 100");
 
-        //Update field
-        document.isUpdateFields(true);
+		// Enable updating fields in the document
+		document.isUpdateFields(true);
 
-        //Save to file
-        String result="output/insertAdvanceField.docx";
-        document.saveToFile(result, FileFormat.Docx);
+		// Specify the file path for the resulting document
+		String result = "output/insertAdvanceField.docx";
+
+		// Save the document to the specified file path in Docx format
+		document.saveToFile(result, FileFormat.Docx);
+
+		// Dispose of the document resources
+		document.dispose();
     }
 }

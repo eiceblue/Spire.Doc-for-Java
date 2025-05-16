@@ -49,5 +49,8 @@ public class addCheckBoxContentControl {
         //Save to file
         String output = "output/addCheckBoxContentControl.docx";
         document.saveToFile(output, FileFormat.Docx);
+
+        // Dispose the document
+        document.dispose();
     }
 }

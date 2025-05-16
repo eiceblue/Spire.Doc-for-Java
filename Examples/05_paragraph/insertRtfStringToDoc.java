@@ -22,5 +22,8 @@ public class insertRtfStringToDoc {
 
         // Save to file.
         document.saveToFile(result, FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

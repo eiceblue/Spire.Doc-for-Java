@@ -5,24 +5,31 @@ import java.io.*;
 
 public class getFormFieldByName {
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
+		
+		// Create a StringBuilder object to store the information
+		StringBuilder sb = new StringBuilder();
 
-        //Open a Word document
-        Document document = new Document("data/FillFormField.doc");
+		// Create a new document object using the specified input file path
+		Document document = new Document("data/FillFormField.doc");
 
-        //Get the first section
-        Section section = document.getSections().get(0);
+		// Get the first section of the document
+		Section section = document.getSections().get(0);
 
-        //Get form field by name
-        FormField formField = section.getBody().getFormFields().get("email");
+		// Get the form field by its name from the body of the section
+		FormField formField = section.getBody().getFormFields().get("email");
 
-        //Append the file name and type in string builder
-        sb.append("The name of the form field is " + formField.getName()+"\r\n");
-        sb.append("The type of the form field is " + formField.getFormFieldType());
+		// Append the name and type of the form field to the StringBuilder object with additional formatting
+		sb.append("The name of the form field is " + formField.getName() + "\r\n");
+		sb.append("The type of the form field is " + formField.getFormFieldType());
 
-        //Write the information to txt file
-        String output="output/getFormFieldByName.txt";
-        writeStringToTxt(sb.toString(),output);
+		// Specify the output file path for the text file
+		String output = "output/getFormFieldByName.txt";
+
+		// Write the contents of the StringBuilder object to a text file
+		writeStringToTxt(sb.toString(), output);
+
+		// Dispose the document resources
+		document.dispose();
     }
     public static void writeStringToTxt(String content, String txtFileName) throws IOException {
         File file=new File(txtFileName);

@@ -5,50 +5,66 @@ import com.spire.doc.interfaces.IParagraphBase;
 
 public class createIFField {
     public static void main(String[] args) throws Exception {
-        //Create Word document.
-        Document document = new Document();
 
-        //Add a new section.
-        Section section = document.addSection();
+		// Create a new document object
+		Document document = new Document();
 
-        //Add a new paragraph.
-        Paragraph paragraph = section.addParagraph();
+		// Add a section to the document
+		Section section = document.addSection();
 
-        // Define a method of creating an IF Field.
-        CreateIfField(document, paragraph);
+		// Add a paragraph to the section
+		Paragraph paragraph = section.addParagraph();
 
-        //Define merged data.
-        String[] fieldName = { "Count" };
-        String[] fieldValue = { "2" };
+		// Create an IF field and add it to the paragraph using a helper method named "CreateIfField"
+		CreateIfField(document, paragraph);
 
-        //Merge data into the IF Field.
-        document.getMailMerge().execute(fieldName, fieldValue);
+		// Specify the field names and field values for the mail merge operation
+		String[] fieldName = { "Count" };
+		String[] fieldValue = { "2" };
 
-        //Update all fields in the document.
-        document.isUpdateFields(true);
+		// Execute the mail merge operation with the specified field names and field values
+		document.getMailMerge().execute(fieldName, fieldValue);
 
-        //Save to file.
-        String result = "output/CreateAnIFField.docx";
-        document.saveToFile(result, FileFormat.Docx_2013);
-    }
-    //Create the IF Field like:{IF { MERGEFIELD Count } > "100" "Thanks" " The minimum order is 100 units "}
-    static void CreateIfField(Document document, Paragraph paragraph)
-    {
-        IfField ifField = new IfField(document);
-        ifField.setType(FieldType.Field_If);
-        ifField.setCode("IF");
+		// Enable updating of fields in the document
+		document.isUpdateFields(true);
 
-        paragraph.getItems().add(ifField);
-        paragraph.appendField("Count", FieldType.Field_Merge_Field);
-        paragraph.appendText(" > ");
-        paragraph.appendText("\"100\" ");
-        paragraph.appendText("\"Thanks\" ");
-        paragraph.appendText("\"The minimum order is 100 units\"");
+		// Specify the output file path
+		String result = "output/CreateAnIFField.docx";
 
-        IParagraphBase endPara = document.createParagraphItem(ParagraphItemType.Field_Mark);
-        FieldMark end=(FieldMark)endPara;
-        end.setType(FieldMarkType.Field_End);
-        paragraph.getItems().add(end);
-        ifField.setEnd(end) ;
-    }
+		// Save the modified document to the specified output file in DOCX format (compatible with Word 2013)
+		document.saveToFile(result, FileFormat.Docx_2013);
+
+		// Dispose the document resources
+		document.dispose();
+		}
+
+		static void CreateIfField(Document document, Paragraph paragraph) {
+			// Create a new IF field
+			IfField ifField = new IfField(document);
+			
+			// Set the field type to Field_If
+			ifField.setType(FieldType.Field_If);
+			
+			// Set the field code for the IF field
+			ifField.setCode("IF");
+			
+			// Add the IF field to the paragraph
+			paragraph.getItems().add(ifField);
+			
+			// Append other text and fields to the paragraph
+			paragraph.appendField("Count", FieldType.Field_Merge_Field);
+			paragraph.appendText(" > ");
+			paragraph.appendText("\"100\" ");
+			paragraph.appendText("\"Thanks\" ");
+			paragraph.appendText("\"The minimum order is 100 units\"");
+			
+			// Create a field end mark and add it to the paragraph
+			IParagraphBase endPara = document.createParagraphItem(ParagraphItemType.Field_Mark);
+			FieldMark end=(FieldMark)endPara;
+			end.setType(FieldMarkType.Field_End);
+			paragraph.getItems().add(end);
+			
+			// Set the field end mark for the IF field
+			ifField.setEnd(end);
+		}
 }

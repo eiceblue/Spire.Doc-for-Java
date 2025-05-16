@@ -11,9 +11,11 @@ public class removeWatermark {
         //Set the watermark as null to remove the text and image watermark
         document.setWatermark(null);
 
-        String output = "output/removeWatermark.docx";
-
         //Save to file
+        String output = "output/removeWatermark.docx";
         document.saveToFile(output, FileFormat.Docx_2013);
+
+        // Dispose the document
+        document.dispose();
     }
 }

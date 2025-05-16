@@ -4,11 +4,13 @@ import com.spire.doc.fields.*;
 
 public class alterLanguageDictionary {
     public static void main(String[] args) {
-        //Create Word document.
+        //Create a Word document.
         Document document = new Document();
 
-        //Add new section and paragraph to the document.
+        //Add new section
         Section sec = document.addSection();
+
+        //Add a paragraph to the document.
         Paragraph para = sec.addParagraph();
 
         //Add a textRange for the paragraph and append some Peru Spanish words.
@@ -20,5 +22,8 @@ public class alterLanguageDictionary {
 
         //Save to file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

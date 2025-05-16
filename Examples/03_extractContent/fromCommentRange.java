@@ -39,5 +39,9 @@ public class fromCommentRange {
 
         // Save the destination document
         destinationDoc.saveToFile("output/fromCommentRange.docx", FileFormat.Docx);
+
+        //Dispose the document
+        sourceDoc.dispose();
+        destinationDoc.dispose();
     }
 }

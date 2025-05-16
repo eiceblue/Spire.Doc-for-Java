@@ -1,5 +1,4 @@
 import com.spire.doc.*;
-
 public class removeSpecificParagraph {
     public static void main(String[] args) {
         //Create Word document.
@@ -15,5 +14,8 @@ public class removeSpecificParagraph {
 
         //Save to file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

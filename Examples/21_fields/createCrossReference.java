@@ -4,49 +4,67 @@ import com.spire.doc.fields.*;
 
 public class createCrossReference {
     public static void main(String[] args) {
-        //Create Word document.
-        Document document = new Document();
+		// Create a new document object
+		Document document = new Document();
 
-        //Add a new section.
-        Section section = document.addSection();
+		// Add a section to the document
+		Section section = document.addSection();
 
-        //Create a bookmark.
-        Paragraph paragraph = section.addParagraph();
-        paragraph.appendBookmarkStart("MyBookmark");
-        paragraph.appendText("Text inside a bookmark");
-        paragraph.appendBookmarkEnd("MyBookmark");
+		// Add a paragraph to the section
+		Paragraph paragraph = section.addParagraph();
 
-        //Insert line breaks.
-        for (int i = 0; i < 4; i++)
-        {
-            paragraph.appendBreak(BreakType.Line_Break);
-        }
+		// Append a bookmark start tag with the specified name "MyBookmark" to the paragraph
+		paragraph.appendBookmarkStart("MyBookmark");
 
-        //Create a cross-reference field, and link it to bookmark.
-        Field field = new Field(document);
-        field.setType(FieldType.Field_Ref);
-        field.setCode("REF MyBookmark \\p \\h");
+		// Append the text "Text inside a bookmark" to the paragraph
+		paragraph.appendText("Text inside a bookmark");
 
-        //Insert field to paragraph.
-        paragraph = section.addParagraph();
-        paragraph.appendText("For more information, see ");
-        paragraph.getChildObjects().add(field);
+		// Append a bookmark end tag with the specified name "MyBookmark" to the paragraph
+		paragraph.appendBookmarkEnd("MyBookmark");
 
-        //Insert FieldSeparator object.
-        FieldMark fieldSeparator = new FieldMark(document, FieldMarkType.Field_Separator);
-        paragraph.getChildObjects().add(fieldSeparator);
+		// Add line breaks to the paragraph (repeated 4 times)
+		for (int i = 0; i < 4; i++) {
+			paragraph.appendBreak(BreakType.Line_Break);
+		}
 
-        //Set display text of the field.
-        TextRange tr = new TextRange(document);
-        tr.setText("above");
-        paragraph.getChildObjects().add(tr);
+		// Create a new field object
+		Field field = new Field(document);
 
-        //Insert FieldEnd object to mark the end of the field.
-        FieldMark fieldEnd = new FieldMark(document, FieldMarkType.Field_End);
-        paragraph.getChildObjects().add(fieldEnd);
+		// Set the field type to Field_Ref
+		field.setType(FieldType.Field_Ref);
 
-        String result = "output/CreateCrossReferenceToBookmark.docx";
-        //Save to file.
-        document.saveToFile(result, FileFormat.Docx_2013);
+		// Set the field code to reference the bookmark named "MyBookmark" and include page number and hyperlink
+		field.setCode("REF MyBookmark \\p \\h");
+
+		// Add a new paragraph to the section
+		paragraph = section.addParagraph();
+
+		// Append the text "For more information, see " to the paragraph
+		paragraph.appendText("For more information, see ");
+
+		// Add the field as a child object of the paragraph
+		paragraph.getChildObjects().add(field);
+
+		// Add a field separator mark after the field
+		FieldMark fieldSeparator = new FieldMark(document, FieldMarkType.Field_Separator);
+		paragraph.getChildObjects().add(fieldSeparator);
+
+		// Add a text range object with the text "above" after the field separator mark
+		TextRange tr = new TextRange(document);
+		tr.setText("above");
+		paragraph.getChildObjects().add(tr);
+
+		// Add a field end mark after the text range
+		FieldMark fieldEnd = new FieldMark(document, FieldMarkType.Field_End);
+		paragraph.getChildObjects().add(fieldEnd);
+
+		// Specify the output file path
+		String result = "output/CreateCrossReferenceToBookmark.docx";
+
+		// Save the document to the specified output file in DOCX format (compatible with Word 2013)
+		document.saveToFile(result, FileFormat.Docx_2013);
+
+		// Dispose the document resources
+		document.dispose();
     }
 }

@@ -1,54 +1,65 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
+
 import java.awt.*;
 
 public class addTableByArray {
     public static void main(String[] args) {
-         String output = "output/addTableByArray.docx";
+        String output = "output/addTableByArray.docx";
 
-        //create a Word document
+        // Create a new document object
         Document document = new Document();
 
-        //add a section
+        // Add a section to the document
         Section section = document.addSection();
 
-        //add paragraph style
+        // Create a new paragraph style with specific formatting
         ParagraphStyle style = new ParagraphStyle(document);
         style.getCharacterFormat().setFontSize(20f);
         style.getCharacterFormat().setBold(true);
         style.getCharacterFormat().setTextColor(Color.ORANGE);
+
+        // Add the style to the document's styles collection
         document.getStyles().add(style);
 
-        //create a paragraph and append text
+        // Add a paragraph to the section and set its text as "Table"
         Paragraph para = section.addParagraph();
         para.appendText("Table");
 
-        //apply style for the added paragraph
+        // Set the horizontal alignment of the paragraph to center
         para.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
+
+        // Apply the previously created style to the paragraph
         para.applyStyle(style.getName());
-        Table table =section.addTable(true);
-        String[][] data =
-                {
-                        new String[]{"Name", "Capital", "Continent", "Area", "Population"},
-                        new String[]{"Argentina", "Buenos Aires", "South America", "2777815", "32300003"},
-                        new String[]{"Bolivia", "La Paz", "South America", "1098575", "7300000" },
-                        new String[]{"Brazil", "Brasilia", "South America", "8511196", "150400000"},
-                };
 
+        // Add a table to the section with headers enabled
+        Table table = section.addTable(true);
 
-        int rowCount =data.length;
-        int columnCount =data[0].length;
-        table.resetCells(rowCount,columnCount);
+        // Define the data for the table
+        String[][] data = {
+                {"Name", "Capital", "Continent", "Area", "Population"},
+                {"Argentina", "Buenos Aires", "South America", "2777815", "32300003"},
+                {"Bolivia", "La Paz", "South America", "1098575", "7300000"},
+                {"Brazil", "Brasilia", "South America", "8511196", "150400000"},
+        };
 
-        //fill the data to Table
-        for (int i = 0; i <rowCount; i++)
-        {
-            for (int j = 0; j < columnCount; j++)
-            {
+        int rowCount = data.length;
+        int columnCount = data[0].length;
+
+        // Reset the cells of the table with the specified row and column count
+        table.resetCells(rowCount, columnCount);
+
+        // Populate the table with the data
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
                 table.getRows().get(i).getCells().get(j).addParagraph().appendText(data[i][j]);
             }
         }
-        //save the document
+
+        // Save the modified document to the output file
         document.saveToFile(output, FileFormat.Docx);
+
+        // Dispose of the document object to release resources
+        document.dispose();
     }
 }

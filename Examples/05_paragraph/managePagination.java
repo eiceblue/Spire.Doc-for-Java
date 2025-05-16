@@ -9,8 +9,10 @@ public class managePagination {
         //Load the file from disk.
         document.loadFromFile("data/Template_Docx_1.docx");
 
-        //Get the first section and the paragraph we want to manage the pagination.
+        //Get the first section
         Section sec = document.getSections().get(0);
+
+        //Get the fifth paragraph.
         Paragraph para = sec.getParagraphs().get(4);
 
         //Set the pagination format as Format.PageBreakBefore for the checked paragraph.
@@ -20,5 +22,8 @@ public class managePagination {
 
         //Save the file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

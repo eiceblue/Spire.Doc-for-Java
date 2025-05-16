@@ -3,29 +3,34 @@ import com.spire.doc.collections.StyleCollection;
 
 public class copyDocumentStyles {
     public static void main(String[] args) {
+        // Set the input file path
+        String inputFile1 = "data/Template_Toc.docx";
+        String inputFile2 = "data/Template_Docx_1.docx";
 
-        String inputFile1 ="data/Template_Toc.docx";
-        String inputFile2 ="data/Template_Docx_1.docx";
-        String outputFile="output/copyDocumentStyles.docx";
+        // Set the output file path
+        String outputFile = "output/copyDocumentStyles.docx";
 
-        //Load source document from disk
+        // Create a new Document object for the source document and load from inputFile1
         Document srcDoc = new Document();
         srcDoc.loadFromFile(inputFile1);
 
-        //Load destination document from disk
-        Document destDoc= new Document();
+        // Create a new Document object for the destination document and load from inputFile2
+        Document destDoc = new Document();
         destDoc.loadFromFile(inputFile2);
 
-        //Get the style collections of source document
+        // Get the StyleCollection from the source document
         StyleCollection styles = srcDoc.getStyles();
 
-        //Add the style to destination document
-        for (int i = 0; i < styles.getCount(); i ++)
-        {
+        // Copy each style from the source document to the destination document
+        for (int i = 0; i < styles.getCount(); i++) {
             destDoc.getStyles().add(styles.get(i));
         }
 
-        //Save the Word file
+        // Save the destination document to the output file in Docx format
         destDoc.saveToFile(outputFile, FileFormat.Docx);
+
+        // Dispose of the source and destination documents to release resources
+        srcDoc.dispose();
+        destDoc.dispose();
     }
 }

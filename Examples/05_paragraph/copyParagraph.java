@@ -1,6 +1,5 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
-
 public class copyParagraph {
     public static void main(String[] args) {
         //Create Word document1.
@@ -33,5 +32,9 @@ public class copyParagraph {
 
         // Save the file.
         document2.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document1.dispose();
+        document2.dispose();
     }
 }

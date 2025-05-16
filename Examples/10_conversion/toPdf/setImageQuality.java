@@ -2,21 +2,26 @@ import com.spire.doc.*;
 
 public class setImageQuality {
     public static void main(String[] args) {
+        // Specify the input file path for the Word document to be processed
+        String inputFile = "data/Template_Doc_1.doc";
 
-        String inputFile="data/Template_Doc_1.doc";
-        String outputFile="output/Result-DocToPDFImageQuality.pdf";
+        // Specify the output file path for the resulting PDF document
+        String outputFile = "output/Result-DocToPDFImageQuality.pdf";
 
-        //Create Word document.
+        // Create a new instance of the Document class
         Document document = new Document();
 
-        //Load the file from disk.
+        // Load the Word document from the specified input file
         document.loadFromFile(inputFile);
 
-        //Set the output image quality to be 40% of the original image. The default set of the output image quality is 80% of the original.
+        // Set the JPEG image quality for the document (value between 0 and 100, where 0 represents the lowest quality)
         document.setJPEGQuality(40);
 
-        //Save to file.
+        // Save the document to the specified output file in PDF format with default settings for other parameters
         document.saveToFile(outputFile, FileFormat.PDF);
+
+        // Dispose of system resources associated with the document
+        document.dispose();
 
     }
 }

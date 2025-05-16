@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class findAndHighlight {
     public static void main(String[] args) {
-        //Create word document.
+        //Create a word document.
         Document document = new Document();
 
         // Load the document from disk.
@@ -13,12 +13,16 @@ public class findAndHighlight {
         //Find text.
         TextSelection[] textSelections = document.findAllString("word", false, true);
 
-        // Set highlight.
+        //Loop through the textSelections
         for (TextSelection selection : textSelections){
+            // Set highlight.
             selection.getAsOneRange().getCharacterFormat().setHighlightColor(Color.yellow);
         }
 
         // Save to file.
         document.saveToFile("output/findAndHighlight.docx", FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

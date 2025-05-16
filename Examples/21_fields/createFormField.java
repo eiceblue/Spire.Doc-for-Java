@@ -1,7 +1,6 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
 import com.spire.doc.fields.*;
-import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.awt.*;
 import java.io.*;
@@ -25,25 +24,33 @@ public class createFormField {
     static  String inputFooter="data/footer.png";
     static  String inputHeader="data/header.png";
     public static void main(String[] args) throws Exception {
-        String output="output/createFormField.doc";
-        //create Word document.
-        com.spire.doc.Document document = new  com.spire.doc.Document();
-        Section section = document.addSection();
 
-        //page setup.
-        setPage(section);
+		// Create a new document object
+		Document document = new Document();
 
-        //insert header and footer.
-        insertHeaderAndFooter(section);
+		// Add a section to the document
+		Section section = document.addSection();
 
-        //add title.
-        addTitle(section);
+		// Set page settings for the section 
+		setPage(section);
 
-        //add form.
-        addForm(section);
+		// Insert header and footer for the section 
+		insertHeaderAndFooter(section);
 
-        //save doc file.
-        document.saveToFile(output, FileFormat.Doc);
+		// Add a title to the section 
+		addTitle(section);
+
+		// Add a form to the section 
+		addForm(section);
+
+		// Specify the output file path
+		String output = "output/createFormField.doc";
+
+		// Save the document to the specified output file in DOC format
+		document.saveToFile(output, FileFormat.Doc);
+
+		// Dispose the document resources
+		document.dispose();
     }
 
     private static void setPage(Section section) {
@@ -55,7 +62,7 @@ public class createFormField {
         section.getPageSetup().getMargins().setRight(89.85f);
     }
 
-    private static void insertHeaderAndFooter(Section section) throws IOException {
+    private static void insertHeaderAndFooter(Section section) throws Exception {
         //insert picture and text to header
         Paragraph headerParagraph = section.getHeadersFooters().getHeader().addParagraph();
         DocPicture headerPicture = headerParagraph.appendPicture(inputHeader);
@@ -161,27 +168,27 @@ public class createFormField {
 
         InputStream stream = new FileInputStream(new File(inputXml));
         xmlDocument = documentBuilder.parse(stream);
-        NodeList nodeList = xmlDocument.getElementsByTagName("section");
+        org.w3c.dom.NodeList nodeList = xmlDocument.getElementsByTagName("section");
 
         for (int i = 0; i < nodeList.getLength(); i++) {
 
-            Node node = nodeList.item(i);
+            org.w3c.dom.Node node = nodeList.item(i);
             TableRow row = table.addRow(false);
             row.getCells().get(0).getCellFormat().setBackColor(new Color(0x00, 0x71, 0xb6));
             row.getCells().get(0).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
 
             //label of field group
             Paragraph cellParagraph = row.getCells().get(0).addParagraph();
-            NamedNodeMap namedNodeMap = node.getAttributes();
+            org.w3c.dom.NamedNodeMap namedNodeMap = node.getAttributes();
             cellParagraph.appendText(namedNodeMap.getNamedItem("name").getNodeValue());
             cellParagraph.applyStyle(formFieldGroupLabelStyle.getName());
-            NodeList childList = node.getChildNodes();
+            org.w3c.dom.NodeList childList = node.getChildNodes();
 
             for (int j = 0; j < childList.getLength(); j++) {
-                Node childNode = childList.item(j);
+                org.w3c.dom.Node childNode = childList.item(j);
                 String str = childNode.getNodeName();
                 if ("field".equals(str)) {
-                    NamedNodeMap childMap = childNode.getAttributes();
+                    org.w3c.dom.NamedNodeMap childMap = childNode.getAttributes();
                     TableRow fieldRow = table.addRow(false);
                     //field label
                     fieldRow.getCells().get(0).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
@@ -205,9 +212,9 @@ public class createFormField {
                         DropDownFormField list
                                 = (DropDownFormField) fieldParagraph.appendField(fieldId, FieldType.Field_Form_Drop_Down);
 
-                        NodeList items = childNode.getChildNodes();
+                        org.w3c.dom.NodeList items = childNode.getChildNodes();
                         for (int h = 0; h < items.getLength(); h++) {
-                            Node item = items.item(h);
+                            org.w3c.dom.Node item = items.item(h);
                             if ("item".equals(item.getNodeName())){
                                 list.getDropDownItems().add(item.getTextContent());
                             }

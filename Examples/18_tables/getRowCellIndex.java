@@ -5,47 +5,59 @@ import java.io.*;
 
 public class getRowCellIndex {
     public static void main(String[] args) throws IOException {
-        //Load Word from disk
+        // Create a new document object
         Document doc = new Document();
+
+        // Load the document from file "data/ReplaceTextInTable.docx"
         doc.loadFromFile("data/ReplaceTextInTable.docx");
 
-        //Get the first section
+        // Get the first section of the document
         Section section = doc.getSections().get(0);
 
-        //Get the first table in the section
+        // Get the first table in the section
         Table table = section.getTables().get(0);
 
+        // Create a StringBuilder to store the content
         StringBuilder content = new StringBuilder();
 
-        //Get table collections
+        // Get the collection of tables in the section
         TableCollection collections = section.getTables();
 
-        //Get the table index
+        // Get the index of the table in the collection
         int tableIndex = collections.indexOf(table);
 
-        //Get the index of the last table row
+        // Get the last row in the table
         TableRow row = table.getLastRow();
+
+        // Get the index of the row
         int rowIndex = row.getRowIndex();
 
-        //Get the index of the last table cell
-        TableCell cell = (TableCell)row.getLastChild();
+        // Get the last cell in the row
+        TableCell cell = (TableCell) row.getLastChild();
+
+        // Get the index of the cell
         int cellIndex = cell.getCellIndex();
 
-        //Append these information into content
+        // Append the table index, row index, and cell index to the content
         content.append("Table index is " + tableIndex);
         content.append("\r\n");
         content.append("Row index is " + rowIndex);
         content.append("\r\n");
         content.append("Cell index is " + cellIndex);
 
-        //Save to txt file
+        // Specify the output file path
         String output = "output/GetRowCellIndex_out.txt";
-        writeStringToTxt(content.toString(),output);
+
+        // Write the content to the output file
+        writeStringToTxt(content.toString(), output);
+
+        // Dispose the document resources
+        doc.dispose();
     }
+
     public static void writeStringToTxt(String content, String txtFileName) throws IOException {
-        File file=new File(txtFileName);
-        if (file.exists())
-        {
+        File file = new File(txtFileName);
+        if (file.exists()) {
             file.delete();
         }
         FileWriter fWriter = new FileWriter(txtFileName, true);

@@ -7,19 +7,26 @@ public class addPictureToTableCell {
         String input2 = "data/spireDoc.png";
         String output = "output/addPictureToTableCell.docx";
 
-        //load the document
+        // Create a new document object
         Document doc = new Document();
+
+        // Load the document from input1 file
         doc.loadFromFile(input1);
 
-        //get the first table from the first section of the document
+        // Get the first table in the first section of the document
         Table table1 = doc.getSections().get(0).getTables().get(0);
 
-        //add a picture to the specified table cell and set picture size
+        // Get the paragraph at row 1, cell 2 of table1 and append a picture from input2
         DocPicture picture = table1.getRows().get(1).getCells().get(2).getParagraphs().get(0).appendPicture(input2);
+
+        // Set the width and height of the picture to 100 units
         picture.setWidth(100);
         picture.setHeight(100);
 
-        //save the document
+        // Save the modified document to the output file
         doc.saveToFile(output, FileFormat.Docx);
+
+        // Dispose of the document object to release resources
+        doc.dispose();
     }
 }

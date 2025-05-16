@@ -9,7 +9,9 @@ public class addTableCaption {
 
         //Get the first table
         Body body = document.getSections().get(0).getBody();
-        Table table = (Table)body.getTables().get(0);
+
+        //Get the first document
+        Table table = body.getTables().get(0);
 
         //Add caption to the table
         table.addCaption("Table", CaptionNumberingFormat.Number, CaptionPosition.Below_Item);
@@ -20,5 +22,8 @@ public class addTableCaption {
         //Save the file
         String output = "output/addTableCaption_result.docx";
         document.saveToFile(output, FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

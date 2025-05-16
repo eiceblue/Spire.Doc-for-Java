@@ -2,7 +2,6 @@ import com.spire.doc.*;
 import com.spire.doc.documents.*;
 import com.spire.doc.fields.*;
 import com.spire.doc.interfaces.*;
-
 import java.awt.*;
 
 public class tableCaptionCrossReference {
@@ -10,27 +9,36 @@ public class tableCaptionCrossReference {
         //Create word document
         Document document = new Document();
 
-        //Get the first section
+        //Add a new section
         Section section = document.addSection();
 
         //Create a table
         Table table = section.addTable(true);
+
+        //Set the number of rows and columns
         table.resetCells(2, 3);
         //Add caption to the table
         IParagraph captionParagraph = table.addCaption("Table", CaptionNumberingFormat.Number, CaptionPosition.Below_Item);
 
         //Create a bookmark
         String bookmarkName = "Table_1";
+
+        //Add a paragraph
         Paragraph paragraph = section.addParagraph();
+
+        //Append the bookmark
         paragraph.appendBookmarkStart(bookmarkName);
         paragraph.appendBookmarkEnd(bookmarkName);
 
-        //Replace bookmark content
+        //Create a BookmarksNavigator
         BookmarksNavigator navigator = new BookmarksNavigator(document);
+
+        //MOve the navigator to the bookmark
         navigator.moveToBookmark(bookmarkName);
         TextBodyPart part = navigator.getBookmarkContent();
         part.getBodyItems().clear();
         part.getBodyItems().add(captionParagraph);
+        //Replace bookmark content
         navigator.replaceBookmarkContent(part);
 
         //Create cross-reference field to point to bookmark "Table_1"
@@ -70,5 +78,8 @@ public class tableCaptionCrossReference {
         //Save the file
         String output = "output/tableCaptionCrossReference.docx";
         document.saveToFile(output, FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

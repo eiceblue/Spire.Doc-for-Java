@@ -1,12 +1,20 @@
 import com.spire.doc.*;
+
 public class checkFileFormat {
     public static void main(String[] args) {
+
         String input = "data/Template.docx";
+
+        //Create a document
         Document doc = new Document();
+
+        //Load from disk
         doc.loadFromFile(input);
-        //Get file format
+
+        //Get the file format
         FileFormat ff = doc.getDetectedFormatType();
         String fileFormat ="The file format is ";
+
         //Check the format info
         switch (ff) {
             case Doc:
@@ -52,6 +60,11 @@ public class checkFileFormat {
                 fileFormat +="Unknown format.";
                 break;
         }
+
+        //Print the file format
         System.out.println(fileFormat);
+
+        //Dispose the document
+        doc.dispose();
     }
 }

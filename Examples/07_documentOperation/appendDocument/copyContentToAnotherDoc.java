@@ -2,12 +2,16 @@ import com.spire.doc.*;
 
 public class copyContentToAnotherDoc {
     public static void main(String[] args) {
-        //Initialize a new object of Document class and load the source document.
+        //Create a document
         Document sourceDoc = new Document();
+
+        //Load the source document.
         sourceDoc.loadFromFile("data/Template_Docx_1.docx");
 
-        //Initialize another object to load target document.
+        //create another document
         Document destinationDoc = new Document();
+
+        //Load a document
         destinationDoc.loadFromFile("data/Target.docx");
 
         //Copy content from source file and insert them to the target file.
@@ -23,5 +27,9 @@ public class copyContentToAnotherDoc {
 
         //Save to file.
         destinationDoc.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the documents
+        sourceDoc.dispose();
+        destinationDoc.dispose();
     }
 }

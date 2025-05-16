@@ -11,7 +11,7 @@ public class cloneSection {
         //Create the destination word document.
         Document desDoc = new Document();
 
-        // Load the document from disk.
+        // Initializes a section with a null value.
         Section cloneSection = null;
 
         for (Object sectionObj : srcDoc.getSections()) {
@@ -26,5 +26,9 @@ public class cloneSection {
 
         //Save to file.
         desDoc.saveToFile(output, FileFormat.Docx_2013);
+
+        //Dispose the documents
+        srcDoc.dispose();
+        desDoc.dispose();
     }
 }

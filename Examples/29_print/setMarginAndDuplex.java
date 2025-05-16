@@ -1,8 +1,11 @@
 import com.spire.doc.*;
-import com.spire.ms.Printing.*;
+import com.spire.doc.documents.*;
+import com.spire.doc.Printing.*;
 
 public class setMarginAndDuplex {
     public static void main(String[] args) {
+
+        // Create
         Document doc = new Document();
         doc.loadFromFile("data/print.docx");
 
@@ -16,10 +19,14 @@ public class setMarginAndDuplex {
 
         //Double-sided, vertical printing
         printDoc.getPrinterSettings().setDuplex(Duplex.Vertical);
+
         //Double-sided, horizontal printing
         //printDoc.getPrinterSettings().setDuplex(Duplex.Horizontal);
 
-        //Print the word document
+        //Print the Word document
         printDoc.print();
+
+        // Dispose the document
+        doc.dispose();
     }
 }

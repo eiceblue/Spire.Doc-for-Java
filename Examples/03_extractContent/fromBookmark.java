@@ -25,7 +25,7 @@ public class fromBookmark {
         TextBodyPart textBodyPart = navigator.getBookmarkContent();
 
         //Create a TextRange type list.
-        List<TextRange> list = new ArrayList<>();
+        List<TextRange> list = new ArrayList<TextRange>();
 
         // Traverse the items of text body
         for (Object item : textBodyPart.getBodyItems()) {
@@ -50,5 +50,9 @@ public class fromBookmark {
 
         // Save the document.
         destinationDoc.saveToFile("output/fromBookmark.docx", FileFormat.Docx);
+
+        //Dispose the documents
+        sourcedocument.dispose();
+        destinationDoc.dispose();
     }
 }

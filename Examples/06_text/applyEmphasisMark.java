@@ -21,5 +21,8 @@ public class applyEmphasisMark {
         //Save the file
         String output = "output/applyEmphasisMark.docx";
         document.saveToFile(output, FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

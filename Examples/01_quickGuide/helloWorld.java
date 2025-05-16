@@ -17,5 +17,8 @@ public class helloWorld {
 
         //Save to file.
         document.saveToFile("output/helloWorld.docx", FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

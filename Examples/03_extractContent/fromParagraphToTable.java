@@ -19,11 +19,15 @@ public class fromParagraphToTable {
 
         // Save the document.
         destinationDoc.saveToFile("output/fromParagraphToTable.docx", FileFormat.Docx);
+
+        //Dispose the document
+        sourceDocument.dispose();
+        destinationDoc.dispose();
     }
 
     private static void ExtractByTable(Document sourceDocument, Document destinationDocument, int startPara, int tableNo) {
         // Get the table from the source document
-        Table table = ((Table)(sourceDocument.getSections().get(0).getTables().get((tableNo - 1))));
+        Table table = sourceDocument.getSections().get(0).getTables().get((tableNo - 1));
 
         // Get the table index
         int index = sourceDocument.getSections().get(0).getBody().getChildObjects().indexOf(table);

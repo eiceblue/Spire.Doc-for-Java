@@ -2,12 +2,16 @@ import com.spire.doc.*;
 
 public class keepSameFormat {
     public static void main(String[] args) {
-        //Load the source document from disk
+
+        //Create a document
         Document srcDoc = new Document();
+        //Load the source document from disk
         srcDoc.loadFromFile("data/Template_N2.docx");
 
-        //Load the destination document from disk
+        //Create another document
         Document destDoc = new Document();
+
+        //Load the document from disk
         destDoc.loadFromFile("data/Template_N3.docx");
 
         //Keep same format of source document
@@ -22,5 +26,9 @@ public class keepSameFormat {
         //Save the Word document
         String output="output/keepSameFormat.docx";
         destDoc.saveToFile(output, FileFormat.Docx_2013);
+
+        //Dispose the documents
+        srcDoc.dispose();
+        destDoc.dispose();
     }
 }

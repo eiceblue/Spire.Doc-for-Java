@@ -7,14 +7,19 @@ public class addBarcodeImage {
         String input2 = "data/barcode.png";
         String output = "output/addBarcodeImage.docx";
 
-        //Open a Word document
-        Document document = new Document();
-        document.loadFromFile(input1);
+		// Create a new Document object
+		Document document = new Document();
 
-        //Add barcode image
-        DocPicture picture = document.getSections().get(0).addParagraph().appendPicture(input2);
+		// Load the document from the specified input file
+		document.loadFromFile(input1);
 
-        //Save the document
-        document.saveToFile(output, FileFormat.Docx);
+		// Add a paragraph to the first section of the document and append a picture to it
+		DocPicture picture = document.getSections().get(0).addParagraph().appendPicture(input2);
+
+		// Save the modified document to the specified output file in Docx format
+		document.saveToFile(output, FileFormat.Docx);
+
+		// Clean up resources associated with the document
+		document.dispose();
     }
 }

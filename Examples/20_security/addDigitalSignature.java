@@ -1,22 +1,22 @@
 import com.spire.doc.*;
 
 public class addDigitalSignature {
-
     public static void main(String[] args) {
-        //Input and output file paths
-        String input="data/AddDigitalSignature.docx";
-        String output="output/AddDigitalSignature_output.docx";
-        //The path of certificate file
-        String certificatePath="data/gary.pfx";
-        //Secure password
-        String securePwd="e-iceblue";
-        //Create a new Document object
-        Document doc=new Document();
-        //Load docx from input path
+        String input = "data/AddDigitalSignature.docx";
+        String output = "output/AddDigitalSignature_output.docx";
+        String certificatePath = "data/gary.pfx";
+        String securePwd = "e-iceblue";
+
+        // Create a new document object
+        Document doc = new Document();
+
+        // Load the document from the specified input file
         doc.loadFromFile(input);
-        //Add digital signature and save the document
-        doc.saveToFile(output, FileFormat.Docx,certificatePath, securePwd);
-        //Close the document
-        doc.close();
+
+        // Save the document to the specified output file in DOCX format with encryption using the specified certificate path and password
+        doc.saveToFile(output, FileFormat.Docx, certificatePath, securePwd);
+
+        // Dispose the document resources
+        doc.dispose();
     }
 }

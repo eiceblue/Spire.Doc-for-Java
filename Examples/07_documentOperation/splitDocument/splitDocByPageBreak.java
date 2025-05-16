@@ -9,14 +9,18 @@ public class splitDocByPageBreak {
         //Load the file from disk.
         original.loadFromFile("data/SplitWordFileByPageBreak.docx");
 
-        //Create a new word document and add a section to it.
+        //Create a new document
         Document newWord = new Document();
+
+        //Add a new section
         Section section = newWord.addSection();
+
+        //copy the default style,theme and Compatibility
         original.cloneDefaultStyleTo(newWord);
         original.cloneThemesTo(newWord);
         original.cloneCompatibilityTo(newWord);
 
-        //Split the original word document into separate documents according to page break.
+        //Split the original Word document into separate documents according to page break.
         int index = 0;
 
         //Traverse through all sections of original document.
@@ -79,6 +83,10 @@ public class splitDocByPageBreak {
         //Save to file.
         String result ="output/result-SplitWordFileByPageBreak_"+index+".docx";
         newWord.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        original.dispose();
+        newWord.dispose();
     }
 }
 

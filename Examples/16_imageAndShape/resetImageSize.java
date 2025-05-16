@@ -7,28 +7,35 @@ public class resetImageSize {
         String input="data/imageTemplate.docx";
         String output="output/resetImageSize.docx";
 
-        //load a document
-        Document doc = new Document();
-        doc.loadFromFile(input);
+		// Create a new Document object
+		Document doc = new Document();
 
-        //get the first secion
-        Section section = doc.getSections().get(0);
+		// Load the document from the input file
+		doc.loadFromFile(input);
 
-        //get the first paragraph
-        Paragraph paragraph = section.getParagraphs().get(0);
+		// Get the first section of the document
+		Section section = doc.getSections().get(0);
 
-        //reset the image size of the first paragraph
-        for (int i =0; i<paragraph.getChildObjects().getCount();i++)
-        {
-            DocumentObject docObj= paragraph.getChildObjects().get(i);
-            if (docObj instanceof DocPicture)
-            {
-                DocPicture picture = (DocPicture)docObj;
-                picture.setWidth(50f);
-                picture.setHeight(50f);
-            }
-        }
-        //save the document
-        doc.saveToFile(output, FileFormat.Docx);
+		// Get the first paragraph of the section
+		Paragraph paragraph = section.getParagraphs().get(0);
+
+		// Iterate through all child objects of the paragraph
+		for (int i = 0; i < paragraph.getChildObjects().getCount(); i++) {
+			DocumentObject docObj = paragraph.getChildObjects().get(i);
+			
+			// Check if the child object is an instance of DocPicture
+			if (docObj instanceof DocPicture) {
+				// Cast the child object to DocPicture and modify its width and height
+				DocPicture picture = (DocPicture) docObj;
+				picture.setWidth(50f);
+				picture.setHeight(50f);
+			}
+		}
+
+		// Save the modified document to the output file
+		doc.saveToFile(output, FileFormat.Docx);
+
+		// Clean up resources associated with the document
+		doc.dispose();
     }
 }

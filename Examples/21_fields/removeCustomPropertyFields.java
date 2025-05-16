@@ -2,24 +2,34 @@ import com.spire.doc.*;
 
 public class removeCustomPropertyFields {
     public static void main(String[] args) {
-        //Create Word document.
-        Document document = new Document();
+     
+		// Create a new empty document
+		Document document = new Document();
 
-        //Load the file from disk.
-        document.loadFromFile("data/removeCustomPropertyFields.docx");
+		// Load an existing document from the specified file path
+		document.loadFromFile("data/removeCustomPropertyFields.docx");
 
-        //Get custom document properties object.
-        CustomDocumentProperties cdp = document.getCustomDocumentProperties();
-        int i1 = cdp.getCount();
-        //Remove all custom property fields in the document.
-        for (int i = 0; i < cdp.getCount(); ) {
-            cdp.remove(cdp.get(i).getName());
-        }
+		// Get the custom document properties of the document
+		CustomDocumentProperties cdp = document.getCustomDocumentProperties();
 
-        document.isUpdateFields(true);
+		// Get the count of custom document properties
+		int i1 = cdp.getCount();
 
-        //Save to file.
-        String output = "output/removeCustomPropertyFields.docx";
-        document.saveToFile(output, FileFormat.Docx_2013);
+		// Loop through the custom document properties and remove them
+		for (int i = 0; i < cdp.getCount(); ) {
+			cdp.remove(cdp.get(i).getName());
+		}
+
+		// Enable updating fields in the document
+		document.isUpdateFields(true);
+
+		// Specify the file path for the resulting document
+		String output = "output/removeCustomPropertyFields.docx";
+
+		// Save the document to the specified file path in Docx 2013 format
+		document.saveToFile(output, FileFormat.Docx_2013);
+
+		// Dispose of the document resources
+		document.dispose();
     }
 }

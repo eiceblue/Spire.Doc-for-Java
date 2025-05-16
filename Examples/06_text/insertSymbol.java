@@ -28,5 +28,8 @@ public class insertSymbol {
 
         //Save to file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

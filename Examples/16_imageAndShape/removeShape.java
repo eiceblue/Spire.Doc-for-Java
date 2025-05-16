@@ -7,28 +7,31 @@ public class removeShape {
         String input="data/shapes.docx";
         String output="output/removeShape.docx";
 
-        //load a word document
-        Document doc = new Document();
-        doc.loadFromFile(input);
+		// Load a Word document
+		Document doc = new Document();
 
-        //get first section
-        Section section = doc.getSections().get(0);
+		// Load the document from the input file
+		doc.loadFromFile(input);
 
-        //traverse all the child objects of paragraph
-        for (int j= 0; j<section.getParagraphs().getCount();j++)
-        {
-            Paragraph para = section.getParagraphs().get(j);
-            for (int i = 0; i < para.getChildObjects().getCount(); i++)
-            {
-                //if the child objects is shape object
-                if (para.getChildObjects().get(i) instanceof ShapeObject)
-                {
-                    //remove the shape object
-                    para.getChildObjects().removeAt(i);
-                }
-            }
-        }
-        //Save the document
-        doc.saveToFile(output, FileFormat.Docx);
+		// Get the first section of the document
+		Section section = doc.getSections().get(0);
+
+		// Traverse all child objects of each paragraph in the section
+		for (int j = 0; j < section.getParagraphs().getCount(); j++) {
+			Paragraph para = section.getParagraphs().get(j);
+			for (int i = 0; i < para.getChildObjects().getCount(); i++) {
+				// Check if the child object is a ShapeObject
+				if (para.getChildObjects().get(i) instanceof ShapeObject) {
+					// Remove the ShapeObject from the paragraph's child objects
+					para.getChildObjects().removeAt(i);
+				}
+			}
+		}
+
+		// Save the modified document to the output file
+		doc.saveToFile(output, FileFormat.Docx);
+
+		// Clean up resources associated with the document
+		doc.dispose();
     }
 }

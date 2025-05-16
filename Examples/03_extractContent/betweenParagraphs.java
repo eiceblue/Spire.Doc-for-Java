@@ -19,6 +19,11 @@ public class betweenParagraphs {
 
         // Save the document.
         destinationDoc.saveToFile("output/betweenParagraphs.docx", FileFormat.Docx);
+
+        //Dispose the documents
+        sourceDocument.dispose();
+        destinationDoc.dispose();
+
     }
 
     private static void ExtractBetweenParagraphs(Document sourceDocument, Document destinationDocument, int startPara, int endPara) {

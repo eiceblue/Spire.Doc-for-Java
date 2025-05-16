@@ -3,37 +3,57 @@ import com.spire.doc.documents.*;
 
 public class removeContentControls {
     public static void main(String[] args) {
-        //Load document from disk
+        // Create a new instance of Document
         Document doc = new Document();
+
+        // Load the document from a file
         doc.loadFromFile("data/removeContentControls.docx");
 
-        //Loop through sections
+        // Iterate over each section in the document
         for (int s = 0; s < doc.getSections().getCount(); s++) {
             Section section = doc.getSections().get(s);
+
+            // Iterate over each child object in the section's body
             for (int i = 0; i < section.getBody().getChildObjects().getCount(); i++) {
-                //Loop through contents in paragraph
+
+                // Check if the child object is a Paragraph
                 if (section.getBody().getChildObjects().get(i) instanceof Paragraph) {
                     Paragraph para = (Paragraph) section.getBody().getChildObjects().get(i);
+
+                    // Iterate over each child object in the paragraph
                     for (int j = 0; j < para.getChildObjects().getCount(); j++) {
-                        //Find the StructureDocumentTagInline
+
+                        // Check if the child object is a StructureDocumentTagInline
                         if (para.getChildObjects().get(j) instanceof StructureDocumentTagInline) {
-                            com.spire.doc.documents.StructureDocumentTagInline sdt = (StructureDocumentTagInline) para.getChildObjects().get(j);
-                            //Remove the content control from paragraph
+                            StructureDocumentTagInline sdt = (StructureDocumentTagInline) para.getChildObjects().get(j);
+
+                            // Remove the StructureDocumentTagInline from the paragraph
                             para.getChildObjects().remove(sdt);
+
+                            // Decrement the index to account for the removed object
                             j--;
                         }
                     }
                 }
+
+                // Check if the child object is a StructureDocumentTag
                 if (section.getBody().getChildObjects().get(i) instanceof StructureDocumentTag) {
-                    com.spire.doc.documents.StructureDocumentTag sdt = (StructureDocumentTag) section.getBody().getChildObjects().get(i);
+                    StructureDocumentTag sdt = (StructureDocumentTag) section.getBody().getChildObjects().get(i);
+
+                    // Remove the StructureDocumentTag from the section's body
                     section.getBody().getChildObjects().remove(sdt);
+
+                    // Decrement the index to account for the removed object
                     i--;
                 }
             }
         }
 
-        //Save the Word document
+        // Save the modified document to a file
         String output = "output/removeContentControls.docx";
         doc.saveToFile(output, FileFormat.Docx_2013);
+
+        // Dispose the document object
+        doc.dispose();
     }
 }

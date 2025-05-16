@@ -4,71 +4,67 @@ import com.spire.doc.fields.*;
 
 public class convertFieldToBodyText {
     public static void main(String[] args) {
-        //Create the source document
-        Document sourceDocument = new Document();
 
-        //Load the source document from disk.
-        sourceDocument.loadFromFile("data/TextInputField.docx");
+		// Create a new source document object
+		Document sourceDocument = new Document();
 
-        //Traverse FormFields
-        for (FormField field : (Iterable<FormField>)sourceDocument.getSections().get(0).getBody().getFormFields())
-        {
-            //Find FieldFormTextInput type field
-            if (field.getType().equals(FieldType.Field_Form_Text_Input))
-            {
-                //Get the paragraph
-                Paragraph paragraph = field.getOwnerParagraph();
+		// Load the document from the specified input file "data/TextInputField.docx"
+		sourceDocument.loadFromFile("data/TextInputField.docx");
 
-                //Define variables
-                int startIndex = 0;
-                int endIndex = 0;
+		// Iterate through each form field in the first section of the document
+		for (FormField field : (Iterable<FormField>) sourceDocument.getSections().get(0).getBody().getFormFields()) {
 
-                //Create a new TextRange
-                TextRange textRange = new TextRange(sourceDocument);
+			// Check if the form field type is Field_Form_Text_Input
+			if (field.getType().equals(FieldType.Field_Form_Text_Input)) {
+				
+				// Get the owner paragraph of the form field
+				Paragraph paragraph = field.getOwnerParagraph();
+				
+				int startIndex = 0;
+				int endIndex = 0;
 
-                //Set text for textRange
-                textRange.setText(paragraph.getText());
+				// Create a new text range with the content of the paragraph
+				TextRange textRange = new TextRange(sourceDocument);
+				textRange.setText(paragraph.getText());
 
-                //Traverse DocumentObjectS of field paragraph
-                for(DocumentObject obj :(Iterable<DocumentObject>)paragraph.getChildObjects())
-                {
-                    //If its DocumentObjectType is BookmarkStart
-                    if (obj.getDocumentObjectType().equals(DocumentObjectType.Bookmark_Start))
-                    {
-                        //Get the index
-                        startIndex = paragraph.getChildObjects().indexOf(obj);
-                    }
-                    //If its DocumentObjectType is BookmarkEnd
-                    if (obj.getDocumentObjectType().equals(DocumentObjectType.Bookmark_End))
-                    {
-                        //Get the index
-                        endIndex = paragraph.getChildObjects().indexOf(obj);
-                    }
-                }
-                //Remove ChildObjects
-                for (int i = endIndex; i > startIndex; i--)
-                {
-                    //If it is TextFormField
-                    if (paragraph.getChildObjects().get(i) instanceof TextFormField)
-                    {
-                        TextFormField textFormField = (TextFormField)paragraph.getChildObjects().get(i);
+				// Find the start and end index of the bookmark tags in the paragraph's child objects
+				for (DocumentObject obj : (Iterable<DocumentObject>)paragraph.getChildObjects()) {
+					if (obj.getDocumentObjectType().equals(DocumentObjectType.Bookmark_Start)) {
+						startIndex = paragraph.getChildObjects().indexOf(obj);
+					}
+					if (obj.getDocumentObjectType().equals(DocumentObjectType.Bookmark_End)) {
+						endIndex = paragraph.getChildObjects().indexOf(obj);
+					}
+				}
 
-                        //Remove the field object
-                        paragraph.getChildObjects().remove(textFormField);
-                    }
-                    else
-                    {
-                        paragraph.getChildObjects().removeAt(i);
-                    }
-                }
-                //Insert the new TextRange
-                paragraph.getChildObjects().insert(startIndex, textRange);
-                break;
-            }
+				// Remove any form fields or other objects between the bookmark tags
+				for (int i = endIndex; i > startIndex; i--) {
+					if (paragraph.getChildObjects().get(i) instanceof TextFormField) {
+						TextFormField textFormField = (TextFormField) paragraph.getChildObjects().get(i);
 
-        }
-        //Save the document.
-        String output="output/ConvertFieldToBodyText.docx";
-        sourceDocument.saveToFile(output, FileFormat.Docx);
+						// Remove the text form field
+						paragraph.getChildObjects().remove(textFormField);
+					} else {
+						// Remove the object at the specified index
+						paragraph.getChildObjects().removeAt(i);
+					}
+				}
+
+				// Insert the text range at the start index of the bookmark tags
+				paragraph.getChildObjects().insert(startIndex, textRange);
+				
+				// Exit the loop after processing the first form field
+				break;
+			}
+		}
+
+		// Specify the output file path
+		String output = "output/ConvertFieldToBodyText.docx";
+
+		// Save the modified document to the specified output file in DOCX format
+		sourceDocument.saveToFile(output, FileFormat.Docx);
+
+		// Dispose the source document resources
+		sourceDocument.dispose();
     }
 }

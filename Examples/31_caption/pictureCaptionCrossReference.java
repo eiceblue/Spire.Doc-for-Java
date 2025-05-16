@@ -16,10 +16,19 @@ public class pictureCaptionCrossReference {
 
         //Add the first picture
         Paragraph par1 = section.addParagraph();
+
+        //Set the after-spacing
         par1.getFormat().setAfterSpacing(10);
+
+        //Load a picture
         DocPicture pic1 = par1.appendPicture("data/spire.Doc.png");
+
+        //Set the picture height
         pic1.setHeight(120);
+
+        //Set the picture width
         pic1.setWidth(120);
+
         //Add caption to the picture
         CaptionNumberingFormat format = CaptionNumberingFormat.Number;
         IParagraph captionParagraph = pic1.addCaption("Figure", format, CaptionPosition.Below_Item);
@@ -27,8 +36,14 @@ public class pictureCaptionCrossReference {
 
         //Add the second picture
         Paragraph par2 = section.addParagraph();
+
+        //Load a picture
         DocPicture pic2 = par2.appendPicture("data/word.png");
+
+        //Set the picture height
         pic2.setHeight(120);
+
+        //Set the picture width
         pic2.setWidth(120);
         //Add caption to the picture
         captionParagraph = pic2.addCaption("Figure", format, CaptionPosition.Below_Item);
@@ -36,7 +51,11 @@ public class pictureCaptionCrossReference {
 
         //Create a bookmark
         String bookmarkName = "Figure_2";
+
+        //Add a paragraph
         Paragraph paragraph = section.addParagraph();
+
+        //Append a bookmark
         paragraph.appendBookmarkStart(bookmarkName);
         paragraph.appendBookmarkEnd(bookmarkName);
 
@@ -70,5 +89,8 @@ public class pictureCaptionCrossReference {
         //Save the file
         String output = "output/pictureCaptionCrossReference.docx";
         document.saveToFile(output, FileFormat.Docx);
+
+        //Dispose the document
+        document.dispose();
     }
 }

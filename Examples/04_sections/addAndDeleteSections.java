@@ -18,6 +18,9 @@ public class addAndDeleteSections {
 
         //Save to file
         doc.saveToFile(output, FileFormat.Docx);
+
+        //Dispose the document
+        doc.dispose();
     }
     private static void AddSection(Document doc)
     {

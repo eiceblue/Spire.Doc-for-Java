@@ -15,11 +15,18 @@ public class createBarcode {
         TextRange txtRang = p.appendText("H63TWX11072");
         //Set barcode font name, note you need to install the barcode font on your system at first
         txtRang.getCharacterFormat().setFontName("C39HrP60DlTt");
+
+        //Set the font size
         txtRang.getCharacterFormat().setFontSize(80);
+
+        //Set the text color
         txtRang.getCharacterFormat().setTextColor(Color.blue);
 
-        //Save and launch document
+        //Save the document
         String output = "output/createBarcode.docx";
         doc.saveToFile(output, FileFormat.Docx);
+
+        //Dispose the document
+        doc.dispose();
     }
 }

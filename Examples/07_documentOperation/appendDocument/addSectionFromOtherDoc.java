@@ -18,5 +18,9 @@ public class addSectionFromOtherDoc {
 
         //Save to file
         TarDoc.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        TarDoc.dispose();
+        SouDoc.dispose();
     }
 }

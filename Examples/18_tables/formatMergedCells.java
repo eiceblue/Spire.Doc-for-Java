@@ -6,16 +6,16 @@ import java.awt.*;
 
 public class formatMergedCells {
     public static void main(String[] args) {
-        //Create word document
+        // Create a new document object
         Document document = new Document();
 
-        //Add a new section
+        // Add a section to the document
         Section section = document.addSection();
 
-        //Add a new table
+        // Add a table to the section using the addTable method
         Table table = addTable(section);
 
-        //Create a new style
+        // Create a new paragraph style
         ParagraphStyle style = new ParagraphStyle(document);
         style.setName("Style");
         style.getCharacterFormat().setTextColor(Color.cyan);
@@ -24,34 +24,41 @@ public class formatMergedCells {
         style.getCharacterFormat().setFontSize(13);
         document.getStyles().add(style);
 
-        //Merge cell horizontally
+        // Apply horizontal merge to cells in the table
         table.applyHorizontalMerge(0, 0, 1);
-        //Apply style
+
+        // Apply the style to the first cell in the table
         table.get(0, 0).getParagraphs().get(0).applyStyle(style.getName());
-        //Set vertical and horizontal alignment
         table.get(0, 0).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
         table.get(0, 0).getParagraphs().get(0).getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
 
-        //Merge cell vertically
+        // Apply vertical merge to cells in the table
         table.applyVerticalMerge(0, 1, 3);
-        //Apply style
+
+        // Apply the style to the second cell in the table
         table.get(1, 0).getParagraphs().get(0).applyStyle(style.getName());
-        //Set vertical and horizontal alignment
         table.get(1, 0).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
         table.get(1, 0).getParagraphs().get(0).getFormat().setHorizontalAlignment(HorizontalAlignment.Left);
 
-        //Set column width
+        // Set the width of the second cell in the table
         table.get(1, 0).setCellWidth(20, CellWidthType.Percentage);
 
-        //Save the file
+        // Specify the output file path
         String output = "output/formatMergedCells.docx";
+
+        // Save the document to the specified file format
         document.saveToFile(output, FileFormat.Docx);
+
+        // Dispose the document resources
+        document.dispose();
     }
 
+    // Method to add a table to the section with specified data
     private static Table addTable(Section section) {
         Table table = section.addTable(true);
+
+        // Specify the number of rows and columns for the table
         table.resetCells(4, 3);
-        //Table data
         String[][] data =
                 {
                         new String[]{"Product", "", "Price"},

@@ -2,9 +2,13 @@ import com.spire.doc.*;
 
 public class preserveTheme {
     public static void main(String[] args) {
-        //Load the source document
+
         String input = "data/Theme.docx";
+
+        //Create a document
         Document doc = new Document();
+
+        //Load from the disk
         doc.loadFromFile(input);
 
         //Create a new Word document
@@ -21,5 +25,9 @@ public class preserveTheme {
         //Save and launch document
         String output = "output/preserveTheme.docx";
         newWord.saveToFile(output, FileFormat.Docx_2013);
+
+        //Dispose the documents
+        doc.dispose();
+        newWord.dispose();
     }
 }

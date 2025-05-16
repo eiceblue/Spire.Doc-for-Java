@@ -4,64 +4,72 @@ import com.spire.doc.fields.*;
 
 public class createBookmarkForTable {
     public static void main(String[] args) {
+        // Set the output file path for the document with bookmarks for a table
         String output = "output/createBookmarkForTable.docx";
 
-        //Create word document.
+        // Create a new instance of the Document class
         Document document = new Document();
 
-        //Add a new section.
+        // Add a section to the document
         Section section = document.addSection();
 
-        //Create bookmark for a table
+        // Call the createBookmarkForTable method to create bookmarks and add a table within the section
         createBookmarkForTable(document, section);
 
-        //Save the document.
+        // Save the document to the specified output file in DOCX format
         document.saveToFile(output, FileFormat.Docx);
+
+        // Dispose of the document object to release resources
+        document.dispose();
     }
-    private static void createBookmarkForTable(Document doc, Section section)
-    {
-        //Add a paragraph
+
+    // Define the createBookmarkForTable method
+    private static void createBookmarkForTable(Document doc, Section section) {
+        // Add a paragraph to the section
         Paragraph paragraph = section.addParagraph();
 
-        //Append text for added paragraph
-        TextRange txtRange = paragraph.appendText("The following example demonstrates how to create bookmark for a table in a Word document.");
-
-        //Set the font in italic
+        // Append text to the paragraph and set its formatting
+        TextRange txtRange = paragraph
+            .appendText("The following example demonstrates how to create bookmark for a table in a Word document.");
         txtRange.getCharacterFormat().setItalic(true);
 
-        //Append bookmark start
+        // Append bookmark start to the paragraph
         paragraph.appendBookmarkStart("CreateBookmark");
 
-        //Append bookmark end
+        // Append bookmark end to the paragraph
         paragraph.appendBookmarkEnd("CreateBookmark");
 
-        //Add table
+        // Add a table to the section
         Table table = section.addTable(true);
 
-        //Set the number of rows and columns
+        // Reset the cells of the table to have 2 rows and 2 columns
         table.resetCells(2, 2);
 
-        //Append text for table cells
+        // Add text to the cells of the table
         TextRange range = table.getRows().get(0).getCells().get(0).addParagraph().appendText("sampleA");
         range = table.getRows().get(0).getCells().get(1).addParagraph().appendText("sampleB");
         range = table.getRows().get(1).getCells().get(0).addParagraph().appendText("120");
         range = table.getRows().get(1).getCells().get(1).addParagraph().appendText("260");
 
-        //Get the bookmark by index.
+        // Get the first bookmark from the document
         Bookmark bookmark = doc.getBookmarks().get(0);
 
-        //Get the name of bookmark.
+        // Get the name of the bookmark
         String bookmarkName = bookmark.getName();
 
-        //Locate the bookmark by name.
+        // Create a BookmarksNavigator for the document
         BookmarksNavigator navigator = new BookmarksNavigator(doc);
+
+        // Move to the bookmark position in the document
         navigator.moveToBookmark(bookmarkName);
 
-        //Add table to TextBodyPart
+        // Get the TextBodyPart containing the bookmark content
         TextBodyPart part = navigator.getBookmarkContent();
+
+        // Add the table to the BodyItems of the TextBodyPart
         part.getBodyItems().add(table);
 
-        //Replace bookmark cotent with table
+        // Replace the bookmark content with the modified TextBodyPart
         navigator.replaceBookmarkContent(part);
     }
 }

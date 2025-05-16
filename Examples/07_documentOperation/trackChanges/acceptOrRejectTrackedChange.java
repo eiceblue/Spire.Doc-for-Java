@@ -1,7 +1,8 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
+
 public class acceptOrRejectTrackedChange {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
        //Create Word document.
         Document document = new Document();
 
@@ -20,5 +21,8 @@ public class acceptOrRejectTrackedChange {
 
         //Save to file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

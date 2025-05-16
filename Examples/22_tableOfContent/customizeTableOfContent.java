@@ -4,61 +4,123 @@ import com.spire.doc.fields.*;
 
 public class customizeTableOfContent {
     public static void main(String[] args) {
-        //Create a document
-        Document doc = new Document();
-        //add a section
-        Section section = doc.addSection();
-        //Customize table of contents with switches
-        TableOfContent toc = new TableOfContent(doc, "{\\o \"1-3\" \\n 1-1}");
-        Paragraph para = section.addParagraph();
-        para.getItems().add(toc);
-        para.appendFieldMark(FieldMarkType.Field_Separator);
-        para.appendText("TOC");
-        para.appendFieldMark(FieldMarkType.Field_End);
-        doc.setTOC(toc);
+      
+		// Create a new Document object
+		Document doc = new Document();
 
-        Paragraph par = section.addParagraph();
-        TextRange tr = par.appendText("Flowers");
-        tr.getCharacterFormat().setFontSize(30);
-        par.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
+		// Add a section to the document
+		Section section = doc.addSection();
 
-        //Create paragraph and set the head level
-        Paragraph para1 = section.addParagraph();
-        para1.appendText("Ornithogalum");
-        //apply the Heading1 style
-        para1.applyStyle(BuiltinStyle.Heading_1);
-        //add paragraphs
-        para1 = section.addParagraph();
-        DocPicture picture = para1.appendPicture("data/ornithogalum.jpg");
-        picture.setTextWrappingStyle(TextWrappingStyle.Square);
-        para1.appendText("Ornithogalum is a genus of perennial plants mostly native to southern Europe and southern Africa belonging to the family Asparagaceae. Some species are native to other areas such as the Caucasus. Growing from a bulb, species have linear basal leaves and a slender stalk, up to 30 cm tall, bearing clusters of typically white star-shaped flowers, often striped with green.");
-        para1 = section.addParagraph();
+		// Create a TableOfContent object with specified format and add it to a paragraph in the section
+		TableOfContent toc = new TableOfContent(doc, "{\\o \"1-3\" \\n 1-1}");
+		Paragraph para = section.addParagraph();
+		para.getItems().add(toc);
 
-        Paragraph para2 = section.addParagraph();
-        para2.appendText("Rosa");
-        //apply the Heading2 style
-        para2.applyStyle(BuiltinStyle.Heading_2);
-        para2 = section.addParagraph();
-        DocPicture picture2 = para2.appendPicture("data/rosa.jpg");
-        picture2.setTextWrappingStyle(TextWrappingStyle.Square);
-        para2.appendText("A rose is a woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears. There are over a hundred species and thousands of cultivars. They form a group of plants that can be erect shrubs, climbing or trailing with stems that are often armed with sharp prickles. Flowers vary in size and shape and are usually large and showy, in colours ranging from white through yellows and reds. Most species are native to Asia, with smaller numbers native to Europe, North America, and northwestern Africa. Species, cultivars and hybrids are all widely grown for their beauty and often are fragrant. Roses have acquired cultural significance in many societies. Rose plants range in size from compact, miniature roses, to climbers that can reach seven meters in height. Different species hybridize easily, and this has been used in the development of the wide range of garden roses.");
-        section.addParagraph();
+		// Add field marks to define the start and end of the table of contents
+		para.appendFieldMark(FieldMarkType.Field_Separator);
+		para.appendText("TOC");
+		para.appendFieldMark(FieldMarkType.Field_End);
 
-        Paragraph para3 = section.addParagraph();
-        para3.appendText("Hyacinth");
-        //apply the Heading3 style
-        para3.applyStyle(BuiltinStyle.Heading_3);
-        para3 = section.addParagraph();
-        DocPicture picture3 = para3.appendPicture("data/hyacinths.JPG");
-        picture3.setTextWrappingStyle(TextWrappingStyle.Tight);
-        para3.appendText("Hyacinthus is a small genus of bulbous, fragrant flowering plants in the family Asparagaceae, subfamily Scilloideae.These are commonly called hyacinths.The genus is native to the eastern Mediterranean (from the south of Turkey through to northern Israel).");
-        para3 = section.addParagraph();
-        para3.appendText("Several species of Brodiea, Scilla, and other plants that were formerly classified in the lily family and have flower clusters borne along the stalk also have common names with the word \"hyacinth\" in them. Hyacinths should also not be confused with the genus Muscari, which are commonly known as grape hyacinths.");
+		// Set the document's table of contents to the created TableOfContent object
+		doc.setTOC(toc);
 
-        //Update TOC
-        doc.updateTableOfContents();
-        //Save to file
-        String output = "output/customizeTableOfContent.docx";
-        doc.saveToFile(output, FileFormat.Docx_2013);
+		// Add another paragraph to the section
+		Paragraph par = section.addParagraph();
+
+		// Append text "Flowers" to the paragraph and customize its font size and alignment
+		TextRange tr = par.appendText("Flowers");
+		tr.getCharacterFormat().setFontSize(30);
+		par.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
+
+		// Add another paragraph to the section
+		Paragraph para1 = section.addParagraph();
+
+		// Append text "Ornithogalum" to the paragraph
+		para1.appendText("Ornithogalum");
+
+		// Apply the built-in style "Heading 1" to the paragraph
+		para1.applyStyle(BuiltinStyle.Heading_1);
+
+		// Add another paragraph to the section
+		para1 = section.addParagraph();
+
+		// Append a picture to the paragraph from the specified file path
+		DocPicture picture = para1.appendPicture("data/ornithogalum.jpg");
+
+		// Set the text wrapping style of the picture to Square
+		picture.setTextWrappingStyle(TextWrappingStyle.Square);
+
+		// Append text describing Ornithogalum to the paragraph
+		para1.appendText("Ornithogalum is a genus of perennial plants...");
+
+		// Add empty paragraphs to the section
+		section.addParagraph();
+		section.addParagraph();
+		section.addParagraph();
+		section.addParagraph();
+
+		// Add another paragraph to the section
+		Paragraph para2 = section.addParagraph();
+
+		// Append text "Rosa" to the paragraph
+		para2.appendText("Rosa");
+
+		// Apply the built-in style "Heading 2" to the paragraph
+		para2.applyStyle(BuiltinStyle.Heading_2);
+
+		// Add another paragraph to the section
+		para2 = section.addParagraph();
+
+		// Append a picture to the paragraph from the specified file path
+		DocPicture picture2 = para2.appendPicture("data/rosa.jpg");
+
+		// Set the text wrapping style of the picture to Square
+		picture2.setTextWrappingStyle(TextWrappingStyle.Square);
+
+		// Append text describing Rosa to the paragraph
+		para2.appendText("A rose is a woody perennial flowering plant...");
+
+		// Add empty paragraphs to the section
+		section.addParagraph();
+		section.addParagraph();
+		section.addParagraph();
+		section.addParagraph();
+
+		// Add another paragraph to the section
+		Paragraph para3 = section.addParagraph();
+
+		// Append text "Hyacinth" to the paragraph
+		para3.appendText("Hyacinth");
+
+		// Apply the built-in style "Heading 3" to the paragraph
+		para3.applyStyle(BuiltinStyle.Heading_3);
+
+		// Add another paragraph to the section
+		para3 = section.addParagraph();
+
+		// Append a picture to the paragraph from the specified file path
+		DocPicture picture3 = para3.appendPicture("data/hyacinths.JPG");
+
+		// Set the text wrapping style of the picture to Tight
+		picture3.setTextWrappingStyle(TextWrappingStyle.Tight);
+
+		// Append text describing Hyacinth to the paragraph
+		para3.appendText("Hyacinthus is a small genus of bulbous, fragrant flowering plants...");
+
+		// Add another paragraph to the section
+		para3 = section.addParagraph();
+
+		// Append text about hyacinths and Muscari to the paragraph
+		para3.appendText("Several species of Brodiea, Scilla, and other plants that were formerly classified in the lily family...");
+
+		// Update the table of contents in the document
+		doc.updateTableOfContents();
+
+		// Save the document to a file
+		String output = "output/customizeTableOfContent.docx";
+		doc.saveToFile(output, FileFormat.Docx);
+
+		// Dispose the Document object
+		doc.dispose();
     }
 }

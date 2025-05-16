@@ -25,5 +25,8 @@ public class cloneSectionContent {
 
         //Save to file
         doc.saveToFile(output, FileFormat.Docx_2013);
+
+        //Dispose the document
+        doc.dispose();
     }
 }

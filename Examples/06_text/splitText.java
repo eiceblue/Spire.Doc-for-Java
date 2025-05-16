@@ -16,5 +16,8 @@ public class splitText {
         //Save and launch the document
         String output = "output/splitText.docx";
         doc.saveToFile(output, FileFormat.Docx_2013);
+
+        //Dispose the document
+        doc.dispose();
     }
 }

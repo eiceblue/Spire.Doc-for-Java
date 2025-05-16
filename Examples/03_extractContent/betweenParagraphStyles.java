@@ -20,6 +20,10 @@ public class betweenParagraphStyles {
 
         // Save the document.
         destinationDoc.saveToFile("output/betweenParagraphStyles.docx", FileFormat.Docx_2013);
+
+        //Dispose the documents
+        sourceDocument.dispose();
+        destinationDoc.dispose();
     }
 
     private static void ExtractBetweenParagraphStyles(Document sourceDocument, Document destinationDocument, String stylename1, String stylename2) {

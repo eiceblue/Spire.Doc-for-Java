@@ -1,51 +1,55 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
 import com.spire.doc.fields.*;
+
 import java.awt.*;
 
 public class imageHeaderAndFooter {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String input1 = "data/multiPages.docx";
         String input2 = "data/e-iceblue.png";
         String input3 = "data/logo.png";
         String output = "output/imageHeaderAndFooter.docx";
 
-        //load the document from disk
+        // Load the document from the input1 file
         Document doc = new Document();
         doc.loadFromFile(input1);
 
-        //get the header of the first page
+        // Get the header of the first page
         HeaderFooter header = doc.getSections().get(0).getHeadersFooters().getHeader();
 
-        //add a paragraph for the header
+        // Add a paragraph to the header
         Paragraph paragraph = header.addParagraph();
 
-        //set the format of the paragraph
+        // Set the horizontal alignment of the paragraph
         paragraph.getFormat().setHorizontalAlignment(HorizontalAlignment.Right);
 
-        //append a picture in the paragraph
-        DocPicture headerimage = paragraph.appendPicture(input2);
-        headerimage.setVerticalAlignment( ShapeVerticalAlignment.Bottom);
+        // Append a picture to the paragraph
+        DocPicture headerImage = paragraph.appendPicture(input2);
+        headerImage.setVerticalAlignment(ShapeVerticalAlignment.Bottom);
 
-        //get the footer of the first section
+        // Get the footer of the first section
         HeaderFooter footer = doc.getSections().get(0).getHeadersFooters().getFooter();
 
-        //add a paragraph for the footer
+        // Add a paragraph to the footer
         Paragraph paragraph2 = footer.addParagraph();
 
-        //set the format of the paragraph
+        // Set the horizontal alignment of the paragraph
         paragraph2.getFormat().setHorizontalAlignment(HorizontalAlignment.Left);
 
-        //append a picture in the paragraph
-        DocPicture footerimage = paragraph2.appendPicture(input3);
+        // Append a picture to the paragraph
+        DocPicture footerImage = paragraph2.appendPicture(input3);
 
-        //append text in the paragraph
-        TextRange TR = paragraph2.appendText("Copyright © 2013 e-iceblue. All Rights Reserved.");
-        TR.getCharacterFormat().setFontName("Arial");
-        TR.getCharacterFormat().setFontSize(10);
-        TR.getCharacterFormat().setTextColor( Color.BLACK);
+        // Append text to the paragraph
+        TextRange copyrightText = paragraph2.appendText("Copyright © 2013 e-iceblue. All Rights Reserved.");
+        copyrightText.getCharacterFormat().setFontName("Arial");
+        copyrightText.getCharacterFormat().setFontSize(10);
+        copyrightText.getCharacterFormat().setTextColor(Color.BLACK);
 
-        //save the document
+        // Save the document
         doc.saveToFile(output, FileFormat.Docx);
+
+        // Dispose of the document object to release resources
+        doc.dispose();
     }
 }

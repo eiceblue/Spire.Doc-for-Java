@@ -26,7 +26,10 @@ public class updateCheckBox {
             //Update the status
             if ("Check_Box".equals(type))
             {
+                // Get the sdtCheckBox
                 SdtCheckBox scb = (SdtCheckBox)tagInlines.get(i).getSDTProperties().getControlProperties() ;
+
+                // Judge the status
                 if (scb.getChecked())
                 {
                     scb.setChecked(false);
@@ -41,24 +44,40 @@ public class updateCheckBox {
         //Save the document
         String output = "output/updateCheckBox.docx";
         document.saveToFile(output, FileFormat.Docx);
+
+        // Dispose the document
+        document.dispose();
     }
 
     public static StructureTagInLines GetAllTags(Document document) {
         StructureTagInLines structureTags = new StructureTagInLines();
+
+        // Iterate through the sections of the document
         for (int i = 0; i < document.getSections().getCount(); i++) {
             Section section = document.getSections().get(i);
+
+            // Iterate through the child objects in the body of each section
             for (int j = 0; j < section.getBody().getChildObjects().getCount(); j++){
                 DocumentObject obj = section.getBody().getChildObjects().get(j);
-                if(obj.getDocumentObjectType() == DocumentObjectType.Paragraph)
-                    for (int k = 0; k < ((Paragraph)obj).getChildObjects().getCount() ; k++) {
+
+                // Check if the child object is a paragraph
+                if(obj.getDocumentObjectType() == DocumentObjectType.Paragraph) {
+
+                    // Iterate through the child objects of the paragraph
+                    for (int k = 0; k < ((Paragraph)obj).getChildObjects().getCount(); k++) {
                         DocumentObject pobj = ((Paragraph)obj).getChildObjects().get(k);
+
+                        // Check if the child object is a StructureDocumentTagInline
                         if (pobj.getDocumentObjectType() == DocumentObjectType.Structure_Document_Tag_Inline) {
+                            // If it is, add it to the list of tagInlines
                             structureTags.getM_tagInlines().add((StructureDocumentTagInline)pobj);
                         }
                     }
-
+                }
             }
         }
+
+        // Return the StructureTagInLines object containing all the retrieved StructureDocumentTagInline objects
         return structureTags;
     }
 }

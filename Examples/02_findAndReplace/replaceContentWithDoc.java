@@ -40,7 +40,7 @@ public class replaceContentWithDoc {
                 Section section2=(Section)sectionObj;
                 for (Object paragraphObj : section2.getParagraphs()) {
                     Paragraph paragraph=(Paragraph)paragraphObj;
-                    section1.getBody().getChildObjects().insert(index, ((Paragraph)(paragraph.deepClone())));
+                    section1.getBody().getChildObjects().insert(index, paragraph.deepClone());
                 }
             }
 
@@ -50,5 +50,9 @@ public class replaceContentWithDoc {
 
         // Save the document.
         document1.saveToFile("output/replaceContentWithDoc.docx", FileFormat.Docx_2013);
+
+        //Dispose the documents
+        document1.dispose();
+        document2.dispose();
     }
 }

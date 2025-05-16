@@ -1,5 +1,6 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
+
 public class addVariables {
     public static void main(String[] args) throws Exception {
         //Create Word document.
@@ -24,5 +25,8 @@ public class addVariables {
 
         //Save to file.
         document.saveToFile(result, FileFormat.Docx_2013);
+
+        //Dispose the document
+        document.dispose();
     }
 }

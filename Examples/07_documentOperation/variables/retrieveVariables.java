@@ -1,5 +1,4 @@
 import com.spire.doc.*;
-
 public class retrieveVariables {
     public static void main(String[] args) throws Exception {
         //Create Word document.
@@ -20,5 +19,8 @@ public class retrieveVariables {
         System.out.println("The name of the variable retrieved by index 0 is: " + s1);
         System.out.println("The vaule of the variable retrieved by index 0 is: " + s2);
         System.out.println("The vaule of the variable retrieved by name \"A1\" is: " + s3);
+
+        //Dispose the document
+        document.dispose();
     }
 }

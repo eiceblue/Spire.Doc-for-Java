@@ -1,37 +1,41 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
+
 import java.awt.*;
 
 public class setDiagonalBorder {
     public static void main(String[] args) {
         String output = "output/setDiagonalBorder.docx";
 
-        //create a document
+        // Create a new document object
         Document document = new Document();
 
-        //add section
+        // Add a section to the document
         Section section = document.addSection();
 
-        //add a teable
+        // Add a table to the section, with autofit behavior enabled
         Table table = section.addTable(true);
 
-        //set rows and columns
+        // Reset the number of cells in the table to 4 columns and 3 rows
         table.resetCells(4, 3);
 
-        //set table format
+        // Set the horizontal alignment of the table to center
         table.getTableFormat().setHorizontalAlignment(RowAlignment.Center);
 
-        //set double diagonal border
+        // Set the diagonal down border for the first cell in the first row
         table.getFirstRow().getCells().get(0).getCellFormat().getBorders().getDiagonalDown().setBorderType(BorderStyle.Double);
         table.getFirstRow().getCells().get(0).getCellFormat().getBorders().getDiagonalDown().setColor(Color.GREEN);
         table.getFirstRow().getCells().get(0).getCellFormat().getBorders().getDiagonalDown().setLineWidth(2f);
 
-        //set single diagonal border
+        // Set the diagonal up border for the last cell in the table
         table.getLastCell().getCellFormat().getBorders().getDiagonalUp().setBorderType(BorderStyle.Single);
         table.getLastCell().getCellFormat().getBorders().getDiagonalUp().setColor(Color.RED);
         table.getLastCell().getCellFormat().getBorders().getDiagonalUp().setLineWidth(0.8f);
 
-        //save to file
+        // Save the document to the specified output file in DOCX format
         document.saveToFile(output, FileFormat.Docx);
+
+        // Dispose the document resources
+        document.dispose();
     }
 }
