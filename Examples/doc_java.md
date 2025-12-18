@@ -2060,11 +2060,11 @@ section.getPageSetup().getBorders().setBorderType(BorderStyle.Double_Wave);
 // Set the color of the page borders to light gray
 section.getPageSetup().getBorders().setColor(Color.lightGray);
 
-// Set the space (margin) on the left side of the page borders to 20
-section.getPageSetup().getBorders().getLeft().setSpace(20);
+// Set the space (margin) on the left side of the page borders to 50
+section.getPageSetup().getBorders().getLeft().setSpace(50);
 
-// Set the space (margin) on the right side of the page borders to 20
-section.getPageSetup().getBorders().getRight().setSpace(20);
+// Set the space (margin) on the right side of the page borders to 50
+section.getPageSetup().getBorders().getRight().setSpace(50);
 ```
 
 ---
@@ -6606,52 +6606,37 @@ nestedTable.get(3, 2).addParagraph().appendText("$0");
 Table table = section.addTable(true);
 table.resetCells(data.length + 1, header.length);
 
-
 // Add the header row
-TableRow row = table.getRows().get(0);
-row.isHeader(true);
-row.setHeight(20);
-row.setHeightType(TableRowHeightType.Exactly);
-
-for (int j = 0; j < row.getCells().getCount(); j++)
-{
-    row.getCells().get(j).getCellFormat().getShading().setBackgroundPatternColor(Color.gray);
-}
-
-for (int i = 0; i < header.length; i++)
-{
-    row.getCells().get(i).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
-    Paragraph p = row.getCells().get(i).addParagraph();
+TableRow headerRow = table.getRows().get(0);
+headerRow.isHeader(true);
+headerRow.setHeight(20);
+headerRow.setHeightType(TableRowHeightType.Exactly);
+headerRow.getRowFormat().setBackColor(Color.gray);
+for (int i = 0; i < header.length; i++) {
+    Paragraph p = headerRow.getCells().get(i).addParagraph();
     p.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
     TextRange txtRange = p.appendText(header[i]);
     txtRange.getCharacterFormat().setBold(true);
 }
+
 // Add data rows
-for (int r = 0; r < data.length; r++)
-{
+for (int r = 0; r < data.length; r++) {
     TableRow dataRow = table.getRows().get(r + 1);
     dataRow.setHeight(25);
     dataRow.setHeightType(TableRowHeightType.Exactly);
-    for (int c = 0; c < dataRow.getCells().getCount(); c++)
-    {
-        dataRow.getCells().get(c).getCellFormat().getShading().setBackgroundPatternColor(Color.white);
-    }
-
-    for (int c = 0; c < data[r].length; c++)
-    {
+    dataRow.getRowFormat().setBackColor(Color.white);
+    for (int c = 0; c < data[r].length; c++) {
         dataRow.getCells().get(c).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
         dataRow.getCells().get(c).addParagraph().appendText(data[r][c]);
     }
 }
+
 // Apply alternating row color
-for (int j = 1; j < table.getRows().getCount(); j++)
-{
-    if (j % 2 == 0)
-    {
-        TableRow row2 = table.getRows().get(j);
-        for (int f = 0; f < row2.getCells().getCount(); f++)
-        {
-            row2.getCells().get(f).getCellFormat().getShading().setBackgroundPatternColor(new Color(173, 216, 230)/*Color.getLightBlue()*/);
+for (int j = 1; j < table.getRows().getCount(); j++) {
+    if (j % 2 == 0) {
+        TableRow row = table.getRows().get(j);
+        for (int f = 0; f < row.getCells().getCount(); f++) {
+            row.getCells().get(f).getCellFormat().setBackColor(new Color(173, 216, 230));
         }
     }
 }
@@ -6671,37 +6656,36 @@ Section section = doc.addSection();
 // Create a table object
 Table table = new Table(doc);
 
-//Set the width of table
-table.setPreferredWidth(new PreferredWidth(WidthType.Percentage, (short)100));
-//Set the border of table
-table.getFormat().getBorders().setBorderType(BorderStyle.Single);
+// Set the preferred width of the table to 100% of the page width
+table.setPreferredWidth(new PreferredWidth(WidthType.Percentage, (short) 100));
 
-//Create a table row
-TableRow row = table.getRows().get(0);
+// Set the border type of the table to single line
+table.getTableFormat().getBorders().setBorderType(BorderStyle.Single);
+
+// Create a new row for the table
+TableRow row = new TableRow(doc);
 row.setHeight(50.0f);
+table.getRows().add(row);
 
-//Create a table cell
-TableCell cell1 = table.getRows().get(0).getCells().get(0);
-//Add a paragraph
+// Create the first cell in the row
+TableCell cell1 = new TableCell(doc);
 Paragraph para1 = cell1.addParagraph();
-//Append text in the paragraph
 para1.appendText("Row 1, Cell 1");
-//Set the horizontal alignment of paragrah
 para1.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
-//Set the background color of cell
-cell1.getCellFormat().getShading().setBackgroundPatternColor(Color.lightGray);
-//Set the vertical alignment of paragraph
+cell1.getCellFormat().setBackColor(Color.lightGray);
 cell1.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+row.getCells().add(cell1);
 
-//Create a table cell
-TableCell cell2 = table.getRows().get(0).getCells().get(1);
+// Create the second cell in the row
+TableCell cell2 = new TableCell(doc);
 Paragraph para2 = cell2.addParagraph();
 para2.appendText("Row 1, Cell 2");
 para2.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
-cell2.getCellFormat().getShading().setBackgroundPatternColor(Color.lightGray);
+cell2.getCellFormat().setBackColor(Color.lightGray);
 cell2.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+row.getCells().add(cell2);
 
-//Add the table in the section
+// Add the table to the section
 section.getTables().add(table);
 ```
 
@@ -6737,7 +6721,7 @@ table.resetCells(1, 1);
 // Get the cell in the first row and first column
 TableCell cell = table.getRows().get(0).getCells().get(0);
 
-// Set the height of the first row to 150f (float)
+// Set the height of the first row
 table.getRows().get(0).setHeight(150f);
 
 // Add a paragraph with text to the cell
@@ -6746,12 +6730,20 @@ cell.addParagraph().appendText("Draft copy in vertical style");
 // Set the text direction to right-to-left rotated
 cell.getCellFormat().setTextDirection(TextDirection.Right_To_Left_Rotated);
 
-//Set the table format.
-table.getFormat().setWrapTextAround(true);
-table.getFormat().getPositioning().setVertRelationTo(VerticalRelation.Page);
-table.getFormat().getPositioning().setHorizRelationTo(HorizontalRelation.Page);
-table.getFormat().getPositioning().setHorizPosition((float)section.getPageSetup().getPageSize().getWidth() - table.getWidth());
-table.getFormat().getPositioning().setVertPosition(200f);
+// Enable text wrapping around the table
+table.getTableFormat().setWrapTextAround(true);
+
+// Set vertical position relative to page
+table.getTableFormat().getPositioning().setVertRelationTo(VerticalRelation.Page);
+
+// Set horizontal position relative to page
+table.getTableFormat().getPositioning().setHorizRelationTo(HorizontalRelation.Page);
+
+// Set horizontal position
+table.getTableFormat().getPositioning().setHorizPosition((float) section.getPageSetup().getPageSize().getWidth() - table.getWidth());
+
+// Set vertical position
+table.getTableFormat().getPositioning().setVertPosition(200f);
 ```
 
 ---
@@ -6862,9 +6854,9 @@ Section section = document.getSections().get(0);
 Table table = section.getTables().get(0);
 
 // Check if text wrapping is enabled for the table
-if (table.getFormat().getWrapTextAround()) {
+if (table.getTableFormat().getWrapTextAround()) {
     // Get the positioning information for the table
-    TablePositioning position = table.getFormat().getPositioning();
+    TablePositioning position = table.getTableFormat().getPositioning();
 
     // Get horizontal positioning details
     String horizPosition = "Position: " + position.getHorizPosition() + " pt";
@@ -6911,16 +6903,15 @@ table.getRows().get(8).getCells().get(3).splitCell(2, 2);
 ## Modify table, row, and cell formats in Word documents
 ```java
 // Method to modify the table format
-private static void ModifyTableFormat(Table table)
-{
+private static void MoidfyTableFormat(Table table) {
     // Set the preferred width of the table
-    table.setPreferredWidth(new PreferredWidth(WidthType.Twip, (short)6000));
+    table.setPreferredWidth(new PreferredWidth(WidthType.Twip, (short) 6000));
 
     // Apply a predefined table style to the table
     table.applyStyle(DefaultTableStyle.Table_3_Deffects_2);
 
     // Set padding for all sides of the table
-    table.getFormat().getPaddings().setAll(5f);
+    table.getTableFormat().getPaddings().setAll(5f);
 
     // Set the title and description for the table
     table.setTitle("Spire.Doc for Java");
@@ -6928,41 +6919,37 @@ private static void ModifyTableFormat(Table table)
 }
 
 // Method to modify the row format
-private static void ModifyRowFormat(Table table)
-{
-    //Set cell spacing
-    table.getFormat().setCellSpacing(2f);
+private static void ModifyRowFormat(Table table) {
+    // Set the cell spacing for the first row
+    table.getRows().get(0).getRowFormat().setCellSpacing(2f);
 
-    //Set row height
+    // Set the height of the second row to a specific value
     table.getRows().get(1).setHeightType(TableRowHeightType.Exactly);
     table.getRows().get(1).setHeight(20f);
 
-    //Set background color
-    for (int i = 0; i < table.getRows().get(2).getCells().getCount(); i++)
-    {
-        table.getRows().get(2).getCells().get(i).getCellFormat().getShading().setBackgroundPatternColor(Color.gray);
-    }
+    // Set the background color for the third row
+    table.getRows().get(2).getRowFormat().setBackColor(Color.gray);
 }
 
 // Method to modify the cell format
-private static void ModifyCellFormat(Table table)
-{
-    //Set alignment
+private static void ModifyCellFormat(Table table) {
+    // Set vertical alignment and horizontal alignment for the cell in the first row and first column
     table.getRows().get(0).getCells().get(0).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
     table.getRows().get(0).getCells().get(0).getParagraphs().get(0).getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
 
-    //Set background color
-    table.getRows().get(1).getCells().get(0).getCellFormat().getShading().setBackgroundPatternColor(Color.gray);
+    // Set the background color for the cell in the second row and first column
+    table.getRows().get(1).getCells().get(0).getCellFormat().setBackColor(Color.gray);
 
-    //Set cell border
-    table.getRows().get(2).getCells().get(0).getCellFormat().getBorders().setBorderType(BorderStyle.Single);
-    table.getRows().get(2).getCells().get(0).getCellFormat().getBorders().setLineWidth(1f);
-    table.getRows().get(2).getCells().get(0).getCellFormat().getBorders().getLeft().setColor(Color.red);
-    table.getRows().get(2).getCells().get(0).getCellFormat().getBorders().getRight().setColor(Color.red);
-    table.getRows().get(2).getCells().get(0).getCellFormat().getBorders().getTop().setColor(Color.red);
-    table.getRows().get(2).getCells().get(0).getCellFormat().getBorders().getBottom().setColor(Color.red);
+    // Set borders for the cell in the third row and first column
+    CellFormat cellFormat = table.getRows().get(2).getCells().get(0).getCellFormat();
+    cellFormat.getBorders().setBorderType(BorderStyle.Single);
+    cellFormat.getBorders().setLineWidth(1f);
+    cellFormat.getBorders().getLeft().setColor(Color.red);
+    cellFormat.getBorders().getRight().setColor(Color.red);
+    cellFormat.getBorders().getTop().setColor(Color.red);
+    cellFormat.getBorders().getBottom().setColor(Color.red);
 
-    //Set text direction
+    // Set text direction for the cell in the fourth row and first column
     table.getRows().get(3).getCells().get(0).getCellFormat().setTextDirection(TextDirection.Right_To_Left);
 }
 ```
@@ -7002,73 +6989,48 @@ doc.getSections().get(0).getTables().removeAt(0);
 # Spire.Doc Table Header Row Repetition
 ## Create a table with header rows that repeat on each page
 ```java
-//Create a table width default borders
+// Add a table to the section, with autofit behavior enabled
 Table table = section.addTable(true);
-//Set table with to 100%
-PreferredWidth width = new PreferredWidth(WidthType.Percentage, (short)100);
+
+// Set the preferred width of the table to 100% of the available width
+PreferredWidth width = new PreferredWidth(WidthType.Percentage, (short) 100);
 table.setPreferredWidth(width);
 
-//Add a new row
+// Add a header row to the table
 TableRow row = table.addRow();
-//Set the row as a table header
 row.isHeader(true);
-//Add a new cell for row
+row.getRowFormat().setBackColor(Color.lightGray);
+
+// Add a cell to the header row with a width of 100% of the available width and centered contents
 TableCell cell = row.addCell();
-
-//Set the backcolor of row
-for (int j = 0; j < row.getCells().getCount(); j++)
-{
-    row.getCells().get(j).getCellFormat().getShading().setBackgroundPatternColor(Color.lightGray);
-}
 cell.setCellWidth(100, CellWidthType.Percentage);
-//Add a paragraph for cell to put some data
-Paragraph parapraph = cell.addParagraph();
-//Add text
-parapraph.appendText("Row Header 1");
-//Set paragraph horizontal center alignment
-parapraph.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
+Paragraph paragraph = cell.addParagraph();
+paragraph.appendText("Row Header 1");
+paragraph.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
 
+// Add another header row to the table
 row = table.addRow(false, 1);
 row.isHeader(true);
-for (int j = 0; j < row.getCells().getCount(); j++)
-{
-    row.getCells().get(j).getCellFormat().getShading().setBackgroundPatternColor(Color.orange);
-}
-//Set row height
+row.getRowFormat().setBackColor(Color.orange);
 row.setHeight(30f);
+
+// Add a cell to the second header row with a width of 100% of the available width, vertically aligned in the middle, and centered contents
 cell = row.getCells().get(0);
 cell.setCellWidth(100, CellWidthType.Percentage);
-//Set cell vertical middle alignment
 cell.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
-//Add a paragraph for cell to put some data
-parapraph = cell.addParagraph();
-//Add text
-parapraph.appendText("Row Header 2");
-parapraph.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
+paragraph = cell.addParagraph();
+paragraph.appendText("Row Header 2");
+paragraph.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
 
-//Add many common rows
-for (int i = 0; i < 70; i++)
-{
+// Add multiple rows and cells to the table
+for (int i = 0; i < 70; i++) {
     row = table.addRow(false, 2);
     cell = row.getCells().get(0);
-    //Set cell width to 50% of table width
     cell.setCellWidth(50f, CellWidthType.Percentage);
     cell.addParagraph().appendText("Column 1 Text");
     cell = row.getCells().get(1);
     cell.setCellWidth(50f, CellWidthType.Percentage);
     cell.addParagraph().appendText("Column 2 Text");
-}
-//Set cell backcolor
-for (int j = 1; j < table.getRows().getCount(); j++)
-{
-    if (j % 2 == 0)
-    {
-        TableRow row2 = table.getRows().get(j);
-        for (int f = 0; f < row2.getCells().getCount(); f++)
-        {
-            row2.getCells().get(f).getCellFormat().getShading().setBackgroundPatternColor(Color.PINK);
-        }
-    }
 }
 ```
 
@@ -7133,7 +7095,7 @@ Table table = section.addTable(true);
 table.resetCells(4, 3);
 
 // Set the horizontal alignment of the table to center
-table.getFormat().setHorizontalAlignment(RowAlignment.Center);
+table.getTableFormat().setHorizontalAlignment(RowAlignment.Center);
 
 // Set the diagonal down border for the first cell in the first row
 table.getFirstRow().getCells().get(0).getCellFormat().getBorders().getDiagonalDown().setBorderType(BorderStyle.Double);
@@ -7158,14 +7120,14 @@ Table table = header.addTable();
 table.resetCells(4, 2);
 
 // Set the table's wrap text around property to true
-table.getFormat().setWrapTextAround(true);
+table.getTableFormat().setWrapTextAround(true);
 
 // Set the table's horizontal absolute positioning to "Outside" the text area
-table.getFormat().getPositioning().setHorizPositionAbs(HorizontalPosition.Outside);
+table.getTableFormat().getPositioning().setHorizPositionAbs(HorizontalPosition.Outside);
 
 // Set the table's vertical positioning relative to the margin and set the vertical position to 43 points
-table.getFormat().getPositioning().setVertRelationTo(VerticalRelation.Margin);
-table.getFormat().getPositioning().setVertPosition(43f);
+table.getTableFormat().getPositioning().setVertRelationTo(VerticalRelation.Margin);
+table.getTableFormat().getPositioning().setVertPosition(43f);
 ```
 
 ---
@@ -7183,27 +7145,27 @@ Table table = section.getTables().get(0);
 table.applyStyle(DefaultTableStyle.Colorful_List);
 
 // Set the right border of the table to a red hairline with a line width of 1.0F
-table.getFormat().getBorders().getRight().setBorderType(BorderStyle.Hairline);
-table.getFormat().getBorders().getRight().setLineWidth(1.0F);
-table.getFormat().getBorders().getRight().setColor(Color.RED);
+table.getTableFormat().getBorders().getRight().setBorderType(BorderStyle.Hairline);
+table.getTableFormat().getBorders().getRight().setLineWidth(1.0F);
+table.getTableFormat().getBorders().getRight().setColor(Color.RED);
 
 // Set the top border of the table to a green hairline with a line width of 1.0F
-table.getFormat().getBorders().getTop().setBorderType(BorderStyle.Hairline);
-table.getFormat().getBorders().getTop().setLineWidth(1.0F);
-table.getFormat().getBorders().getTop().setColor(Color.GREEN);
+table.getTableFormat().getBorders().getTop().setBorderType(BorderStyle.Hairline);
+table.getTableFormat().getBorders().getTop().setLineWidth(1.0F);
+table.getTableFormat().getBorders().getTop().setColor(Color.GREEN);
 
 // Set the left border of the table to a yellow hairline with a line width of 1.0F
-table.getFormat().getBorders().getLeft().setBorderType(BorderStyle.Hairline);
-table.getFormat().getBorders().getLeft().setLineWidth(1.0F);
-table.getFormat().getBorders().getLeft().setColor(Color.YELLOW);
+table.getTableFormat().getBorders().getLeft().setBorderType(BorderStyle.Hairline);
+table.getTableFormat().getBorders().getLeft().setLineWidth(1.0F);
+table.getTableFormat().getBorders().getLeft().setColor(Color.YELLOW);
 
 // Set the bottom border of the table to a dot-dash style
-table.getFormat().getBorders().getBottom().setBorderType(BorderStyle.Dot_Dash);
+table.getTableFormat().getBorders().getBottom().setBorderType(BorderStyle.Dot_Dash);
 
 // Set the vertical borders of the table to a dot style and horizontal borders to none
-table.getFormat().getBorders().getVertical().setBorderType(BorderStyle.Dot);
-table.getFormat().getBorders().getHorizontal().setBorderType(BorderStyle.None);
-table.getFormat().getBorders().getVertical().setColor(Color.ORANGE);
+table.getTableFormat().getBorders().getVertical().setBorderType(BorderStyle.Dot);
+table.getTableFormat().getBorders().getHorizontal().setBorderType(BorderStyle.None);
+table.getTableFormat().getBorders().getVertical().setColor(Color.ORANGE);
 ```
 
 ---
@@ -10584,247 +10546,6 @@ for (Object object : layoutDoc.getLayoutEntitiesOfNode(((Section) doc.getFirstCh
     FixedLayoutLine paragraphLine = (FixedLayoutLine) object;
     paragraphLine.getText().trim();
     paragraphLine.getRectangle().toString();
-}
-```
-
----
-
-# Spire.Doc Paragraph Formatting
-## Remove space between paragraphs of same style
-```java
-// Get the Body object from the first section of the document
-Body body = document.getSections().get(0).getBody();
-
-// Loop through each paragraph in the body of the document
-Paragraph paragraph;
-for (int i = 0; i < body.getParagraphs().getCount(); i++) {
-    // Retrieve the current paragraph
-    paragraph = body.getParagraphs().get(i);
-
-    // Set no space between paragraphs of the same style for the current paragraph
-    paragraph.getFormat().setNoSpaceBetweenParagraphsOfSameStyle(true);
-}
-```
-
----
-
-# Spire.Doc Document Comparison
-## Compare documents ignoring table differences
-```java
-// Create a new CompareOptions object to specify comparison settings
-CompareOptions compareoptions = new CompareOptions();
-
-// Set the option to ignore differences in tables during comparison
-compareoptions.setIgnoreTable(true);
-
-// Compare the two documents using the specified options, with "E-iceblue" as the author name for tracked changes
-document1.compare(document2, "E-iceblue", compareoptions);
-```
-
----
-
-# Spire.Doc Document Revision Tracking
-## Track document revisions in Word documents
-```java
-// Start the track revisions
-document.startTrackRevisions("User01", new Date());
-
-// Get the first paragraph and add content
-document.getSections().get(0).getParagraphs().get(0).appendText("User01 add new Text!");
-
-// Delete a paragraph
-document.getSections().get(0).getParagraphs().removeAt(2);
-
-// Stop the track revisions
-document.stopTrackRevisions();
-```
-
----
-
-# Spire.Doc document conversion
-## Convert Word document to MHTML format
-```java
-// Create word document
-Document document = new Document();
-
-// Load the file from disk
-document.loadFromFile("data\\ToMhtml.docx");
-
-// Save to MHTML file
-document.saveToFile("ToMhtml-out.mhtml", FileFormat.Mhtml);
-```
-
----
-
-# Spire.Doc Java Text Formatting
-## Set underline color and style for text in document
-```java
-// Add a new paragraph to the section
-Paragraph paragraph = section.addParagraph();
-
-// Append text to the paragraph and get the TextRange object for formatting
-TextRange textRange = paragraph.appendText("Welcome to evaluate Spire.Doc for Java product.");
-
-// Set the underline style of the text to single underline
-textRange.getCharacterFormat().setUnderlineStyle(UnderlineStyle.Single);
-
-// Set the underline color of the text to red
-textRange.getCharacterFormat().setUnderlineColor(Color.red);
-```
-
----
-
-# Spire.Doc Bookmark Modification
-## Modify bookmark name in Word document
-```java
-// Create a new instance of the Document class
-Document document = new Document();
-
-// Retrieve the Bookmark object
-Bookmark bookmark = document.getBookmarks().get("Test");
-
-// Change the name of the retrieved bookmark to "bookmark1"
-bookmark.setName("bookmark1");
-```
-
----
-
-# Spire.Doc Chart Axis Configuration
-## Configure chart axes properties including labels, gridlines, titles, and formatting
-```java
-static void appendChartAxis(Chart chart)
-{
-    for (int i = 0; i < chart.getAxes().getCount(); i++)
-    {
-        if (i == 0)
-        {
-            chart.getAxes().get(i).setCategoryType(AxisCategoryType.Category);
-            chart.getAxes().get(i).getBounds().setMaximum(new AxisBound(5));
-            chart.getAxes().get(i).getBounds().setMinimum(new AxisBound(0));
-            chart.getAxes().get(i).getUnits().setMajor(1);
-            chart.getAxes().get(i).getUnits().setMajorTimeUnit(AxisTimeUnit.Auto);
-            chart.getAxes().get(i).getUnits().setMinor(1);
-            chart.getAxes().get(i).getUnits().setMinorTimeUnit(AxisTimeUnit.Days);
-            chart.getAxes().get(i).hasMajorGridlines(false);
-            chart.getAxes().get(i).hasMinorGridlines(true);
-            chart.getAxes().get(i).getLabels().isAutoSpacing(false);
-            chart.getAxes().get(i).getLabels().setSpacing(1);
-            chart.getAxes().get(i).getLabels().setOffset(1);
-            chart.getAxes().get(i).getLabels().setPosition(AxisTickLabelPosition.Low);
-            chart.getAxes().get(i).setReverseOrder(true);
-            chart.getAxes().get(i).getTitle().setText("x-axis");
-            chart.getAxes().get(i).getTitle().setShow(true);
-            chart.getAxes().get(i).getTitle().setOverlay(true);
-        }
-        else if (i == 1)
-        {
-            chart.getAxes().get(i).setCategoryType(AxisCategoryType.Category);
-            chart.getAxes().get(i).getUnits().isMajorAuto(true);
-            chart.getAxes().get(i).getUnits().isMinorAuto(true);
-            chart.getAxes().get(i).getBounds().setLogBase(10);
-            chart.getAxes().get(i).hasMajorGridlines(true);
-            chart.getAxes().get(i).hasMinorGridlines(false);
-            chart.getAxes().get(i).setReverseOrder(false);
-            chart.getAxes().get(i).getLabels().isAutoSpacing(true);
-            chart.getAxes().get(i).getTitle().setText("y-axis");
-            chart.getAxes().get(i).getTitle().setShow(true);
-            chart.getAxes().get(i).getTitle().setOverlay(true);
-        }
-        else
-        {
-            chart.getAxes().get(i).getTitle().setText("z-axis");
-            chart.getAxes().get(i).getTitle().setShow(true);
-            chart.getAxes().get(i).getTitle().setOverlay(false);
-        }
-        chart.getAxes().get(i).getLabels().setAlignment(LabelAlignment.Left);
-        chart.getAxes().get(i).getUnits().setBaseTimeUnit(AxisTimeUnit.Auto);
-        chart.getAxes().get(i).setAxisBetweenCategories(true);
-        chart.getAxes().get(i).getDisplayUnits().setCustomUnit(1);
-        chart.getAxes().get(i).getDisplayUnits().setUnit(AxisBuiltInUnit.Custom);
-        chart.getAxes().get(i).getDisplayUnits().setShowLabel(true);
-        chart.getAxes().get(i).getTickMarks().setSpacing(1);
-        chart.getAxes().get(i).getTickMarks().setMajor(AxisTickMark.None);
-        chart.getAxes().get(i).getTickMarks().setMinor(AxisTickMark.Inside);
-        chart.getAxes().get(i).getTitle().getCharacterFormat().setFontSize(8);
-        chart.getAxes().get(i).getTitle().getCharacterFormat().setTextColor(Color.red);
-        chart.getAxes().get(i).getTitle().getCharacterFormat().setBold(true);
-    }
-}
-```
-
----
-
-# Spire.Doc Chart Data Labels
-## Find charts in document and configure data labels
-```java
-// Loop through all sections in the document
-for (int i = 0; i < document.getSections().getCount(); i++) {
-    // Loop through all paragraphs in the current section
-    for (int j = 0; j < document.getSections().get(i).getParagraphs().getCount(); j++) {
-        // Get the current paragraph
-        Paragraph paragraph = document.getSections().get(i).getParagraphs().get(j);
-
-        // Loop through all child objects in the paragraph
-        for (int k = 0; k < paragraph.getChildObjects().getCount(); k++) {
-            DocumentObject obj = paragraph.getChildObjects().get(k);
-            // Check if the object is a shape (e.g., chart, etc.)
-            if (obj instanceof ShapeObject) {
-                // Cast the object to a ShapeObject
-                ShapeObject shape = (ShapeObject) obj;
-
-                // Get the chart from the shape
-                Chart chart = shape.getChart();
-                ChartSeriesCollection series = chart.getSeries();
-                ChartDataLabelCollection dataLabels = series.get(0).getDataLabels();
-                series.get(0).hasDataLabels(true);
-                
-                // Configure data labels
-                dataLabels.setShowValue(true);
-                dataLabels.setShowCategoryName(true);
-                dataLabels.setShowSeriesName(true);
-                dataLabels.setShowLeaderLines(true);
-                dataLabels.setSeparator(";");
-                dataLabels.getNumberFormat().setFormatCode("#,##0");
-
-                // Configure text formatting
-                dataLabels.getCharacterFormat().setFontSize(8);
-                dataLabels.getCharacterFormat().setBold(true);
-                dataLabels.getCharacterFormat().setTextColor(Color.blue);
-                dataLabels.getCharacterFormat().getBorder().setColor(Color.blue);
-                dataLabels.getCharacterFormat().setBidi(true);
-                dataLabels.getCharacterFormat().setItalic(true);
-                dataLabels.getCharacterFormat().setUnderlineColor(Color.red);
-                dataLabels.getCharacterFormat().setUnderlineStyle(UnderlineStyle.Double);
-                dataLabels.getCharacterFormat().setFontName("Arial");
-                dataLabels.getCharacterFormat().setAllCaps(true);
-                dataLabels.getCharacterFormat().isShadow(true);
-            }
-        }
-    }
-}
-```
-
----
-
-# Spire.Doc chart data table
-## append chart data table to Word document
-```java
-static void appendChartDataTable(Chart chart)
-{
-    // Enable the display of the data table in the chart
-    chart.getDataTable().setShow(true);
-
-    // Show legend keys (symbols) in the data table
-    chart.getDataTable().setShowLegendKeys(true);
-
-    // Display horizontal borders between rows in the data table
-    chart.getDataTable().setShowHorizontalBorder(true);
-
-    // Display vertical borders between columns in the data table
-    chart.getDataTable().setShowVerticalBorder(true);
-
-    // Show an outline border around the entire data table
-    chart.getDataTable().setShowOutlineBorder(true);
 }
 ```
 

@@ -34,9 +34,9 @@ public class setVerticalAlignment {
 
         // Define the data for the table
         String[][] data = {
-                new String[] {"","Spire.Office","Spire.DataExport"},
-                new String[] {"","Spire.Doc","Spire.DocViewer"},
-                new String[] {"","Spire.XLS","Spire.PDF"}
+                {"", "Spire.Office", "Spire.DataExport"},
+                {"", "Spire.Doc", "Spire.DocViewer"},
+                {"", "Spire.XLS", "Spire.PDF"}
         };
 
         // Populate the table with data

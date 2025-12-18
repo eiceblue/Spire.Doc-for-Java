@@ -71,11 +71,11 @@ public class formatMergedCells {
             TableRow dataRow = table.getRows().get(r);
             dataRow.setHeight(20);
             dataRow.setHeightType(TableRowHeightType.Exactly);
+            dataRow.getRowFormat().setBackColor(Color.white);
             for (int c = 0; c < dataRow.getCells().getCount(); c++) {
                 if (data[r][c] != null && data[r][c] != "") {
                     TextRange range = dataRow.getCells().get(c).addParagraph().appendText(data[r][c]);
                     range.getCharacterFormat().setFontName("Arial");
-                    dataRow.getCells().get(c).getCellFormat().getShading().setBackgroundPatternColor(Color.white);
                 }
             }
         }

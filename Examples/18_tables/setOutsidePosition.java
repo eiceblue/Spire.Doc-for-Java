@@ -27,21 +27,21 @@ public class setOutsidePosition {
 		table.resetCells(4, 2);
 
 		// Set the table's wrap text around property to true
-		table.getFormat().setWrapTextAround(true);
+		table.getTableFormat().setWrapTextAround(true);
 
 		// Set the table's horizontal absolute positioning to "Outside" the text area
-		table.getFormat().getPositioning().setHorizPositionAbs(HorizontalPosition.Outside);
+		table.getTableFormat().getPositioning().setHorizPositionAbs(HorizontalPosition.Outside);
 
 		// Set the table's vertical positioning relative to the margin and set the vertical position to 43 points
-		table.getFormat().getPositioning().setVertRelationTo(VerticalRelation.Margin);
-		table.getFormat().getPositioning().setVertPosition(43f);
+		table.getTableFormat().getPositioning().setVertRelationTo(VerticalRelation.Margin);
+		table.getTableFormat().getPositioning().setVertPosition(43f);
 
 		// Define the data for the table
 		String[][] data = {
-				new String[] {"Spire.Doc.left","Spire XLS.right"},
-				new String[] {"Spire.Presentatio.left","Spire.PDF.right"},
-				new String[] {"Spire.DataExport.left","Spire.PDFViewe.right"},
-				new String []{"Spire.DocViewer.left","Spire.BarCode.right"}
+				{"Spire.Doc.left", "Spire XLS.right"},
+				{"Spire.Presentatio.left", "Spire.PDF.right"},
+				{"Spire.DataExport.left", "Spire.PDFViewe.right"},
+				{"Spire.DocViewer.left", "Spire.BarCode.right"}
 		};
 
 		// Populate the table with data

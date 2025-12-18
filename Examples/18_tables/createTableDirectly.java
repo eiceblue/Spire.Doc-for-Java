@@ -7,43 +7,43 @@ public class createTableDirectly {
     public static void main(String[] args) {
         // Create a new document object
         Document doc = new Document();
-        //Add a section
+
+        // Add a section to the document
         Section section = doc.addSection();
-        //Create a table
+
+        // Create a table object
         Table table = new Table(doc);
-        table.resetCells(1,2);
 
-        //Set the width of table
-        table.setPreferredWidth(new PreferredWidth(WidthType.Percentage, (short)100));
-        //Set the border of table
-        table.getFormat().getBorders().setBorderType( BorderStyle.Single);
+        // Set the preferred width of the table to 100% of the page width
+        table.setPreferredWidth(new PreferredWidth(WidthType.Percentage, (short) 100));
 
-        //Create a table row
-        TableRow row = table.getRows().get(0);
+        // Set the border type of the table to single line
+        table.getTableFormat().getBorders().setBorderType(BorderStyle.Single);
+
+        // Create a new row for the table
+        TableRow row = new TableRow(doc);
         row.setHeight(50.0f);
+        table.getRows().add(row);
 
-        //Create a table cell
-        TableCell cell1 = table.getRows().get(0).getCells().get(0);
-        //Add a paragraph
+        // Create the first cell in the row
+        TableCell cell1 = new TableCell(doc);
         Paragraph para1 = cell1.addParagraph();
-        //Append text in the paragraph
         para1.appendText("Row 1, Cell 1");
-        //Set the horizontal alignment of paragrah
         para1.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
-        //Set the background color of cell
-        cell1.getCellFormat().getShading().setBackgroundPatternColor(Color.lightGray);
-        //Set the vertical alignment of paragraph
+        cell1.getCellFormat().setBackColor(Color.lightGray);
         cell1.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+        row.getCells().add(cell1);
 
-        //Create a table cell
-        TableCell cell2 = table.getRows().get(0).getCells().get(1);
+        // Create the second cell in the row
+        TableCell cell2 = new TableCell(doc);
         Paragraph para2 = cell2.addParagraph();
         para2.appendText("Row 1, Cell 2");
         para2.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
-        cell2.getCellFormat().getShading().setBackgroundPatternColor(Color.lightGray);
+        cell2.getCellFormat().setBackColor(Color.lightGray);
         cell2.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+        row.getCells().add(cell2);
 
-        //Add the table in the section
+        // Add the table to the section
         section.getTables().add(table);
 
         // Specify the output file path

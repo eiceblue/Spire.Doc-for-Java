@@ -21,9 +21,9 @@ public class getTablePosition {
         StringBuilder stringBuilder = new StringBuilder();
 
         // Check if text wrapping is enabled for the table
-        if (table.getFormat().getWrapTextAround()) {
+        if (table.getTableFormat().getWrapTextAround()) {
             // Get the positioning information for the table
-            TablePositioning position = table.getFormat().getPositioning();
+            TablePositioning position = table.getTableFormat().getPositioning();
 
             // Append horizontal positioning details to the StringBuilder
             stringBuilder.append("Horizontal:");

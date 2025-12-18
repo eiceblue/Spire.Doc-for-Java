@@ -24,9 +24,9 @@ public class createTable {
 		}
 
 		private static void addTable(Section section) {
+			// Define header and data for the table
 			String[] header = {"Name", "Capital", "Continent", "Area", "Population"};
-			String[][] data =
-					{
+			String[][] data = {
 							new String[]{"Argentina", "Buenos Aires", "South America", "2777815", "32300003"},
 							new String[]{"Bolivia", "La Paz", "South America", "1098575", "7300000"},
 							new String[]{"Brazil", "Brasilia", "South America", "8511196", "150400000"},
@@ -45,49 +45,43 @@ public class createTable {
 							new String[]{"America", "Washington", "North America", "9363130", "249200000"},
 							new String[]{"Uruguay", "Montevideo", "South America", "176140", "3002000"},
 							new String[]{"Venezuela", "Caracas", "South America", "912047", "19700000"}
-					};
+			};
 
 			// Create the table
 			Table table = section.addTable(true);
 			table.resetCells(data.length + 1, header.length);
 
 			// Add the header row
-			TableRow row = table.getRows().get(0);
-			row.isHeader(true);
-			row.setHeight(20);
-			row.setHeightType(TableRowHeightType.Exactly);
-
-			for (int j = 0; j < row.getCells().getCount(); j++) {
-				row.getCells().get(j).getCellFormat().getShading().setBackgroundPatternColor(Color.gray);
-			}
-
+			TableRow headerRow = table.getRows().get(0);
+			headerRow.isHeader(true);
+			headerRow.setHeight(20);
+			headerRow.setHeightType(TableRowHeightType.Exactly);
+			headerRow.getRowFormat().setBackColor(Color.gray);
 			for (int i = 0; i < header.length; i++) {
-				row.getCells().get(i).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
-				Paragraph p = row.getCells().get(i).addParagraph();
+				Paragraph p = headerRow.getCells().get(i).addParagraph();
 				p.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
 				TextRange txtRange = p.appendText(header[i]);
 				txtRange.getCharacterFormat().setBold(true);
 			}
+
 			// Add data rows
 			for (int r = 0; r < data.length; r++) {
 				TableRow dataRow = table.getRows().get(r + 1);
 				dataRow.setHeight(25);
 				dataRow.setHeightType(TableRowHeightType.Exactly);
-				for (int c = 0; c < dataRow.getCells().getCount(); c++) {
-					dataRow.getCells().get(c).getCellFormat().getShading().setBackgroundPatternColor(Color.white);
-				}
-
+				dataRow.getRowFormat().setBackColor(Color.white);
 				for (int c = 0; c < data[r].length; c++) {
 					dataRow.getCells().get(c).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
 					dataRow.getCells().get(c).addParagraph().appendText(data[r][c]);
 				}
 			}
+
 			// Apply alternating row color
 			for (int j = 1; j < table.getRows().getCount(); j++) {
 				if (j % 2 == 0) {
-					TableRow row2 = table.getRows().get(j);
-					for (int f = 0; f < row2.getCells().getCount(); f++) {
-						row2.getCells().get(f).getCellFormat().getShading().setBackgroundPatternColor(new Color(173, 216, 230)/*Color.getLightBlue()*/);
+					TableRow row = table.getRows().get(j);
+					for (int f = 0; f < row.getCells().getCount(); f++) {
+						row.getCells().get(f).getCellFormat().setBackColor(new Color(173, 216, 230));
 					}
 				}
 			}

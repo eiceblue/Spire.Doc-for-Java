@@ -27,12 +27,20 @@ public class createVerticalTable {
         // Set the text direction to right-to-left rotated
         cell.getCellFormat().setTextDirection(TextDirection.Right_To_Left_Rotated);
 
-        //Set the table format.
-        table.getFormat().setWrapTextAround(true);
-        table.getFormat().getPositioning().setVertRelationTo(VerticalRelation.Page);
-        table.getFormat().getPositioning().setHorizRelationTo( HorizontalRelation.Page);
-        table.getFormat().getPositioning().setHorizPosition((float) section.getPageSetup().getPageSize().getWidth()-table.getWidth());
-        table.getFormat().getPositioning().setVertPosition( 200f);
+        // Enable text wrapping around the table
+        table.getTableFormat().setWrapTextAround(true);
+
+        // Set vertical position relative to page
+        table.getTableFormat().getPositioning().setVertRelationTo(VerticalRelation.Page);
+
+        // Set horizontal position relative to page
+        table.getTableFormat().getPositioning().setHorizRelationTo(HorizontalRelation.Page);
+
+        // Set horizontal position
+        table.getTableFormat().getPositioning().setHorizPosition((float) section.getPageSetup().getPageSize().getWidth() - table.getWidth());
+
+        // Set vertical position
+        table.getTableFormat().getPositioning().setVertPosition(200f);
 
         // Specify the output file path
         String result = "output/Result-CreateVerticalTable.docx";

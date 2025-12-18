@@ -19,11 +19,11 @@ public class addPageBorders {
         // Set the color of the page borders to light gray
         section.getPageSetup().getBorders().setColor(Color.lightGray);
 
-        // Set the space (margin) on the left side of the page borders to 20
-        section.getPageSetup().getBorders().getLeft().setSpace(20);
+        // Set the space (margin) on the left side of the page borders to 50
+        section.getPageSetup().getBorders().getLeft().setSpace(50);
 
-        // Set the space (margin) on the right side of the page borders to 20
-        section.getPageSetup().getBorders().getRight().setSpace(20);
+        // Set the space (margin) on the right side of the page borders to 50
+        section.getPageSetup().getBorders().getRight().setSpace(50);
 
         // Specify the output file path
         String result = "output/result-addPageBorders.docx";
