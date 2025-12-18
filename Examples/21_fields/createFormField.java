@@ -174,7 +174,7 @@ public class createFormField {
 
             org.w3c.dom.Node node = nodeList.item(i);
             TableRow row = table.addRow(false);
-            row.getCells().get(0).getCellFormat().setBackColor(new Color(0x00, 0x71, 0xb6));
+            row.getCells().get(0).getCellFormat().getShading().setBackgroundPatternColor(new Color(0x00, 0x71, 0xb6));
             row.getCells().get(0).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
 
             //label of field group

@@ -34,7 +34,6 @@ public class pageSetup {
 
     // Method to add a table to the section
     private static void addTable(Section section) {
-        // Define the header and data for the table
         String[] header = {"Name", "Capital", "Continent", "Area", "Population"};
         String[][] data =
                 {
@@ -57,7 +56,6 @@ public class pageSetup {
                         new String[]{"Uruguay", "Montevideo", "South", "176140", "3002000"},
                         new String[]{"Venezuela", "Caracas", "South", "912047", "19700000"}
                 };
-
         // Create a new table with header row
         Table table = section.addTable(true);
 
@@ -65,37 +63,32 @@ public class pageSetup {
         table.resetCells(data.length + 1, header.length);
 
         // Customize the appearance of the header row
-        TableRow headerRow = table.getRows().get(0);
-        headerRow.isHeader(true);
-        headerRow.setHeight(20);
-        headerRow.setHeightType(TableRowHeightType.Exactly);
-        headerRow.getRowFormat().setBackColor(Color.GRAY);
-
-        // Add cells with formatted text to the header row
+        TableRow row = table.getRows().get(0);
+        row.isHeader(true);
+        row.setHeight(20);
+        row.setHeightType(TableRowHeightType.Exactly);
+        for (int j = 0; j < row.getCells().getCount(); j++) {
+            row.getCells().get(j).getCellFormat().getShading().setBackgroundPatternColor(Color.GRAY);
+        }
         for (int i = 0; i < header.length; i++) {
-            // Customize cell formatting
-            TableCell cell = headerRow.getCells().get(i);
-            cell.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
-
-            // Add a paragraph to the cell and format its content
-            Paragraph p = cell.addParagraph();
+            row.getCells().get(i).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+            Paragraph p = row.getCells().get(i).addParagraph();
             p.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
             TextRange txtRange = p.appendText(header[i]);
             txtRange.getCharacterFormat().setBold(true);
         }
 
-        // Add data rows to the table
         for (int r = 0; r < data.length; r++) {
             TableRow dataRow = table.getRows().get(r + 1);
             dataRow.setHeight(20);
             dataRow.setHeightType(TableRowHeightType.Exactly);
-            dataRow.getRowFormat().setBackColor(new Color(0, true));
+            for (int c = 0; c < dataRow.getCells().getCount(); c++) {
+                dataRow.getCells().get(c).getCellFormat().getShading().setBackgroundPatternColor(Color.white);
+            }
 
-            // Add cells with plain text to each data row
             for (int c = 0; c < data[r].length; c++) {
-                TableCell cell = dataRow.getCells().get(c);
-                cell.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
-                cell.addParagraph().appendText(data[r][c]);
+                dataRow.getCells().get(c).getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+                dataRow.getCells().get(c).addParagraph().appendText(data[r][c]);
             }
         }
     }
