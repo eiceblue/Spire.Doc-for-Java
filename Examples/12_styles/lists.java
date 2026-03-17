@@ -1,4 +1,5 @@
 import com.spire.doc.*;
+import com.spire.doc.collections.ListLevelCollection;
 import com.spire.doc.documents.*;
 
 public class lists {
@@ -22,22 +23,17 @@ public class lists {
         paragraph.appendText("Numbered List:").getCharacterFormat().setBold(true);
 
         // Create a new numbered list style
-        ListStyle numberList = new ListStyle(document, ListType.Numbered);
-        numberList.setName("numberList");
+        ListStyle numberList =document.getStyles().add(ListType.Numbered, "numberList");
+        ListLevelCollection Levels = numberList.getListRef().getLevels();
 
         // Configure the levels of the numbered list style
-        numberList.getLevels().get(1).setNumberPrefix("\u0000.");
-        numberList.getLevels().get(1).setPatternType(ListPatternType.Arabic);
-        numberList.getLevels().get(2).setNumberPrefix("\u0000.\u0001.");
-        numberList.getLevels().get(2).setPatternType(ListPatternType.Arabic);
+        Levels.get(1).setNumberPrefix("\u0000.");
+        Levels.get(1).setPatternType(ListPatternType.Arabic);
+        Levels.get(2).setNumberPrefix("\u0000.\u0001.");
+        Levels.get(2).setPatternType(ListPatternType.Arabic);
 
         // Create a new bulleted list style
-        ListStyle bulletList = new ListStyle(document, ListType.Bulleted);
-        bulletList.setName("bulletList");
-
-        // Add the list styles to the document
-        document.getListStyles().add(numberList);
-        document.getListStyles().add(bulletList);
+        ListStyle bulletList =document.getStyles().add(ListType.Bulleted, "bulletList");
 
         // Add paragraphs with list items to the section
         paragraph = sec.addParagraph();

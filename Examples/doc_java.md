@@ -566,48 +566,42 @@ s2.getParagraphs().add(NewPara2);
 
 ---
 
-# Spire.Doc Catalogue Creation
-## Create a hierarchical catalogue with custom numbered list styles in Word document
+# spire.doc java catalog
+## Create a document catalog with custom list styles
 ```java
-//Create Word document
-Document document = new Document();
-
-//Add a new section
+//Add a new section.
 Section section = document.addSection();
 Paragraph paragraph = section.addParagraph();
 
-//Add Heading 1
+//Add Heading 1.
 paragraph.appendText(BuiltinStyle.Heading_1.toString());
 paragraph.applyStyle(BuiltinStyle.Heading_1);
 paragraph.getListFormat().applyNumberedStyle();
 
-// Add Heading 2
+// Add Heading 2.
 paragraph = section.addParagraph();
 paragraph.appendText(BuiltinStyle.Heading_2.toString());
 paragraph.applyStyle(BuiltinStyle.Heading_2);
 
-//List style for Headings 2
-ListStyle listSty2 = new ListStyle(document, ListType.Numbered);
-for (Object listLevelObj : listSty2.getLevels()) {
+//List style for Headings 2.
+ListStyle listSty2 =  document.getStyles().add(ListType.Numbered, "MyStyle2");
+for (Object listLevelObj : listSty2.getListRef().getLevels()) {
     ListLevel listLev = (ListLevel)listLevelObj;
     listLev.setUsePrevLevelPattern(true);
     listLev.setNumberPrefix("1.");
 }
-listSty2.setName("MyStyle2");
-document.getListStyles().add(listSty2);
+
 paragraph.getListFormat().applyStyle(listSty2.getName());
 
-//Add list style 3
-ListStyle listSty3 = new ListStyle(document, ListType.Numbered);
-for (Object listLevelObj : listSty3.getLevels()) {
+//Add list style 3.
+ListStyle listSty3 = document.getStyles().add(ListType.Numbered, "MyStyle3");
+for (Object listLevelObj : listSty3.getListRef().getLevels()) {
     ListLevel listLev = (ListLevel)listLevelObj;
     listLev.setUsePrevLevelPattern(true);
     listLev.setNumberPrefix("1.1.");
 }
-listSty3.setName("MyStyle3");
-document.getListStyles().add(listSty3);
 
-// Add Heading 3
+// Add Heading 3.
 for (int i = 0; i < 4; i++) {
     paragraph = section.addParagraph();
     // Append text
@@ -3914,8 +3908,8 @@ for (int i = 0; i < doc.getSections().getCount(); i++) {
 
 ---
 
-# Spire.Doc List Styles
-## Create numbered and bulleted lists in Word document
+# Spire.Doc List Creation
+## Create numbered and bulleted lists in a Word document
 ```java
 // Create a new Document object
 Document document = new Document();
@@ -3923,26 +3917,30 @@ Document document = new Document();
 // Add a section to the document
 Section sec = document.addSection();
 
+// Add a paragraph for the title
+Paragraph paragraph = sec.addParagraph();
+paragraph.appendText("Lists");
+paragraph.applyStyle(BuiltinStyle.Title);
+
+// Add a paragraph for the heading
+paragraph = sec.addParagraph();
+paragraph.appendText("Numbered List:").getCharacterFormat().setBold(true);
+
 // Create a new numbered list style
-ListStyle numberList = new ListStyle(document, ListType.Numbered);
-numberList.setName("numberList");
+ListStyle numberList = document.getStyles().add(ListType.Numbered, "numberList");
+ListLevelCollection Levels = numberList.getListRef().getLevels();
 
 // Configure the levels of the numbered list style
-numberList.getLevels().get(1).setNumberPrefix("\u0000.");
-numberList.getLevels().get(1).setPatternType(ListPatternType.Arabic);
-numberList.getLevels().get(2).setNumberPrefix("\u0000.\u0001.");
-numberList.getLevels().get(2).setPatternType(ListPatternType.Arabic);
+Levels.get(1).setNumberPrefix("\u0000.");
+Levels.get(1).setPatternType(ListPatternType.Arabic);
+Levels.get(2).setNumberPrefix("\u0000.\u0001.");
+Levels.get(2).setPatternType(ListPatternType.Arabic);
 
 // Create a new bulleted list style
-ListStyle bulletList = new ListStyle(document, ListType.Bulleted);
-bulletList.setName("bulletList");
+ListStyle bulletList = document.getStyles().add(ListType.Bulleted, "bulletList");
 
-// Add the list styles to the document
-document.getListStyles().add(numberList);
-document.getListStyles().add(bulletList);
-
-// Add numbered list items
-Paragraph paragraph = sec.addParagraph();
+// Add paragraphs with numbered list items to the section
+paragraph = sec.addParagraph();
 paragraph.appendText("List Item 1");
 paragraph.getListFormat().applyStyle(numberList.getName());
 
@@ -3950,7 +3948,6 @@ paragraph = sec.addParagraph();
 paragraph.appendText("List Item 2");
 paragraph.getListFormat().applyStyle(numberList.getName());
 
-// Add sub-level numbered list items
 paragraph = sec.addParagraph();
 paragraph.appendText("List Item 2.1");
 paragraph.getListFormat().applyStyle(numberList.getName());
@@ -3961,13 +3958,35 @@ paragraph.appendText("List Item 2.2");
 paragraph.getListFormat().applyStyle(numberList.getName());
 paragraph.getListFormat().setListLevelNumber(1);
 
-// Add deeper level numbered list items
 paragraph = sec.addParagraph();
 paragraph.appendText("List Item 2.2.1");
 paragraph.getListFormat().applyStyle(numberList.getName());
 paragraph.getListFormat().setListLevelNumber(2);
 
-// Add bulleted list items
+paragraph = sec.addParagraph();
+paragraph.appendText("List Item 2.2.2");
+paragraph.getListFormat().applyStyle(numberList.getName());
+paragraph.getListFormat().setListLevelNumber(2);
+
+paragraph = sec.addParagraph();
+paragraph.appendText("List Item 2.2.3");
+paragraph.getListFormat().applyStyle(numberList.getName());
+paragraph.getListFormat().setListLevelNumber(2);
+
+paragraph = sec.addParagraph();
+paragraph.appendText("List Item 2.3");
+paragraph.getListFormat().applyStyle(numberList.getName());
+paragraph.getListFormat().setListLevelNumber(1);
+
+paragraph = sec.addParagraph();
+paragraph.appendText("List Item 3");
+paragraph.getListFormat().applyStyle(numberList.getName());
+
+// Add paragraph for bulleted list heading
+paragraph = sec.addParagraph();
+paragraph.appendText("Bulleted List:").getCharacterFormat().setBold(true);
+
+// Add paragraphs with bulleted list items to the section
 paragraph = sec.addParagraph();
 paragraph.appendText("List Item 1");
 paragraph.getListFormat().applyStyle(bulletList.getName());
@@ -3976,11 +3995,19 @@ paragraph = sec.addParagraph();
 paragraph.appendText("List Item 2");
 paragraph.getListFormat().applyStyle(bulletList.getName());
 
-// Add sub-level bulleted list items
 paragraph = sec.addParagraph();
 paragraph.appendText("List Item 2.1");
 paragraph.getListFormat().applyStyle(bulletList.getName());
 paragraph.getListFormat().setListLevelNumber(1);
+
+paragraph = sec.addParagraph();
+paragraph.appendText("List Item 2.2");
+paragraph.getListFormat().applyStyle(bulletList.getName());
+paragraph.getListFormat().setListLevelNumber(1);
+
+paragraph = sec.addParagraph();
+paragraph.appendText("List Item 3");
+paragraph.getListFormat().applyStyle(bulletList.getName());
 ```
 
 ---
@@ -4101,8 +4128,8 @@ for (int i = 0; i < doc.getSections().getCount(); i++) {
 
 ---
 
-# Document Styles Management
-## Create and apply various document styles in Word document
+# Spire.Doc Style Management
+## Create and apply document styles in Word documents
 ```java
 // Create a new Document instance
 Document document = new Document();
@@ -4110,71 +4137,64 @@ Document document = new Document();
 // Add a new section to the document
 Section sec = document.addSection();
 
-// Define a title style
+// Add default title style to document
 Style titleStyle = document.addStyle(BuiltinStyle.Title);
-titleStyle.getCharacterFormat().setFontName("cambria");
-titleStyle.getCharacterFormat().setFontSize(28f);
-titleStyle.getCharacterFormat().setTextColor(new Color(42, 123, 136));
-
-// Customize the bottom border of the title style
 if (titleStyle instanceof ParagraphStyle) {
-    ParagraphStyle ps = (ParagraphStyle)titleStyle;
+    ParagraphStyle ps = (ParagraphStyle) titleStyle;
     ps.getParagraphFormat().getBorders().getBottom().setBorderType(BorderStyle.Single);
     ps.getParagraphFormat().getBorders().getBottom().setColor(new Color(42, 123, 136));
     ps.getParagraphFormat().getBorders().getBottom().setLineWidth(1.5f);
     ps.getParagraphFormat().setHorizontalAlignment(HorizontalAlignment.Left);
 }
 
-// Define a normal style
+// Add default normal style and modify
 Style normalStyle = document.addStyle(BuiltinStyle.Normal);
-normalStyle.getCharacterFormat().setFontName("cambria");
-normalStyle.getCharacterFormat().setFontSize(11f);
+if (normalStyle instanceof ParagraphStyle) {
+    ParagraphStyle ps = (ParagraphStyle)normalStyle;
+    ps.getCharacterFormat().setFontName("cambria");
+    ps.getCharacterFormat().setFontSize(11);
+}
 
-// Define a heading 1 style
+// Add default heading1 style
 Style heading1Style = document.addStyle(BuiltinStyle.Heading_1);
-heading1Style.getCharacterFormat().setFontName("cambria");
-heading1Style.getCharacterFormat().setFontSize(14f);
-heading1Style.getCharacterFormat().setTextColor(new Color(42, 123, 136));
+if (heading1Style instanceof ParagraphStyle) {
+    ParagraphStyle ps = (ParagraphStyle)heading1Style;
+    ps.getCharacterFormat().setFontName("cambria");
+    ps.getCharacterFormat().setFontSize(14);
+    ps.getCharacterFormat().setBold(true);
+    ps.getCharacterFormat().setTextColor(new Color(42,123,136));
+}
 
-// Define a heading 2 style
 Style heading2Style = document.addStyle(BuiltinStyle.Heading_2);
-heading2Style.getCharacterFormat().setFontName("cambria");
-heading2Style.getCharacterFormat().setFontSize(12f);
-heading2Style.getCharacterFormat().setBold(true);
+if (heading2Style instanceof ParagraphStyle) {
+    ParagraphStyle ps = (ParagraphStyle)heading2Style;
+    ps.getCharacterFormat().setFontName("cambria");
+    ps.getCharacterFormat().setFontSize(12);
+    ps.getCharacterFormat().setBold(true);
+}
 
-// Define a bullet list style
-ListStyle bulletList = new ListStyle(document, ListType.Bulleted);
-bulletList.getCharacterFormat().setFontName("cambria");
-bulletList.getCharacterFormat().setFontSize(12f);
-bulletList.setName("bulletList");
-document.getListStyles().add(bulletList);
+ListStyle bulletList = document.getStyles().add(ListType.Bulleted, "bulletList");
+if (bulletList instanceof ICharacterStyle) {
+    ICharacterStyle ps = (ICharacterStyle)bulletList;
+    ps.getCharacterFormat().setFontName("cambria");
+    ps.getCharacterFormat().setFontSize(12);
+}
 
-// Create a paragraph and apply the title style to it
+// Apply styles to paragraphs
 Paragraph paragraph = sec.addParagraph();
+paragraph.appendText("Your Name");
 paragraph.applyStyle(BuiltinStyle.Title);
 
-// Create a paragraph and apply the normal style to it
 paragraph = sec.addParagraph();
+paragraph.appendText("Address, City, ST ZIP Code | Telephone | Email");
 paragraph.applyStyle(BuiltinStyle.Normal);
 
-// Create a paragraph and apply the heading 1 style to it
 paragraph = sec.addParagraph();
+paragraph.appendText("Objective");
 paragraph.applyStyle(BuiltinStyle.Heading_1);
 
-// Create a new paragraph and add it to the section
 paragraph = sec.addParagraph();
-paragraph.applyStyle(BuiltinStyle.Normal);
-
-// Create a new paragraph and add it to the section
-paragraph = sec.addParagraph();
-paragraph.applyStyle(BuiltinStyle.Heading_1);
-
-// Create a new paragraph and add it to the section
-paragraph = sec.addParagraph();
-paragraph.applyStyle(BuiltinStyle.Heading_2);
-
-// Create a new paragraph and add it to the section
-paragraph = sec.addParagraph();
+paragraph.appendText("Major:Text");
 paragraph.getListFormat().applyStyle("bulletList");
 ```
 
@@ -10829,4 +10849,171 @@ static void appendChartDataTable(Chart chart)
 ```
 
 ---
+# Document Grid Configuration
+## Specify characters per line in document grid
+```java
+// Create a new document instance
+Document document = new Document();
 
+// Add a new section to the document
+Section section = document.addSection();
+
+// Set the document grid type to character and line grid
+section.getPageSetup().setGridType(GridPitchType.Chars_And_Line);
+
+// Specify the number of characters per line in the document grid
+section.getPageSetup().setCharactersPerLine(30);
+
+// Add a new paragraph to the section
+Paragraph paragraph = section.addParagraph();
+```
+
+---
+
+# spire.doc document revisions
+## accept or reject specific revisions in a Word document
+```java
+// Retrieve the collection of all revision information (track changes) present in the document.
+RevisionInfoCollection revisionInfoCollection = document.getRevisionInfos();
+
+// Iterate through each revision in the document using a for loop.
+for (int i = 0; i < revisionInfoCollection.getCount(); i++) {
+    // Get the revision info object at the current index.
+    RevisionInfo revisionInfo = revisionInfoCollection.get(i);
+
+    // Check if the current revision is an insertion (newly added content).
+    if (revisionInfo.getRevisionType() == RevisionType.Insertion) {
+
+        // Accept (keep) the insertion revision in the document.
+        revisionInfo.accept();
+
+        // Alternative: reject (remove) the insertion instead of accepting it.
+        // revisionInfo.reject();
+
+        // Decrement the loop counter to re-check the current index,
+        // because accepting/rejecting a revision may alter the revision collection.
+        i--;
+    }
+}
+```
+
+---
+
+# Spire.Doc Format Change Revisions
+## Obtain and analyze formatting change revisions in a Word document
+```java
+// Create a new Document instance to work with a Word document in memory.
+Document document = new Document();
+
+// Retrieve the collection of all revision information in the document.
+RevisionInfoCollection revisionInfoCollection = document.getRevisionInfos();
+
+// Iterate through each revision in the collection.
+for (int i = 0; i < revisionInfoCollection.getCount(); i++) {
+    // Obtain the specific revision info object at the current index.
+    RevisionInfo revisionInfo = revisionInfoCollection.get(i);
+
+    // Check if the current revision represents a formatting change.
+    if (revisionInfo.getRevisionType() == RevisionType.Format_Change) {
+
+        // Verify that the object affected by the formatting change is a text range.
+        if (revisionInfo.getOwnerObject() instanceof TextRange) {
+            // Cast the owner object to a TextRange to access its properties.
+            TextRange textRange = (TextRange) revisionInfo.getOwnerObject();
+
+            // Switch the document's revision view mode to show the original version.
+            document.setRevisionsView(RevisionsView.Original);
+
+            // Get the font size as it appeared in the original version.
+            textRange.getCharacterFormat().getFontSize();
+
+            // Switch the document's revision view mode to show the final version.
+            document.setRevisionsView(RevisionsView.Final);
+
+            // Get the font size as it appears after the formatting revision.
+            textRange.getCharacterFormat().getFontSize();
+        }
+    }
+}
+```
+
+---
+
+# Document Format Revision Tracking
+## Track formatting changes in a Word document
+```java
+// Enable revision tracking (Track Changes)
+document.startTrackRevisions("SpireDoc");
+
+// Get the first section of the document
+Section section = document.getSections().get(0);
+
+// Get the first paragraph in that section
+Paragraph paragraph = section.getParagraphs().get(0);
+
+// Loop through all child objects in the first paragraph
+for (int i = 0; i < paragraph.getChildObjects().getCount(); i++) {
+    // Check if the current child object is a text range
+    if (paragraph.getChildObjects().get(i).getDocumentObjectType() == DocumentObjectType.Text_Range) {
+        // Cast the object to a TextRange to access its formatting properties
+        TextRange tr = (TextRange) paragraph.getChildObjects().get(i);
+
+        // Change the text color to red—this will be recorded as a formatting revision
+        tr.getCharacterFormat().setTextColor(Color.RED);
+
+        // Set the font size to 28 points—tracked as a revision due to active track changes
+        tr.getCharacterFormat().setFontSize(28);
+
+        // Apply bold formatting—also captured as a tracked change
+        tr.getCharacterFormat().setBold(true);
+    }
+}
+
+// Append new text to the second paragraph —this insertion will be tracked as a revision
+section.getParagraphs().get(1).appendText("some new text");
+
+// Disable revision tracking (stop recording changes)
+document.stopTrackRevisions();
+```
+
+---
+
+# spire.doc document conversion
+## Convert document to Markdown with export options
+```java
+// Create a new Document instance
+Document document = new Document();
+
+// Configure the Markdown export options to embed images as Base64-encoded strings
+document.getMarkdownExportOptions().setImagesAsBase64(true);
+
+// Specify the local directory where extracted images will be saved
+document.getMarkdownExportOptions().setImagesFolder("Images");
+
+// Set an alias path for the images folder in the generated Markdown
+document.getMarkdownExportOptions().setImagesFolderAlias("MyImages");
+
+// Set list output mode to render as plain text without Markdown list syntax
+document.getMarkdownExportOptions().setListOutputMode(MarkdownListOutputMode.Plain_Text);
+
+// Enable preservation of underline formatting
+document.getMarkdownExportOptions().setSaveUnderlineFormatting(true);
+
+// Configure hyperlink output to use Markdown reference-style links
+document.getMarkdownExportOptions().setLinkOutputMode(MarkdownLinkOutputMode.Reference);
+
+// Set output format for Office Math equations to MathML
+document.getMarkdownExportOptions().setOfficeMathOutputMode(MarkdownOfficeMathOutputMode.Math_ML);
+
+// Specify elements to be saved using HTML syntax within Markdown
+document.getMarkdownExportOptions().setSaveAsHtml(MarkdownSaveAsHtml.Tables);
+
+// Save the converted document to Markdown format
+document.saveToFile("output.md", FileFormat.Markdown);
+
+// Clean up resources
+document.close();
+document.dispose();
+```
+
+---

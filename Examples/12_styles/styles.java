@@ -1,5 +1,7 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
+import com.spire.doc.interfaces.ICharacterStyle;
+
 import java.awt.*;
 
 public class styles {
@@ -13,44 +15,53 @@ public class styles {
         // Add a new section to the document
         Section sec = document.addSection();
 
-        // Define a title style
+        //add default title style to document
         Style titleStyle = document.addStyle(BuiltinStyle.Title);
-        titleStyle.getCharacterFormat().setFontName("cambria");
-        titleStyle.getCharacterFormat().setFontSize(28f);
-        titleStyle.getCharacterFormat().setTextColor(new Color(42, 123, 136));
-
-        // Customize the bottom border of the title style
+        //judge if it is Paragraph Style and then set paragraph format
         if (titleStyle instanceof ParagraphStyle) {
-            ParagraphStyle ps = (ParagraphStyle)titleStyle;
+            ParagraphStyle ps = (ParagraphStyle) titleStyle;
             ps.getParagraphFormat().getBorders().getBottom().setBorderType(BorderStyle.Single);
             ps.getParagraphFormat().getBorders().getBottom().setColor(new Color(42, 123, 136));
             ps.getParagraphFormat().getBorders().getBottom().setLineWidth(1.5f);
             ps.getParagraphFormat().setHorizontalAlignment(HorizontalAlignment.Left);
         }
 
-        // Define a normal style
+        //add default normal style and modify
         Style normalStyle = document.addStyle(BuiltinStyle.Normal);
-        normalStyle.getCharacterFormat().setFontName("cambria");
-        normalStyle.getCharacterFormat().setFontSize(11f);
+        if (normalStyle instanceof ParagraphStyle) {
+            ParagraphStyle ps = (ParagraphStyle)normalStyle;
 
-        // Define a heading 1 style
+            ps.getCharacterFormat().setFontName("cambria");
+            ps.getCharacterFormat().setFontSize(11);
+        }
+
+        //add default heading1 style
         Style heading1Style = document.addStyle(BuiltinStyle.Heading_1);
-        heading1Style.getCharacterFormat().setFontName("cambria");
-        heading1Style.getCharacterFormat().setFontSize(14f);
-        heading1Style.getCharacterFormat().setTextColor(new Color(42, 123, 136));
+        if (heading1Style instanceof ParagraphStyle) {
+            ParagraphStyle ps = (ParagraphStyle)heading1Style;
 
-        // Define a heading 2 style
+            ps.getCharacterFormat().setFontName("cambria");
+            ps.getCharacterFormat().setFontSize(14);
+            ps.getCharacterFormat().setBold(true);
+            ps.getCharacterFormat().setTextColor(new Color(42,123,136));
+        }
+
         Style heading2Style = document.addStyle(BuiltinStyle.Heading_2);
-        heading2Style.getCharacterFormat().setFontName("cambria");
-        heading2Style.getCharacterFormat().setFontSize(12f);
-        heading2Style.getCharacterFormat().setBold(true);
+        if (heading2Style instanceof ParagraphStyle) {
+            ParagraphStyle ps = (ParagraphStyle)heading2Style;
 
-        // Define a bullet list style
-        ListStyle bulletList = new ListStyle(document, ListType.Bulleted);
-        bulletList.getCharacterFormat().setFontName("cambria");
-        bulletList.getCharacterFormat().setFontSize(12f);
-        bulletList.setName("bulletList");
-        document.getListStyles().add(bulletList);
+            ps.getCharacterFormat().setFontName("cambria");
+            ps.getCharacterFormat().setFontSize(12);
+            ps.getCharacterFormat().setBold(true);
+        }
+
+        ListStyle bulletList = document.getStyles().add(ListType.Bulleted, "bulletList");
+        if (bulletList instanceof ICharacterStyle) {
+            ICharacterStyle ps = (ICharacterStyle)bulletList;
+
+            ps.getCharacterFormat().setFontName("cambria");
+            ps.getCharacterFormat().setFontSize(12);
+        }
 
         // Create a paragraph and apply the title style to it
         Paragraph paragraph = sec.addParagraph();

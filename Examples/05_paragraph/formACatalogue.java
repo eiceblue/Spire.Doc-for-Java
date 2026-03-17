@@ -1,5 +1,6 @@
 import com.spire.doc.*;
 import com.spire.doc.documents.*;
+
 public class formACatalogue {
     public static void main(String[] args){
         //Create Word document.
@@ -20,25 +21,22 @@ public class formACatalogue {
         paragraph.applyStyle(BuiltinStyle.Heading_2);
 
         //List style for Headings 2.
-        ListStyle listSty2 = new ListStyle(document, ListType.Numbered);
-        for (Object listLevelObj : listSty2.getLevels()) {
+        ListStyle listSty2 =  document.getStyles().add(ListType.Numbered, "MyStyle2");
+        for (Object listLevelObj : listSty2.getListRef().getLevels()) {
             ListLevel listLev = (ListLevel)listLevelObj;
             listLev.setUsePrevLevelPattern(true);
             listLev.setNumberPrefix("1.");
         }
-        listSty2.setName("MyStyle2");
-        document.getListStyles().add(listSty2);
+
         paragraph.getListFormat().applyStyle(listSty2.getName());
 
         //Add list style 3.
-        ListStyle listSty3 = new ListStyle(document, ListType.Numbered);
-        for (Object listLevelObj : listSty3.getLevels()) {
+        ListStyle listSty3 = document.getStyles().add(ListType.Numbered, "MyStyle3");
+        for (Object listLevelObj : listSty3.getListRef().getLevels()) {
             ListLevel listLev = (ListLevel)listLevelObj;
             listLev.setUsePrevLevelPattern(true);
             listLev.setNumberPrefix("1.1.");
         }
-        listSty3.setName("MyStyle3");
-        document.getListStyles().add(listSty3);
 
         // Add Heading 3.
         for (int i = 0; i < 4; i++) {
