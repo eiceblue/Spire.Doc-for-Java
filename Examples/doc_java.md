@@ -11017,3 +11017,1112 @@ document.dispose();
 ```
 
 ---
+# spire.doc java paragraph
+## adjust right indent
+```java
+Document doc = new Document();
+Section section = doc.addSection();
+
+Paragraph paragraph = section.getBody().addParagraph();
+paragraph.setText("Hello World!");
+paragraph.getFormat().setAdjustRightIndent(true);
+
+paragraph = section.getBody().addParagraph();
+paragraph.setText("Thank you for using the Spire.Doc product.");
+paragraph.getFormat().setAdjustRightIndent(false);
+```
+
+---
+
+# Spire.Doc Java Core Function
+## Delete Pages from a Word Document
+```java
+// Remove all blank pages
+document.removeBlankPages();
+
+// Remove specific pages by index (0-based)
+List<Integer> list = new ArrayList<>(Arrays.asList(2, 4));
+document.removePages(list);
+```
+
+---
+
+# Spire.Doc Java  
+## Convert Markdown to DOCX with template styles  
+```java
+// Initialize a new Document object by loading the Markdown file
+Document doc = new Document("Data\\sample.md");
+
+// Copy all styles from the specified Word template into the current document
+doc.copyStylesFromTemplate("Data\\template.docx");
+
+// Define the output filename
+String outputFile = "MarkdownToDocxUsingTemplateStyles.docx";
+
+// Save the processed document to specified file in DOCX 2016 format
+doc.saveToFile(outputFile, FileFormat.Docx_2016);
+
+// Close the document to release resources
+doc.close();
+```
+
+---
+
+# java word to html retain MathML
+## configure HTML export options to output Office math equations as MathML and embed CSS internally
+```java
+// Retrieve the HTML export options configuration object for the document
+HtmlExportOptions htmlExportOptions = document.getHtmlExportOptions();
+
+// Configure the export to render Office math equations using MathML format
+htmlExportOptions.setOfficeMathOutputMode(HtmlOfficeMathOutputMode.Math_ML);
+
+// Set the CSS stylesheet to be embedded internally within the generated HTML file
+htmlExportOptions.setCssStyleSheetType(CssStyleSheetType.Internal);
+```
+
+---
+
+# java spire.doc font kerning
+## Adjust kerning (character spacing) for text in a paragraph
+```java
+Document doc = new Document();
+Section section = doc.addSection();
+Paragraph paragraph = section.addParagraph();
+TextRange textRange = paragraph.appendText("Some text");
+// Set kerning value (in points). Range 1-1638, 0 disables kerning.
+textRange.getCharacterFormat().setKerning(2.5f);
+```
+
+---
+
+# Spire.Doc java single-level list
+## Create a single-level numbered list in a Word document using Spire.Doc
+```java
+// Create a new instance of the Document class to represent a Word document
+Document document = new Document();
+
+// Add a new section to the document, which acts as a container for content like paragraphs and tables
+Section section = document.addSection();
+
+// Define a list template that uses Arabic numerals (1, 2, 3) followed by a dot
+ListTemplate template = ListTemplate.Number_Arabic_Dot;
+
+// Register this single-level numbered list template with the document and get a reference to it
+ListDefinitionReference listRef = document.getListReferences().addSingleLevelList(template);
+
+// Create a new paragraph object within the current section
+Paragraph paragraph = section.addParagraph();
+
+// Append the text to the newly created paragraph
+paragraph.appendText("List Item 1");
+
+// Apply the previously defined numbered list format (listRef) at level 0 to this paragraph
+paragraph.getListFormat().applyListRef(listRef, 0);
+
+// Reassign the paragraph variable by adding another new paragraph to the section
+paragraph = section.addParagraph();
+
+// Append the text to this new paragraph
+paragraph.appendText("List Item 2");
+
+// Apply the same numbered list format at level 0 to continue the sequence
+paragraph.getListFormat().applyListRef(listRef, 0);
+
+// Create a third paragraph in the section for the next list item
+paragraph = section.addParagraph();
+
+// Append the text to the paragraph
+paragraph.appendText("List Item 3");
+
+// Apply the numbered list format at level 0 to complete the list
+paragraph.getListFormat().applyListRef(listRef, 0);
+```
+
+---
+
+# spire.doc java list  
+## Add template list (bullet and numbered)  
+```java
+// Create a new Document object
+Document document = new Document();
+
+// Add a new section
+Section section = document.addSection();
+
+// Define bullet list template
+ListTemplate template = ListTemplate.Bullet_Default;
+ListDefinitionReference listRef = document.getListReferences().add(template);
+
+// Define numbered list template
+ListTemplate template1 = ListTemplate.Number_Default;
+ListDefinitionReference listRef1 = document.getListReferences().add(template1);
+
+// Add bullet list items
+Paragraph paragraph = section.addParagraph();
+paragraph.appendText("List Item 1");
+paragraph.getListFormat().applyListRef(listRef, 0);
+
+paragraph = section.addParagraph();
+paragraph.appendText("List Item 2");
+paragraph.getListFormat().applyListRef(listRef, 1);
+
+paragraph = section.addParagraph();
+paragraph.appendText("List Item 3");
+paragraph.getListFormat().applyListRef(listRef, 2);
+
+// Add numbered list items
+paragraph = section.addParagraph();
+paragraph.appendText("List Item 6");
+paragraph.getListFormat().applyListRef(listRef1, 0);
+
+paragraph = section.addParagraph();
+paragraph.appendText("List Item 7");
+paragraph.getListFormat().applyListRef(listRef1, 1);
+
+paragraph = section.addParagraph();
+paragraph.appendText("List Item 8");
+paragraph.getListFormat().applyListRef(listRef1, 2);
+```
+
+---
+
+# java spire.doc table style
+## Apply custom table style to a table
+```java
+// Initialize a new Document object
+Document doc = new Document();
+
+// Add a new section to the document
+Section section = doc.addSection();
+
+// Create a new custom table style named "TestTableStyle1"
+TableStyle tableStyle = (TableStyle) doc.getStyles().add(StyleType.Table_Style, "TestTableStyle1");
+
+// Set the horizontal alignment of the table content to Center
+tableStyle.setHorizontalAlignment(RowAlignment.Center);
+
+// Access the borders of the style and set their color to Blue
+tableStyle.getBorders().setColor(Color.BLUE);
+
+// Set the border line style to Single
+tableStyle.getBorders().setBorderType(BorderStyle.Single);
+
+// Add a new table to the current section
+Table table = section.addTable();
+
+// Reset the table structure to have 1 row and 1 column
+table.resetCells(1, 1);
+
+// Access the first cell, add a paragraph and append text
+table.getRows().get(0).getCells().get(0).addParagraph().appendText("Aligned to the center of the page");
+
+// Set the preferred width of the table to 300 points
+table.setPreferredWidth(PreferredWidth.fromPoints(300));
+
+// Apply the previously defined custom style to this table
+table.applyStyle(tableStyle);
+```
+
+---
+
+# java core function
+## Compare list levels of two list styles in a Word document
+```java
+public class compareListLevels {
+    public static void main(String[] args) {
+        Document document = new Document();
+
+        // Add a new bulleted list style named "bulletList1" to the document's styles collection.
+        ListStyle listStyle_1 = document.getStyles().add(ListType.Bulleted, "bulletList1");
+
+        // Retrieve the list level collection associated with the first list style.
+        ListLevelCollection Levels_1 = listStyle_1.getListRef().getLevels();
+
+        // Get the first (top-level) list formatting object from the first style.
+        ListLevel L10 = Levels_1.get(0);
+
+        // Get the second-level list formatting object from the first style.
+        ListLevel L11 = Levels_1.get(1);
+
+        // Get the third-level list formatting object from the first style.
+        ListLevel L12 = Levels_1.get(2);
+
+        // Add another bulleted list style named "bulletList2" to the document.
+        ListStyle listStyle_2 = document.getStyles().add(ListType.Bulleted, "bulletList2");
+
+        // Retrieve the list level collection for the second list style.
+        ListLevelCollection Levels_2 = listStyle_2.getListRef().getLevels();
+
+        // Get the first-level list formatting object from the second style.
+        ListLevel L20 = Levels_2.get(0);
+
+        // Get the second-level list formatting object from the second style.
+        ListLevel L21 = Levels_2.get(1);
+
+        // Get the third-level list formatting object from the second style.
+        ListLevel L22 = Levels_2.get(2);
+
+        // Set line spacing for the first level of the first list style (1.5 times 10-point base).
+        L10.getParagraphFormat().setLineSpacing(10 * 1.5f);
+
+        // Set font size to 9 points for the second level of the first list style.
+        L11.getCharacterFormat().setFontSize(9);
+
+        // Enable legal-style numbering (e.g., 1.1, 1.2) for the second level of the first style.
+        L11.isLegalStyleNumbering(true);
+
+        // Use Arabic numerals (1, 2, 3...) as the numbering pattern.
+        L11.setPatternType(ListPatternType.Arabic);
+
+        // Specify that no character (like a dot or parenthesis) follows the number.
+        L11.setFollowCharacter(FollowCharacterType.Nothing);
+
+        // Set the bullet character using Unicode (U+006E, which is lowercase 'n'—often used as a custom bullet).
+        L11.setBulletCharacter("\\x006e");
+
+        // Align the list number to the left within its numbering space.
+        L11.setNumberAlignment(ListNumberAlignment.Left);
+
+        // Position the number 10 points to the left of the default position (negative value).
+        L11.setNumberPosition(-10);
+
+        // Set the distance between the number and the following text tab stop to 0.5 inches.
+        L11.setTabSpaceAfter(0.5f);
+
+        // Define the starting horizontal position of the actual list text as 0.5 inches.
+        L11.setTextPosition(0.5f);
+
+        // Start numbering at 4 instead of 1 for this level.
+        L11.setStartAt(4);
+
+        // Prefix each number with the word "Chapter" (e.g., "Chapter4").
+        L11.setNumberPrefix("Chapter");
+
+        // Allow numbering to restart when a higher-level item changes.
+        L11.setNoRestartByHigher(false);
+
+        // Do not inherit the numbering format from the previous (higher) level.
+        L11.setUsePrevLevelPattern(false);
+
+        // Set the font name to "Arial" for the third level of the first list style.
+        L12.getCharacterFormat().setFontName("Arial");
+
+        // Set identical line spacing for the first level of the second list style.
+        L20.getParagraphFormat().setLineSpacing(10 * 1.5f);
+
+        // Set font size to 9 points for the second level of the second list style.
+        L21.getCharacterFormat().setFontSize(9);
+
+        // Enable legal-style numbering for the second level of the second style.
+        L21.isLegalStyleNumbering(true);
+
+        // Use Arabic numerals for numbering in the second style’s second level.
+        L21.setPatternType(ListPatternType.Arabic);
+
+        // No character follows the number in the second style’s second level.
+        L21.setFollowCharacter(FollowCharacterType.Nothing);
+
+        // Use the same Unicode bullet character as in the first style.
+        L21.setBulletCharacter("\\x006e");
+
+        // Left-align the number in the second style’s second level.
+        L21.setNumberAlignment(ListNumberAlignment.Left);
+
+        // Position the number at the same horizontal offset (-10 points).
+        L21.setNumberPosition(-10);
+
+        // Set the same tab space after the number (0.5 inches).
+        L21.setTabSpaceAfter(0.5f);
+
+        // Set the same text start position (0.5 inches).
+        L21.setTextPosition(0.5f);
+
+        // Start numbering at 4 for consistency.
+        L21.setStartAt(4);
+
+        // Apply the same "Chapter" prefix.
+        L21.setNumberPrefix("Chapter");
+
+        // Allow restart by higher levels.
+        L21.setNoRestartByHigher(false);
+
+        // Do not use the previous level’s pattern.
+        L21.setUsePrevLevelPattern(false);
+
+        // Create a picture-based bullet for this level (this makes it different from L11).
+        L21.createPictureBullet();
+
+        // Set the font name to "Arial" for the third level of the second list style.
+        L22.getCharacterFormat().setFontName("Arial");
+
+        // Compare the first levels of both list styles for equality.
+        Boolean r0 = L10.equals(L20);
+
+        // Compare the second levels; note: L21 has a picture bullet while L11 does not, so they differ.
+        Boolean r1 = L11.equals(L21);
+
+        // Compare the third levels, which only differ in their parent style but have identical properties.
+        Boolean r2 = L12.equals(L22);
+
+        // Add a new section to the document to hold output paragraphs.
+        Section section = document.addSection();
+
+        // Add a paragraph describing the first comparison.
+        Paragraph paragraph = section.addParagraph();
+        paragraph.setText("Compare the first level of the first ListStyle with the first level of the second ListStyle.");
+
+        // Add a new paragraph to display the result of the first comparison.
+        paragraph = section.addParagraph();
+        paragraph.setText("The comparison result is " + r0 + ".");
+
+        // Add a paragraph describing the second comparison.
+        paragraph = section.addParagraph();
+        paragraph.setText("Compare the second level of the first ListStyle with the second level of the second ListStyle.");
+
+        // Add a new paragraph for the result.
+        paragraph = section.addParagraph();
+        paragraph.setText("The comparison result is " + r1 + ".");
+
+        // Add a paragraph describing the third comparison.
+        paragraph = section.addParagraph();
+        paragraph.setText("Compare the third level of the first ListStyle with the third level of the second ListStyle.");
+
+        // Add a new paragraph for the final result.
+        paragraph = section.addParagraph();
+        paragraph.setText("The comparison result is " + r2 + ".");
+    }
+}
+```
+
+---
+
+# Spire.Doc Java - Create Picture Bullet
+## Create a Word document with picture bullets for list levels
+```java
+// Create a new Document object
+Document document = new Document();
+// Add a section
+Section section = document.addSection();
+// Create a bulleted list style named "bulletList"
+ListStyle listStyle = document.getStyles().add(ListType.Bulleted, "bulletList");
+ListLevelCollection Levels = listStyle.getListRef().getLevels();
+// Enable picture bullet for level 0
+Levels.get(0).createPictureBullet();
+Levels.get(0).getPictureBullet().loadImage("Data//Word.png");
+// Enable picture bullet for level 1
+Levels.get(1).createPictureBullet();
+Levels.get(1).getPictureBullet().loadImage("Data//logo.png");
+// Add paragraph with list style
+Paragraph paragraph = section.addParagraph();
+paragraph.appendText("List Item 1");
+paragraph.getListFormat().applyStyle(listStyle);
+paragraph = section.addParagraph();
+paragraph.appendText("List Item 1.1");
+paragraph.getListFormat().applyStyle(listStyle);
+paragraph.getListFormat().setListLevelNumber(1);
+```
+
+---
+
+# java core functionality
+## delete picture bullet from list level
+```java
+// Initialize a document object
+Document doc = new Document();
+
+// Access the collection of list definitions
+ListCollection lists = doc.getListReferences();
+
+// Get the second level (index 1) of the first list definition (index 0)
+ListLevel listLevel = lists.get(0).getLevels().get(1);
+
+// Remove the picture bullet from this list level
+listLevel.deletePictureBullet();
+```
+
+---
+
+# java spire.doc remove styles
+## Remove specific styles from a Word document
+```java
+document.getStyles().get("Style1").removeSelf();
+document.getStyles().get("Style2").removeSelf();
+```
+
+---
+
+# Spire.Doc Java Custom Styles
+## Add and apply custom character, paragraph, and table styles
+```java
+// Create a new document and obtain basic elements (textRange, paragraph, table)
+Document doc = new Document();
+Section section = doc.addSection();
+Paragraph paragraph = section.addParagraph();
+TextRange textRange = paragraph.appendText("Spire.Doc for Java ");
+// ... further text addition omitted for brevity
+
+// Create and register a new character-style named "MyCharacterStyle1"
+ICharacterStyle characterStyle = (ICharacterStyle)doc.getStyles().add(StyleType.Character_Style, "MyCharacterStyle1");
+characterStyle.getCharacterFormat().setFontName("Arial");
+characterStyle.getCharacterFormat().setFontSize(14);
+characterStyle.getCharacterFormat().setBold(true);
+characterStyle.getCharacterFormat().setTextColor(Color.blue);
+textRange.applyStyle(characterStyle.getName());
+
+// Create and register a new paragraph-style named "MyParagraphStyle1"
+ParagraphStyle heading1Style = (ParagraphStyle)doc.getStyles().add(StyleType.Paragraph_Style, "MyParagraphStyle1");
+heading1Style.getParagraphFormat().setHorizontalAlignment(HorizontalAlignment.Justify);
+heading1Style.getParagraphFormat().setLineSpacing(18);
+heading1Style.getCharacterFormat().setFontName("Calibri");
+heading1Style.getCharacterFormat().setFontSize(12);
+heading1Style.getCharacterFormat().setTextColor(new Color(42, 123, 136));
+paragraph.applyStyle(heading1Style);
+
+// Create a table and apply custom table style
+Table table = section.addTable();
+table.resetCells(15, 4);
+// ... cell filling omitted for brevity
+
+TableStyle tableStyle = (TableStyle)doc.getStyles().add(StyleType.Table_Style, "MyTableStyle1");
+tableStyle.getBorders().setColor(Color.black);
+tableStyle.getBorders().setBorderType(BorderStyle.Double);
+tableStyle.setRowStripe(3);
+tableStyle.getConditionalStyles().get(TableConditionalStyleType.OddRowStripe.getValue()).getShading().setBackgroundPatternColor(new Color(173, 216, 230));
+tableStyle.getConditionalStyles().get(TableConditionalStyleType.EvenRowStripe.getValue()).getShading().setBackgroundPatternColor(new Color(224, 255, 255));
+tableStyle.setColumnStripe(1);
+tableStyle.getConditionalStyles().get(TableConditionalStyleType.EvenColumnStripe.getValue()).getShading().setBackgroundPatternColor(new Color(255, 255, 224));
+table.applyStyle(tableStyle);
+table.getFormat().setStyleOptions(TableStyleOptions.ColumnStripe);
+```
+
+---
+
+# java core functionality
+## delete custom styles from a Word document
+```java
+Document document = new Document();
+document.loadFromFile("Data/CustomStyles.docx");
+
+Section section;
+for (int i = 0; i < document.getSections().getCount(); i++) {
+    section = document.getSections().get(i);
+
+    // Remove styles from paragraphs in body
+    for (int j = 0; j < section.getBody().getParagraphs().getCount(); j++) {
+        Paragraph paragraph = section.getBody().getParagraphs().get(j);
+        document.getStyles().get(paragraph.getStyleName()).removeSelf();
+    }
+
+    Table table;
+    TableRow tableRow;
+    TableCell tableCell;
+    Paragraph cellParagraph;
+
+    // Remove styles from tables and their cells
+    for (int k = 0; k < section.getBody().getTables().getCount(); k++) {
+        table = section.getBody().getTables().get(k);
+        document.getStyles().get(table.getFormat().getStyleName()).removeSelf();
+
+        for (int j = 0; j < table.getRows().getCount(); j++) {
+            tableRow = table.getRows().get(j);
+            for (int l = 0; l < tableRow.getCells().getCount(); l++) {
+                tableCell = tableRow.getCells().get(l);
+                for (int m = 0; m < tableCell.getParagraphs().getCount(); m++) {
+                    cellParagraph = tableCell.getParagraphs().get(m);
+                    document.getStyles().get(cellParagraph.getStyleName()).removeSelf();
+                }
+            }
+        }
+    }
+}
+
+document.saveToFile("DeleteCustomStyles.docx", FileFormat.Docx);
+document.close();
+document.dispose();
+```
+
+---
+
+# java core function
+## modify custom styles in Word document
+```java
+Document document = new Document();
+
+// Find a paragraph style named "MyParagraphStyle1" in the document's style collection
+IStyle style1 = document.getStyles().findByName("MyParagraphStyle1");
+if (style1 != null && style1 instanceof ParagraphStyle) {
+    ParagraphStyle cStyle = (ParagraphStyle) style1;
+    cStyle.getCharacterFormat().setFontName("Arial");
+    cStyle.getCharacterFormat().setFontSize(18);
+    cStyle.getCharacterFormat().setBold(false);
+    cStyle.getCharacterFormat().setTextColor(Color.gray);
+}
+
+// Find a table style named "MyTableStyle1" in the document's style collection
+IStyle style2 = document.getStyles().findByName("MyTableStyle1");
+if (style2 != null && style2 instanceof TableStyle) {
+    TableStyle tableStyle = (TableStyle) style2;
+    tableStyle.getBorders().setColor(Color.gray);
+    tableStyle.getBorders().setBorderType(BorderStyle.Single);
+    tableStyle.getBorders().setLineWidth(1);
+    tableStyle.setRowStripe(2);
+}
+```
+
+---
+
+# java createCombinedChart
+## Create a combined chart (column and line) in a Word document
+```java
+// Append a column chart (450x300 pixels) to the paragraph and retrieve the Chart object
+Chart chart = paragraph.appendChart(ChartType.Column, 450, 300).getChart();
+
+// Change the chart type of the series named "Series 3" to a Line chart and enable secondary axis if applicable
+chart.changeSeriesType("Series 3", ChartSeriesType.Line, true);
+```
+
+---
+
+# spire.doc java chart
+## extract axis data values from chart
+```java
+// Initialize a StringBuilder to store the extracted axis data values
+StringBuilder stringBuilder = new StringBuilder();
+
+Section section;
+Paragraph paragraph;
+// Loop through each section in the loaded document
+for (int i = 0; i < doc.getSections().getCount(); i++) {
+    section = doc.getSections().get(i);
+    // Loop through each paragraph within the current section
+    for (int j = 0; j < section.getParagraphs().getCount(); j++) {
+        paragraph = section.getParagraphs().get(j);
+        // Iterate over all child objects contained in the paragraph
+        for (int k = 0; k < paragraph.getChildObjects().getCount(); k++) {
+            DocumentObject obj = paragraph.getChildObjects().get(k);
+            // Check if the current object is a ShapeObject (which can contain charts)
+            if (obj instanceof ShapeObject) {
+                ShapeObject shape = (ShapeObject) obj;
+                // Retrieve the Chart object from the shape
+                Chart chart = shape.getChart();
+                // Add a header line indicating the start of X-axis data extraction
+                stringBuilder.append("Obtain X-axis data values:\r\n");
+                // Loop through all the X-axis values in the chart
+                for (int x = 0; x < chart.getXValues().getCount(); x++) {
+                    ChartValue xVal = chart.getXValues().get(x);
+                    stringBuilder.append(xVal.getStringValue() + " ");
+                }
+                // Get the first data series from the chart (index 0)
+                ChartSeries series = chart.getSeries().get(0);
+                // Add a new line and a header for Y-axis data extraction
+                stringBuilder.append("\r\nObtain Y-axis data values:");
+                // Iterate through all the Y-values in the selected data series
+                for (int y = 0; y < series.getYValues().getCount(); y++) {
+                    ChartValue yVal = series.getYValues().get(y);
+                    stringBuilder.append(yVal.getValue() + " ");
+                }
+            }
+        }
+    }
+}
+```
+
+---
+
+# java chart template saving
+## save chart as template (.crtx)
+```java
+// Create a new instance of the Word document
+Document doc = new Document();
+
+// Add a new section to the document
+Section section = doc.addSection();
+
+// Add a new paragraph to a newly created section
+Paragraph paragraph = section.addParagraph();
+
+// Append a column chart to the paragraph and retrieve the Chart object
+Chart chart = (paragraph.appendChart(ChartType.Column, 400, 300)).getChart();
+
+// Save the chart as a template file (.crtx)
+chart.saveAsTemplate("SaveChartToTemplate.crtx");
+```
+
+---
+
+# java core function
+## Set data label position in chart
+```java
+// Create a Pie chart and center data labels
+ShapeObject shape = newPara.appendChart(ChartType.Pie, 500, 300);
+Chart chart = shape.getChart();
+chart.getSeries().get(0).hasDataLabels(true);
+chart.getSeries().get(0).getDataLabels().setShowCategoryName(true);
+chart.getSeries().get(0).getDataLabels().setShowValue(true);
+chart.getSeries().get(0).getDataLabels().setPosition(ChartDataLabelPosition.Center);
+
+// Create a Bubble chart and set data labels to left
+ShapeObject shape2 = newPara.appendChart(ChartType.Bubble, 500, 300);
+Chart chart2 = shape2.getChart();
+chart2.getSeries().get(0).hasDataLabels(true);
+chart2.getSeries().get(0).getDataLabels().setShowCategoryName(true);
+chart2.getSeries().get(0).getDataLabels().setShowValue(true);
+chart2.getSeries().get(0).getDataLabels().setPosition(ChartDataLabelPosition.Left);
+```
+
+---
+
+# Spire.Doc Java Character Format  
+## Use DocumentNavigator to write text with various character formatting (underline, bold, shadow, color) and push/pop format stack  
+
+```java
+// Create a Document instance.
+Document doc = new Document();
+
+// Create a DocumentNavigator object to facilitate easy content insertion and formatting.
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+// Write plain text into the document (without special formatting yet).
+navigator.writeln("Write plain text into the document (without special formatting yet).");
+
+// Enable underline formatting for subsequent text.
+navigator.getCharacterFormat().setUnderlineColor(SystemColor.ORANGE);
+navigator.getCharacterFormat().setUnderlineStyle(UnderlineStyle.Single);
+
+// Set bold formatting for subsequent text.
+navigator.getCharacterFormat().setBold(true);
+
+// Enable shadow effect for subsequent text.
+navigator.getCharacterFormat().isShadow(true);
+
+// Set the text color to blue for subsequent text.
+navigator.getCharacterFormat().setTextColor(Color.BLUE);
+
+// Write formatted text using the current character formatting settings.
+navigator.writeln("Write formatted text using the current character formatting settings.");
+
+// Save the current character formatting settings onto an internal stack for later reuse.
+navigator.pushCharacterFormat();
+
+// Clear all character formatting to default (e.g., no bold, no color, etc.).
+navigator.getCharacterFormat().clearFormatting();
+
+// Write text with cleared (default) formatting.
+navigator.writeln("Write text with cleared (default) formatting");
+
+// Restore the previously saved character formatting from the stack.
+navigator.popCharacterFormat();
+
+// Write text using the restored formatting.
+navigator.writeln("Write text using the restored formatting.");
+```
+
+---
+
+# spire.doc java core function
+## insert HTML into Word document
+```java
+// Create a new Document object to represent an empty Word document.
+Document doc = new Document();
+
+// Initialize a DocumentNavigator instance to simplify content insertion and navigation within the document.
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+String html = "<body style=\"font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; padding: 20px; line-height: 1.6;\">\r\n    <h1 style=\"color: #2c3e50;\">Welcome to the Random English Page!</h1>\r\n    <p>This is a randomly generated HTML document containing English text.</p>\r\n    <p>The quick brown <span style=\"background-color: #fffacd; padding: 4px 8px; border-radius: 4px;\">fox jumps</span> over the lazy dog. This sentence contains every letter of the English alphabet.</p>\r\n    <p>Here are a few fun facts:</p>\r\n    <ul>\r\n        <li>English is spoken by over 1.5 billion people worldwide.</li>\r\n        <li>The word \"set\" has the most definitions in the English language.</li>\r\n        <li>\"Dreamt\" is the only English word that ends with \"mt\".</li>\r\n    </ul>\r\n    <p>Thank you for visiting! Have a wonderful day.</p>\r\n</body>";
+
+// Insert the HTML content into the document at the current cursor position.
+navigator.insertHtml(html);
+```
+
+---
+
+# insertCheckBox in Word Document
+## Insert checkbox content controls into a Word document using Spire.Doc
+
+```java
+Document doc = new Document();
+DocumentNavigator navigator = new DocumentNavigator(doc);
+Section section = navigator.getCurrentSection();
+
+// Add paragraphs for checkbox insertion
+Paragraph paragraph = section.addParagraph();
+navigator.moveToParagraph(1, 0);
+navigator.insertCheckBox("Checkbox1", false, 20);
+
+paragraph = section.addParagraph();
+navigator.moveToParagraph(2, 0);
+navigator.insertCheckBox("Checkbox2", true, 20);
+
+paragraph = section.addParagraph();
+navigator.moveToParagraph(3, 0);
+navigator.insertCheckBox("Checkbox3", false, true, 20);
+
+paragraph = section.addParagraph();
+navigator.moveToParagraph(4, 0);
+navigator.insertCheckBox("Checkbox4", true, false, 20);
+```
+
+---
+
+# Spire.Doc java insertField  
+## Insert different types of PAGE fields into a document using DocumentNavigator  
+
+```java
+// Create a new DocumentNavigator instance
+DocumentNavigator navigator = new DocumentNavigator();
+
+// Get the Document object associated with the navigator
+Document doc = navigator.getDocument();
+
+// Write label text "Add page fields:" followed by a paragraph break
+navigator.writeln("Add page fields:");
+
+// Insert a PAGE field with numeric formatting
+navigator.insertField("PAGE \\# \"Page 0\"");
+
+// Insert a paragraph break (empty line)
+navigator.writeln();
+
+// Insert the same PAGE field but with a custom result text
+navigator.insertField("PAGE \\# \"Page 0\"", "3");
+
+// Insert another paragraph break
+navigator.writeln();
+
+// Insert a built-in PAGE field with field result displayed
+navigator.insertField(FieldType.Field_Page, true);
+
+// Insert another paragraph break
+navigator.writeln();
+
+// Insert another PAGE field with field result hidden
+navigator.insertField(FieldType.Field_Page, false);
+```
+
+---
+
+# Java Core Functionality
+## Insert Image into Word Document using DocumentNavigator
+
+```java
+// Create a new Word document instance.
+Document doc = new Document();
+
+// Initialize a DocumentNavigator to help navigate and manipulate the document content.
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+// Write a line of text into the document indicating that an image will be inserted directly.
+navigator.writeln("Insert the picture directly:");
+
+// Insert an image at the current cursor position using the specified image file path.
+navigator.insertImage(imgpath);
+
+// Add a new section to the document.
+Section section = doc.addSection();
+
+// Move the cursor to the second section (index 1, since sections are zero-based).
+navigator.moveToSection(1);
+
+// Write a line of text explaining that the next image will have its dimensions set.
+navigator.writeln("Set the width and height of the image:");
+
+// Insert an image with specified width and height (both set to 100 pixels).
+navigator.insertImage(imgpath, 100, 100);
+
+// Write a line of text describing more advanced image positioning and formatting.
+navigator.writeln("Set the width, height, offset, and wrapping style of the image:");
+
+// Insert an image with detailed positioning and formatting (horizontal origin, offset, vertical origin, offset, width, height, wrapping style)
+navigator.insertImage(imgpath, HorizontalOrigin.Left_Margin_Area, 100, VerticalOrigin.Paragraph, 50, 100, 100, TextWrappingStyle.Through);
+```
+
+---
+
+# java core functionality
+## insert text form field using DocumentNavigator
+```java
+// Create a new empty Word document.
+Document doc = new Document();
+
+// Initialize a DocumentNavigator to help insert content and form fields.
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+// Write a label for Calculation form field.
+navigator.writeln("TextFormFieldType.Calculation: ");
+
+// Insert a calculation-type text form field.
+navigator.insertTextFormField("CalculationTextField", TextFormFieldType.Calculation, "0", "=3+1", 30);
+
+// Insert a line break.
+navigator.writeln();
+
+// Write a label for NumberText form field.
+navigator.writeln("TextFormFieldType.NumberText: ");
+
+// Insert a number-input text form field.
+navigator.insertTextFormField("NumberText", TextFormFieldType.Number_Text, "0", "100", 30);
+
+// Insert a line break.
+navigator.writeln();
+
+// Write a label for DateText form field.
+navigator.writeln("TextFormFieldType.DateText: ");
+
+// Insert a date-formatted text form field.
+navigator.insertTextFormField("DateText", TextFormFieldType.Date_Text, "yyyy/M/d", "2025/8/1", 30);
+
+// Insert a line break.
+navigator.writeln();
+```
+
+---
+
+# spire.doc java list format
+## Apply bullet list style to paragraphs using DocumentNavigator
+```java
+Document doc = new Document();
+Section section = doc.addSection();
+Paragraph paragraph = section.addParagraph();
+paragraph.appendText("This is the first paragraph.");
+paragraph = section.addParagraph();
+paragraph.appendText("This is the second paragraph.");
+paragraph = section.addParagraph();
+paragraph.appendText("This is the third paragraph.");
+
+DocumentNavigator navigator = new DocumentNavigator(doc);
+navigator.getListFormat().applyBulletStyle();
+navigator.moveToParagraph(2, 0);
+navigator.getListFormat().applyBulletStyle();
+```
+
+---
+
+# com.spire.doc java navigator  
+## moveToDocument - insert text at document start and end using DocumentNavigator  
+
+```java
+// Create a new empty document instance.
+Document doc = new Document();
+
+// Create a document navigator to help navigate and modify the document content.
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+// Move the cursor to the very beginning of the document.
+navigator.moveToDocumentStart();
+
+// Write a new line of text at the start of the document.
+navigator.writeln("Insert the content at the beginning of the document.");
+
+// Write another line of text immediately after the previous one at the start.
+navigator.writeln("This is new content.");
+
+// Move the cursor to the very end of the document.
+navigator.moveToDocumentEnd();
+
+// Insert a blank line at the end of the document.
+navigator.writeln();
+
+// Insert a new line of text at the end of the document.
+navigator.writeln("Insert the content at the end of the document.");
+```
+
+---
+
+# java document navigator  
+## move to header and footer  
+```java
+Document doc = new Document();
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+// Navigate to the first section
+navigator.moveToSection(0);
+
+// Navigate to footer of the first page and write text
+navigator.moveToHeaderFooter(HeaderFooterType.Footer_First_Page);
+navigator.writeln("The footer on the first page.");
+
+// Navigate to header of the first page and write text
+navigator.moveToHeaderFooter(HeaderFooterType.Header_First_Page);
+navigator.writeln("The header on the first page.");
+```
+
+---
+
+# java core function
+## move document navigator to a specific paragraph and insert new text
+```java
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+navigator.moveToSection(0);
+navigator.moveToParagraph(2, 0);
+navigator.writeln("This is new content......");
+```
+
+---
+
+# java document table cell
+## operate table cell using DocumentNavigator
+```java
+Document doc = new Document();
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+navigator.startTable();
+
+TableCell cell1 = navigator.insertCell();
+addcellcontent(cell1, "Row 1, Cell 1");
+
+TableCell cell2 = navigator.insertCell();
+addcellcontent(cell2, "Row 1, Cell 2");
+
+TableCell cell3 = navigator.insertCell();
+addcellcontent(cell3, "Row 1, Cell 3");
+
+navigator.endRow();
+
+TableCell cell4 = navigator.insertCell();
+addcellcontent(cell4, "Row 2, Cell 1");
+
+navigator.endTable();
+
+navigator.moveToCell(0, 0, 1, 0);
+navigator.writeln("new content");
+
+CellFormat cellformat = navigator.getCellFormat();
+cellformat.clearFormatting();
+cellformat.getShading().setBackgroundPatternColor(Color.lightGray);
+
+static void addcellcontent(TableCell cell, String Content) {
+    Paragraph para = cell.addParagraph();
+    para.appendText(Content);
+    para.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
+    cell.getCellFormat().getShading().setBackgroundPatternColor(Color.orange);
+    cell.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+}
+```
+
+---
+
+# java operateTableRow
+## Operate table rows: create, populate, and delete a row
+```java
+// Create a new empty document instance.
+Document doc = new Document();
+
+// Create a document navigator to help navigate and modify the document content.
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+// Start creating a new table and get its reference.
+Table table = navigator.startTable();
+
+// Initialize the table with 2 rows and 2 columns.
+table.resetCells(2, 2);
+
+// Set the table width to 100% of the available page width.
+table.setPreferredWidth(new PreferredWidth(WidthType.Percentage, (short)100));
+
+// Set the height of the first row to 30 points.
+table.getFirstRow().setHeight(30f);
+
+// Get a reference to the first cell in the first row (row 0, column 0).
+TableCell cell1 = table.getRows().get(0).getCells().get(0);
+
+// Add content to the first cell of the first row.
+addcellcontent(cell1, "Row 1, Cell 1");
+
+// Get a reference to the second cell in the first row (row 0, column 1).
+TableCell cell2 = table.getRows().get(0).getCells().get(1);
+
+// Add content to the second cell of the first row.
+addcellcontent(cell2, "Row 1, Cell 2");
+
+// Get a reference to the first cell in the second row (row 1, column 0).
+TableCell cell3 = table.getRows().get(1).getCells().get(0);
+
+// Add content to the first cell of the second row.
+addcellcontent(cell3, "Row 2, Cell 1");
+
+// Get a reference to the second cell in the second row (row 1, column 1).
+TableCell cell4 = table.getRows().get(1).getCells().get(1);
+
+// Add content to the second cell of the second row.
+addcellcontent(cell4, "Row 2, Cell 2");
+
+// Finalize the table creation.
+navigator.endTable();
+
+// Delete the first row (row index 0) of the first table (table index 0) in the document.
+navigator.deleteRow(0, 0);
+```
+
+```java
+// Helper method to add content to a table cell with formatting
+static void addcellcontent(TableCell cell, String Content)
+{
+    // Add a new paragraph to the table cell.
+    Paragraph para = cell.addParagraph();
+
+    // Append the specified text content to the paragraph inside the cell.
+    para.appendText(Content);
+
+    // Center-align the text horizontally within the paragraph.
+    para.getFormat().setHorizontalAlignment(HorizontalAlignment.Center);
+
+    // Set the background (shading) color of the table cell to ORANGE.
+    cell.getCellFormat().getShading().setBackgroundPatternColor(Color.ORANGE);
+
+    // Vertically center the content within the table cell.
+    cell.getCellFormat().setVerticalAlignment(VerticalAlignment.Middle);
+}
+```
+
+---
+
+# spire.doc java page format
+## Set page margins and page size using DocumentNavigator
+```java
+Document doc = new Document();
+DocumentNavigator navigator = new DocumentNavigator(doc);
+// Move the navigator's cursor to the first section (section index 0) of the document.
+navigator.moveToSection(0);
+// Set the page margins for the current section.
+navigator.getPageSetup().setMargins(new MarginsF(100, 80, 100, 80));
+// Set the page size of the current section to Letter.
+navigator.getPageSetup().setPageSize(PageSize.Letter);
+```
+
+---
+
+# Spire.Doc java paragraph format
+## Set paragraph formatting using DocumentNavigator
+```java
+// Create a new empty document instance.
+Document doc = new Document();
+
+// Create a document navigator to help navigate and modify the document content.
+DocumentNavigator navigator = new DocumentNavigator(doc);
+
+// Move the navigator's cursor to the first section of the document (section index 0).
+navigator.moveToSection(0);
+
+// Move the cursor to the first paragraph (index 0) at character position 0 within that paragraph.
+navigator.moveToParagraph(0, 0);
+
+// Set the line spacing rule for the current paragraph to "Multiple" (enables custom line spacing multiplier).
+navigator.getParagraphFormat().setLineSpacingRule(LineSpacingRule.Multiple);
+
+// Set the line spacing to 1.5 times the default font size (assuming 12-point font: 1.5 * 12 = 18 points).
+navigator.getParagraphFormat().setLineSpacing(1.5F * 12F);
+
+// Set the left indent of the current paragraph to 5 points.
+navigator.getParagraphFormat().setLeftIndent(5);
+
+// Move the cursor to the third paragraph (index 2) at character position 0.
+navigator.moveToParagraph(2, 0);
+
+// Set the background color of the current paragraph to blue.
+navigator.getParagraphFormat().setBackColor(Color.BLUE);
+```
+
+---
+
