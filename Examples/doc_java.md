@@ -12125,4 +12125,154 @@ navigator.getParagraphFormat().setBackColor(Color.BLUE);
 ```
 
 ---
+# Java Core Function
+## Combine characters using FarEastLayout in Spire.Doc
+
+```java
+Document doc = new Document();
+Section section = doc.addSection();
+
+// Apply Two-Lines-in-One to a text range
+Paragraph paragraph = section.addParagraph();
+TextRange textRange = paragraph.appendText("One Two Three Four");
+textRange.getCharacterFormat().setFontSize(12);
+textRange.getCharacterFormat().setFontNameFarEast("Arial");
+
+FarEastLayout layout = new FarEastLayout();
+layout.setCombine(true);
+textRange.getCharacterFormat().setFarEastLayout(layout);
+
+// Apply Two-Lines-in-One with different bracket types
+for (CombineBrackets bracket : CombineBrackets.values()) {
+    Paragraph bracketParagraph = section.addParagraph();
+    TextRange bracketRange = bracketParagraph.appendText("A B C D");
+    bracketRange.getCharacterFormat().setFontSize(12);
+    bracketRange.getCharacterFormat().setFontNameFarEast("Arial");
+
+    FarEastLayout bracketLayout = new FarEastLayout();
+    bracketLayout.setCombine(true);
+    bracketLayout.setCombineBrackets(bracket);
+    bracketRange.getCharacterFormat().setFarEastLayout(bracketLayout);
+}
+```
+
+---
+
+# spire.doc java document comparison
+## compare two Word documents with enhanced comparison options
+
+```java
+// Create two documents to compare
+Document doc1 = new Document();
+Document doc2 = new Document();
+
+// Initialize comparison options to customize comparison behavior
+CompareOptions options = new CompareOptions();
+options.setCompareMoves(true);          // Track moved content
+options.setIgnoreCaseChanges(true);     // Ignore letter case changes
+options.setIgnoreComments(true);        // Ignore comment differences
+options.setIgnoreFields(true);          // Ignore field differences
+options.setIgnoreFootnotes(true);       // Ignore footnote/endnote differences
+options.setIgnoreTables(true);          // Ignore table differences
+options.setIgnoreTextboxes(true);       // Ignore text box differences
+
+// Compare the two documents, marking changes with author "administrator" and current date
+doc1.compare(doc2, "administrator", new Date(), options);
+```
+
+---
+
+# spire.doc java document
+## Embed only used font characters
+```java
+Document document = new Document();
+
+// Enable embedding fonts into the document file
+document.setEmbedFontsInFile(true);
+
+// Embed only the characters used in the document to reduce file size
+document.setSaveSubsetFonts(true);
+```
+
+---
+
+# Spire.Doc Java
+## Check SVG images in a Word document
+```java
+// Get the body of the first section in the document
+Body body = document.getSections().get(0).getBody();
+
+// Loop through all paragraphs in the body
+for (int i = 0; i < body.getParagraphs().getCount(); i++) {
+    // Get the paragraph at the current index
+    Paragraph paragraph = body.getParagraphs().get(i);
+
+    // Loop through all child objects in the current paragraph
+    for (int j = 0; j < paragraph.getChildObjects().getCount(); j++) {
+        // Get the child object at the current index
+        DocumentObject documentObject = paragraph.getChildObjects().get(j);
+
+        // Check if the child object is a picture
+        if (documentObject instanceof DocPicture) {
+            // Cast the object to DocPicture
+            DocPicture picture = (DocPicture) documentObject;
+
+            // If the picture is an SVG image
+            if (picture.isSVG()) {
+                // Get the raw byte data of the SVG image
+                byte[] svgBytes = picture.getImageBytes();
+                // Process the SVG bytes as needed
+            }
+        }
+    }
+}
+```
+
+---
+
+# java doc footnote/endnote number extraction
+## Extract footnote and endnote content and IDs from a Word document by iterating sections, paragraphs, and paragraph child objects.
+
+```java
+// Iterate through all sections in the document
+for (int n = 0; n < doc.getSections().getCount(); n++) {
+    Section s = doc.getSections().get(n);
+
+    // Iterate through all paragraphs in the current section
+    for (int i = 0; i < s.getParagraphs().getCount(); i++) {
+        Paragraph para = s.getParagraphs().get(i);
+
+        // Iterate through all child objects in the current paragraph
+        for (int j = 0, cnt = para.getChildObjects().getCount(); j < cnt; j++) {
+            ParagraphBase pBase = (ParagraphBase) para.getChildObjects().get(j);
+
+            // Check whether the child object is a footnote or endnote
+            if (pBase instanceof Footnote) {
+                Footnote fn = (Footnote) pBase;
+
+                // Extract footnote
+                if (fn.getFootnoteType() == FootnoteType.Footnote) {
+                    StringBuilder fnText = new StringBuilder();
+                    for (int k = 0; k < fn.getTextBody().getParagraphs().getCount(); k++) {
+                        fnText.append(fn.getTextBody().getParagraphs().get(k).getText());
+                    }
+                    stringBuilder.append("Footnote content:" + fnText.toString() + "\nFootnote ID: " + fn.getId() + "\n");
+                }
+
+                // Extract endnote
+                if (fn.getFootnoteType() == FootnoteType.Endnote) {
+                    StringBuilder enText = new StringBuilder();
+                    for (int k = 0; k < fn.getTextBody().getParagraphs().getCount(); k++) {
+                        enText.append(fn.getTextBody().getParagraphs().get(k).getText());
+                    }
+                    stringBuilder.append("Endnote content:" + enText.toString() + "\nEndnote ID: " + fn.getId() + "\n");
+                }
+            }
+        }
+    }
+}
+```
+
+---
+
 
